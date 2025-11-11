@@ -365,15 +365,14 @@
     }
 
     header h1 {
-      font-size: 4.5rem;
-      font-weight: 800;
+      font-size: clamp(2.5rem, 8vw, 5rem);
       margin-bottom: 1rem;
       background: linear-gradient(135deg, #3b82f6 0%, #60a5fa 50%, #93c5fd 100%);
       background-size: 200% 200%;
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
-      animation: fadeInUp 1s ease-out, gradientFlow 8s ease infinite;
+      animation: fadeInUp 0.8s ease-out 1.3s both, gradientFlow 8s ease infinite 2.1s;
       letter-spacing: -0.02em;
       text-shadow: 0 0 80px rgba(59, 130, 246, 0.5);
     }
@@ -388,7 +387,7 @@
       color: var(--text-secondary);
       font-weight: 300;
       margin-bottom: 1rem;
-      animation: fadeInUp 1s ease-out 0.2s both;
+      animation: fadeInUp 1.3s ease-out 1.5s both;
     }
 
     .subtitle {
@@ -396,7 +395,7 @@
       color: var(--text-secondary);
       font-weight: 400;
       margin-bottom: 3rem;
-      animation: fadeInUp 1s ease-out 0.3s both;
+      animation: fadeInUp 0.8s ease-out 1.7s both;
       max-width: 700px;
       margin-left: auto;
       margin-right: auto;
@@ -407,7 +406,7 @@
       gap: 2rem;
       flex-wrap: wrap;
       justify-content: center;
-      animation: fadeInUp 1s ease-out 0.5s both;
+      animation: fadeInUp 0.8s ease-out 1.9s both;
     }
 
     .nav-links a {
@@ -2759,6 +2758,24 @@
           </div>
         </div>
       </div>
+
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-content">
+          <div class="timeline-date">February 2023 - November 2023</div>
+          <h3 class="timeline-title">Software Developer</h3>
+          <div class="timeline-company">Freelance</div>
+          <p class="timeline-description">
+            Developed custom software solutions and web applications for various clients. Created automation tools, 
+            built responsive websites, and implemented backend systems using modern development frameworks and best practices.
+          </p>
+          <div class="timeline-tags">
+            <span class="timeline-tag">Web Development</span>
+            <span class="timeline-tag">Automation</span>
+            <span class="timeline-tag">Full Stack</span>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -3213,15 +3230,15 @@
            onclick="gtag('event','click',{event_category:'Button',event_label:'GitHub Profile'})">
           <span style="color: var(--text-primary);">💻</span> GitHub
         </a>
-        <!-- Download Resume -->
-        <a href="#" class="resume-download magnetic-btn" onclick="showToast('Resume download coming soon!', 'success'); return false;">
+        <!-- Download Resume - Commented out for now -->
+        <!-- <a href="#" class="resume-download magnetic-btn" onclick="showToast('Resume download coming soon!', 'success'); return false;">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
             <polyline points="7 10 12 15 17 10"></polyline>
             <line x1="12" y1="15" x2="12" y2="3"></line>
           </svg>
           Download Resume
-        </a>
+        </a> -->
       </div>
     </div>
   </section>
