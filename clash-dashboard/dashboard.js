@@ -2,6 +2,11 @@
 
 // ========== UTILITIES ==========
 
+// JSON Export
+function exportToJSON(data) {
+  return JSON.stringify(data, null, 2);
+}
+
 // CSV Parser
 function parseCSV(text) {
   const rows = [];
@@ -61,6 +66,75 @@ function showToast(message, type = 'success') {
 let clashes = [];
 let charts = {};
 let selectedClash = null;
+let history = [];
+let historyIndex = -1;
+const MAX_HISTORY = 50;
+const STORAGE_KEY = 'clash-dashboard-data';
+
+// Data persistence
+function saveToLocalStorage() {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(clashes));
+  } catch(e) {
+    console.warn('LocalStorage save failed:', e);
+  }
+}
+
+function loadFromLocalStorage() {
+  try {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    return saved ? JSON.parse(saved) : null;
+  } catch(e) {
+    console.warn('LocalStorage load failed:', e);
+    return null;
+  }
+}
+
+// History management for undo/redo
+function pushHistory() {
+  historyIndex++;
+  if(historyIndex < history.length) {
+    history = history.slice(0, historyIndex);
+  }
+  history.push(JSON.parse(JSON.stringify(clashes)));
+  if(history.length > MAX_HISTORY) {
+    history.shift();
+  } else {
+    historyIndex = history.length - 1;
+  }
+  updateHistoryButtons();
+}
+
+function undo() {
+  if(historyIndex > 0) {
+    historyIndex--;
+    clashes = JSON.parse(JSON.stringify(history[historyIndex]));
+    renderTable();
+    updateSummary();
+    updateCharts();
+    updateHistoryButtons();
+    showToast('↶ Undo successful', 'success');
+  }
+}
+
+function redo() {
+  if(historyIndex < history.length - 1) {
+    historyIndex++;
+    clashes = JSON.parse(JSON.stringify(history[historyIndex]));
+    renderTable();
+    updateSummary();
+    updateCharts();
+    updateHistoryButtons();
+    showToast('↷ Redo successful', 'success');
+  }
+}
+
+function updateHistoryButtons() {
+  const undoBtn = document.getElementById('undoBtn');
+  const redoBtn = document.getElementById('redoBtn');
+  if(undoBtn) undoBtn.disabled = historyIndex <= 0;
+  if(redoBtn) redoBtn.disabled = historyIndex >= history.length - 1;
+}
 
 // ========== DOM ELEMENTS ==========
 const fileInput = document.getElementById('fileInput');
@@ -102,12 +176,44 @@ fileInput.addEventListener('change', (e) => {
 
 async function handleFileUpload(file) {
   try {
-    const text = await file.text();
-    if(file.name.toLowerCase().endsWith('.json')){
-      clashes = JSON.parse(text);
-    } else {
-      clashes = parseCSV(text);
+    // Validate file size (max 10MB)
+    if(file.size > 10 * 1024 * 1024) {
+      showToast('❌ File too large. Maximum 10MB allowed.', 'error');
+      return;
     }
+    
+    const text = await file.text();
+    let newClashes = [];
+    
+    if(file.name.toLowerCase().endsWith('.json')){
+      newClashes = JSON.parse(text);
+      if(!Array.isArray(newClashes)) {
+        showToast('❌ Invalid JSON format. Expected an array.', 'error');
+        return;
+      }
+    } else {
+      newClashes = parseCSV(text);
+    }
+    
+    if(newClashes.length === 0) {
+      showToast('⚠️ No data found in file.', 'error');
+      return;
+    }
+    
+    // Validate required fields
+    const requiredFields = ['ClashID'];
+    const hasRequiredFields = newClashes.every(c => 
+      requiredFields.every(f => c[f] !== undefined && c[f] !== '')
+    );
+    
+    if(!hasRequiredFields) {
+      showToast('❌ Missing required field: ClashID', 'error');
+      return;
+    }
+    
+    clashes = newClashes;
+    pushHistory();
+    saveToLocalStorage();
     
     initModelFilter();
     renderTable();
@@ -145,10 +251,16 @@ document.querySelectorAll('.tab').forEach(tab => {
 // ========== FILTERS ==========
 function initModelFilter(){
   const models = new Set();
+  const categories = new Set();
+  const assignees = new Set();
+  
   clashes.forEach(c => { 
     if(c.ModelA) models.add(c.ModelA); 
-    if(c.ModelB) models.add(c.ModelB); 
+    if(c.ModelB) models.add(c.ModelB);
+    if(c.Category) categories.add(c.Category);
+    if(c.AssignedTo) assignees.add(c.AssignedTo);
   });
+  
   modelFilter.innerHTML = '<option value="">All Models</option>';
   Array.from(models).sort().forEach(m => {
     const opt = document.createElement('option'); 
@@ -156,6 +268,32 @@ function initModelFilter(){
     opt.textContent = m; 
     modelFilter.appendChild(opt);
   });
+  
+  // Initialize category filter if it exists
+  const categoryFilter = document.getElementById('categoryFilter');
+  if(categoryFilter) {
+    categoryFilter.innerHTML = '<option value="">All Categories</option>';
+    Array.from(categories).sort().forEach(c => {
+      const opt = document.createElement('option'); 
+      opt.value = c; 
+      opt.textContent = c; 
+      categoryFilter.appendChild(opt);
+    });
+    categoryFilter.addEventListener('change', renderTable);
+  }
+  
+  // Initialize assignee filter if it exists
+  const assigneeFilter = document.getElementById('assigneeFilter');
+  if(assigneeFilter) {
+    assigneeFilter.innerHTML = '<option value="">All Assignees</option>';
+    Array.from(assignees).sort().forEach(a => {
+      const opt = document.createElement('option'); 
+      opt.value = a; 
+      opt.textContent = a; 
+      assigneeFilter.appendChild(opt);
+    });
+    assigneeFilter.addEventListener('change', renderTable);
+  }
 }
 
 search.addEventListener('input', renderTable);
@@ -167,7 +305,11 @@ document.getElementById('clearFilters').addEventListener('click', () => {
   search.value = ''; 
   statusFilter.value = ''; 
   priorityFilter.value = ''; 
-  modelFilter.value = ''; 
+  modelFilter.value = '';
+  const categoryFilter = document.getElementById('categoryFilter');
+  const assigneeFilter = document.getElementById('assigneeFilter');
+  if(categoryFilter) categoryFilter.value = '';
+  if(assigneeFilter) assigneeFilter.value = '';
   renderTable();
 });
 
@@ -176,10 +318,15 @@ function renderTable(){
   const q = search.value.trim().toLowerCase();
   tbody.innerHTML = '';
   
+  const categoryFilter = document.getElementById('categoryFilter');
+  const assigneeFilter = document.getElementById('assigneeFilter');
+  
   const filtered = clashes.filter(c => {
     if(statusFilter.value && (c.Status ?? '').toLowerCase() !== statusFilter.value.toLowerCase()) return false;
     if(priorityFilter.value && (c.Priority ?? '').toLowerCase() !== priorityFilter.value.toLowerCase()) return false;
     if(modelFilter.value && !((c.ModelA||'').toLowerCase() === modelFilter.value.toLowerCase() || (c.ModelB||'').toLowerCase() === modelFilter.value.toLowerCase())) return false;
+    if(categoryFilter?.value && (c.Category ?? '').toLowerCase() !== categoryFilter.value.toLowerCase()) return false;
+    if(assigneeFilter?.value && (c.AssignedTo ?? '').toLowerCase() !== assigneeFilter.value.toLowerCase()) return false;
     if(q && !((c.ClashID||'').toLowerCase().includes(q) || (c.ModelA||'').toLowerCase().includes(q) || (c.ModelB||'').toLowerCase().includes(q) || (c.Notes||'').toLowerCase().includes(q))) return false;
     return true;
   });
@@ -201,14 +348,27 @@ function renderTable(){
       <td>${c.AssignedTo||'-'}</td>
     `;
     
-    tr.addEventListener('click', () => {
-      document.querySelectorAll('#clashTable tbody tr').forEach(r => r.classList.remove('selected'));
-      tr.classList.add('selected');
-      showDetails(c);
+    tr.addEventListener('click', (e) => {
+      if(!e.ctrlKey && !e.metaKey && !e.shiftKey) {
+        document.querySelectorAll('#clashTable tbody tr').forEach(r => r.classList.remove('selected'));
+        tr.classList.add('selected');
+        showDetails(c);
+      }
+      updateBulkActionsVisibility();
     });
     
     tbody.appendChild(tr);
   });
+  
+  updateBulkActionsVisibility();
+}
+
+function updateBulkActionsVisibility() {
+  const bulkActions = document.getElementById('bulkActions');
+  const selected = document.querySelectorAll('#clashTable tbody tr.selected');
+  if(bulkActions) {
+    bulkActions.style.display = selected.length > 0 ? 'flex' : 'none';
+  }
 }
 
 // ========== DETAILS PANEL ==========
@@ -237,11 +397,109 @@ function showDetails(c){
   detailsCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 }
 
+// ========== BULK OPERATIONS ==========
+function bulkUpdateStatus(newStatus) {
+  const selected = document.querySelectorAll('#clashTable tbody tr.selected');
+  if(selected.length === 0) {
+    showToast('⚠️ Select clashes to update', 'error');
+    return;
+  }
+  
+  let count = 0;
+  selected.forEach(row => {
+    const clashId = row.cells[0].textContent;
+    const clash = clashes.find(c => c.ClashID === clashId);
+    if(clash) {
+      clash.Status = newStatus;
+      count++;
+    }
+  });
+  
+  pushHistory();
+  saveToLocalStorage();
+  renderTable();
+  updateSummary();
+  updateCharts();
+  showToast(`✅ Updated ${count} clash${count !== 1 ? 'es' : ''}!`, 'success');
+}
+
+function bulkAssign(assignee) {
+  const selected = document.querySelectorAll('#clashTable tbody tr.selected');
+  if(selected.length === 0) {
+    showToast('⚠️ Select clashes to assign', 'error');
+    return;
+  }
+  
+  let count = 0;
+  selected.forEach(row => {
+    const clashId = row.cells[0].textContent;
+    const clash = clashes.find(c => c.ClashID === clashId);
+    if(clash) {
+      clash.AssignedTo = assignee;
+      count++;
+    }
+  });
+  
+  pushHistory();
+  saveToLocalStorage();
+  renderTable();
+  updateSummary();
+  showToast(`✅ Assigned ${count} clash${count !== 1 ? 'es' : ''}!`, 'success');
+}
+
+function bulkDelete() {
+  const selected = document.querySelectorAll('#clashTable tbody tr.selected');
+  if(selected.length === 0) {
+    showToast('⚠️ Select clashes to delete', 'error');
+    return;
+  }
+  
+  if(!confirm(`Delete ${selected.length} clash${selected.length !== 1 ? 'es' : ''}? This cannot be undone.`)) {
+    return;
+  }
+  
+  const clashIds = Array.from(selected).map(row => row.cells[0].textContent);
+  clashes = clashes.filter(c => !clashIds.includes(c.ClashID));
+  
+  pushHistory();
+  saveToLocalStorage();
+  renderTable();
+  updateSummary();
+  updateCharts();
+  showToast(`✅ Deleted ${clashIds.length} clash${clashIds.length !== 1 ? 'es' : ''}!`, 'success');
+}
+
+// Toggle row selection
+document.addEventListener('click', (e) => {
+  if(e.target.closest('#clashTable tbody tr')) {
+    const row = e.target.closest('tr');
+    if(e.ctrlKey || e.metaKey) {
+      row.classList.toggle('selected');
+    } else if(e.shiftKey) {
+      // Range selection
+      const rows = Array.from(document.querySelectorAll('#clashTable tbody tr'));
+      const currentIndex = rows.indexOf(row);
+      const lastSelected = document.querySelector('#clashTable tbody tr.selected');
+      if(lastSelected) {
+        const lastIndex = rows.indexOf(lastSelected);
+        const [start, end] = currentIndex < lastIndex ? [currentIndex, lastIndex] : [lastIndex, currentIndex];
+        rows.slice(start, end + 1).forEach(r => r.classList.add('selected'));
+      }
+    } else {
+      document.querySelectorAll('#clashTable tbody tr').forEach(r => r.classList.remove('selected'));
+      row.classList.add('selected');
+    }
+  }
+});
+
 document.getElementById('saveUpdate').addEventListener('click', () => {
   if (!selectedClash) return;
   
   selectedClash.AssignedTo = document.getElementById('assignName').value.trim();
   selectedClash.Status = document.getElementById('statusSelect').value;
+  
+  pushHistory();
+  saveToLocalStorage();
   
   renderTable();
   updateSummary();
@@ -263,6 +521,41 @@ function updateSummary(){
   document.getElementById('openClashes').textContent = open;
   document.getElementById('assignedClashes').textContent = assigned;
   document.getElementById('resolvedClashes').textContent = resolved;
+  
+  // Calculate KPIs
+  const resolutionRate = total > 0 ? Math.round((resolved / total) * 100) : 0;
+  const highPriority = clashes.filter(c => (c.Priority||'').toLowerCase() === 'high').length;
+  const unassigned = clashes.filter(c => !c.AssignedTo || c.AssignedTo.trim() === '').length;
+  const avgResolutionTime = calculateAvgResolutionTime();
+  
+  // Update KPI displays if they exist
+  const kpiResolution = document.getElementById('kpiResolution');
+  const kpiHighPriority = document.getElementById('kpiHighPriority');
+  const kpiAvgTime = document.getElementById('kpiAvgTime');
+  const kpiUnassigned = document.getElementById('kpiUnassigned');
+  
+  if(kpiResolution) kpiResolution.textContent = `${resolutionRate}%`;
+  if(kpiHighPriority) kpiHighPriority.textContent = highPriority;
+  if(kpiAvgTime) kpiAvgTime.textContent = avgResolutionTime;
+  if(kpiUnassigned) kpiUnassigned.textContent = unassigned;
+}
+
+function calculateAvgResolutionTime() {
+  const resolved = clashes.filter(c => (c.Status||'').toLowerCase() === 'resolved');
+  if(resolved.length === 0) return 'N/A';
+  
+  let totalDays = 0;
+  resolved.forEach(c => {
+    if(c.CreatedAt) {
+      const created = new Date(c.CreatedAt);
+      const now = new Date();
+      const days = Math.round((now - created) / (1000 * 60 * 60 * 24));
+      totalDays += days;
+    }
+  });
+  
+  const avg = Math.round(totalDays / resolved.length);
+  return avg > 0 ? `${avg}d` : 'N/A';
 }
 
 // ========== CHARTS ==========
@@ -387,13 +680,8 @@ function updateCharts() {
     }
   });
   
-  // Trend Chart
-  const trendData = [
-    { week: 'Week 1', open: 45, resolved: 12 },
-    { week: 'Week 2', open: 38, resolved: 19 },
-    { week: 'Week 3', open: 32, resolved: 25 },
-    { week: 'Week 4', open: statusCounts.Open, resolved: statusCounts.Resolved }
-  ];
+  // Trend Chart - Dynamic based on actual data
+  const trendData = generateTrendData(statusCounts);
   
   if (charts.trend) charts.trend.destroy();
   charts.trend = new Chart(document.getElementById('trendChart'), {
@@ -495,6 +783,27 @@ function updateTimeline() {
 }
 
 // ========== EXPORT FUNCTIONS ==========
+
+// JSON Export
+document.getElementById('downloadJson')?.addEventListener('click', () => {
+  if (clashes.length === 0) {
+    showToast('⚠️ No data to export', 'error');
+    return;
+  }
+  
+  const json = exportToJSON(clashes);
+  const blob = new Blob([json], { type: 'application/json;charset=utf-8;' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `clash-data-${new Date().toISOString().split('T')[0]}.json`;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  URL.revokeObjectURL(url);
+  
+  showToast('✅ JSON exported successfully!', 'success');
+});
 
 // CSV Export
 document.getElementById('downloadCsv').addEventListener('click', () => {
@@ -612,7 +921,88 @@ C-0003,Structure.rvt,Architectural.rvt,Structure-Arch,Low,Level 03,18.7,33.2,7.2
 C-0004,MEP.rvt,MEP.rvt,MEP-MEP,High,Level 02,14.5,48.9,3.8,Open,,Pipe clash with electrical conduit,2025-01-18T14:20:00Z
 C-0005,Structure.rvt,MEP.rvt,Structure-MEP,Medium,Level 04,22.1,55.3,10.5,Assigned,John,Beam depth needs verification,2025-01-19T10:45:00Z`;
 
-// Uncomment to preload sample data:
-// clashes = parseCSV(sampleCsv); initModelFilter(); renderTable(); updateSummary(); updateCharts(); updateTimeline();
+// Load sample data on demand
+function loadSampleData() {
+  clashes = parseCSV(sampleCsv);
+  initModelFilter();
+  renderTable();
+  updateSummary();
+  updateCharts();
+  updateTimeline();
+  showToast('✅ Sample data loaded!', 'success');
+}
 
-console.log('✨ Clash Dashboard Enhanced - Ready!');
+// Add load sample data button listener
+const loadSampleBtn = document.getElementById('loadSampleBtn');
+if (loadSampleBtn) {
+  loadSampleBtn.addEventListener('click', loadSampleData);
+}
+
+// Undo/Redo buttons
+const undoBtn = document.getElementById('undoBtn');
+const redoBtn = document.getElementById('redoBtn');
+if(undoBtn) undoBtn.addEventListener('click', undo);
+if(redoBtn) redoBtn.addEventListener('click', redo);
+
+// Keyboard shortcuts
+document.addEventListener('keydown', (e) => {
+  // Ctrl/Cmd + Z: Undo
+  if((e.ctrlKey || e.metaKey) && e.key === 'z' && !e.shiftKey) {
+    e.preventDefault();
+    undo();
+  }
+  // Ctrl/Cmd + Shift + Z: Redo
+  if((e.ctrlKey || e.metaKey) && (e.key === 'z' && e.shiftKey || e.key === 'y')) {
+    e.preventDefault();
+    redo();
+  }
+  // Ctrl/Cmd + S: Save (export)
+  if((e.ctrlKey || e.metaKey) && e.key === 's') {
+    e.preventDefault();
+    document.getElementById('downloadCsv')?.click();
+  }
+  // Delete: Bulk delete selected
+  if(e.key === 'Delete') {
+    const selected = document.querySelectorAll('#clashTable tbody tr.selected');
+    if(selected.length > 0) {
+      e.preventDefault();
+      bulkDelete();
+    }
+  }
+});
+
+// Helper function to generate trend data from clash history
+function generateTrendData(statusCounts) {
+  // Calculate trend based on priority distribution
+  const highCount = clashes.filter(c => (c.Priority||'').toLowerCase() === 'high').length;
+  const mediumCount = clashes.filter(c => (c.Priority||'').toLowerCase() === 'medium').length;
+  const lowCount = clashes.filter(c => (c.Priority||'').toLowerCase() === 'low').length;
+  
+  const totalPriority = highCount + mediumCount + lowCount;
+  const avgResolutionRate = totalPriority > 0 ? Math.round((statusCounts.Resolved / totalPriority) * 100) : 0;
+  
+  return [
+    { week: 'High Priority', open: highCount, resolved: Math.round(highCount * avgResolutionRate / 100) },
+    { week: 'Medium Priority', open: mediumCount, resolved: Math.round(mediumCount * avgResolutionRate / 100) },
+    { week: 'Low Priority', open: lowCount, resolved: Math.round(lowCount * avgResolutionRate / 100) },
+    { week: 'Overall', open: statusCounts.Open, resolved: statusCounts.Resolved }
+  ];
+}
+
+// Initialize dashboard on page load
+window.addEventListener('load', () => {
+  const savedData = loadFromLocalStorage();
+  if(savedData && savedData.length > 0) {
+    clashes = savedData;
+    pushHistory();
+    initModelFilter();
+    renderTable();
+    updateSummary();
+    updateCharts();
+    updateTimeline();
+    showToast('📂 Previous data restored!', 'success');
+  }
+  updateHistoryButtons();
+});
+
+console.log('✨ Clash Dashboard Enhanced - Professional Edition Ready!');

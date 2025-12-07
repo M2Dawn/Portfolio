@@ -240,6 +240,16 @@
     box-shadow: 0 8px 24px rgba(59, 130, 246, 0.4);
   }
   
+  .btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+  }
+  
+  .btn:disabled:hover {
+    box-shadow: none;
+  }
+  
   .btn.secondary { 
     background: transparent; 
     border: 1px solid var(--border); 
@@ -249,6 +259,11 @@
   .btn.secondary:hover {
     background: rgba(59, 130, 246, 0.1);
     border-color: var(--primary);
+  }
+  
+  .btn.secondary:disabled {
+    opacity: 0.4;
+    border-color: var(--border);
   }
   
   .btn-icon {
@@ -334,7 +349,22 @@
     display: flex; 
     gap: 12px; 
     flex-wrap: wrap; 
-    margin-bottom: 16px; 
+    margin-bottom: 16px;
+    padding: 12px;
+    border-radius: 10px;
+    background: rgba(59, 130, 246, 0.05);
+    border: 1px solid var(--border);
+  }
+  
+  #bulkActions {
+    background: rgba(59, 130, 246, 0.1);
+    border: 1px solid rgba(59, 130, 246, 0.3);
+    animation: slideDown 0.2s ease;
+  }
+  
+  @keyframes slideDown {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
   }
   
   .input, select { 
@@ -405,8 +435,9 @@
   }
   
   tbody tr.selected {
-    background: rgba(59, 130, 246, 0.15);
-    border-left: 3px solid var(--primary);
+    background: rgba(59, 130, 246, 0.25);
+    border-left: 4px solid var(--primary);
+    box-shadow: inset 0 0 0 1px var(--primary);
   }
   
   /* Priority Badges */
@@ -728,6 +759,22 @@
     </div>
   </div>
   <div class="header-actions">
+    <button id="undoBtn" class="btn secondary" title="Undo (Ctrl+Z)">
+      <span class="btn-icon">↶</span>
+      <span>Undo</span>
+    </button>
+    <button id="redoBtn" class="btn secondary" title="Redo (Ctrl+Shift+Z)">
+      <span class="btn-icon">↷</span>
+      <span>Redo</span>
+    </button>
+    <button id="loadSampleBtn" class="btn secondary">
+      <span class="btn-icon">📦</span>
+      <span>Load Sample</span>
+    </button>
+    <button id="downloadJson" class="btn secondary">
+      <span class="btn-icon">📄</span>
+      <span>Export JSON</span>
+    </button>
     <button id="downloadExcel" class="btn secondary">
       <span class="btn-icon">📊</span>
       <span>Export Excel</span>
@@ -779,6 +826,30 @@
     </div>
   </div>
 
+  <!-- KPI Metrics -->
+  <div class="stats-grid" id="kpiMetrics">
+    <div class="stat-card">
+      <div class="stat-label">Resolution Rate</div>
+      <div class="stat-value" id="kpiResolution">0%</div>
+      <div class="stat-change positive">Target: 100%</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">High Priority</div>
+      <div class="stat-value" id="kpiHighPriority">0</div>
+      <div class="stat-change negative">Urgent</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Avg Resolution Time</div>
+      <div class="stat-value" id="kpiAvgTime">N/A</div>
+      <div class="stat-change">Days to resolve</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Unassigned</div>
+      <div class="stat-value" id="kpiUnassigned">0</div>
+      <div class="stat-change negative">Pending assignment</div>
+    </div>
+  </div>
+
   <!-- Tabs Navigation -->
   <div class="tabs">
     <button class="tab active" data-tab="overview">📊 Overview</button>
@@ -820,7 +891,14 @@
             <option>High</option><option>Medium</option><option>Low</option>
           </select>
           <select id="modelFilter" class="input"><option value="">All Models</option></select>
+          <select id="categoryFilter" class="input"><option value="">All Categories</option></select>
+          <select id="assigneeFilter" class="input"><option value="">All Assignees</option></select>
           <button id="clearFilters" class="btn secondary">Clear Filters</button>
+        </div>
+        <div class="filter-row" id="bulkActions" style="display:none;">
+          <button class="btn secondary" onclick="bulkUpdateStatus('Assigned')">📌 Mark Assigned</button>
+          <button class="btn secondary" onclick="bulkUpdateStatus('Resolved')">✅ Mark Resolved</button>
+          <button class="btn secondary" onclick="bulkDelete()">🗑️ Delete Selected</button>
         </div>
       </div>
 
