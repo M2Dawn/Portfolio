@@ -322,7 +322,7 @@ function initSkillsChart() {
     labels: ['Revit API', 'Dynamo', 'C#', 'Python', 'Navisworks', 'AutoCAD'],
     datasets: [{
       label: 'Proficiency Level',
-      data: [90, 85, 80, 75, 70, 85],
+      data: [95, 90, 88, 80, 75, 85],
       backgroundColor: [
         'rgba(255, 107, 107, 0.2)',
         'rgba(78, 205, 196, 0.2)',
