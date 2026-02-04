@@ -305,81 +305,6 @@ function addMagneticEffect(elements) {
   });
 }
 
-// ========== SKILLS CHART VISUALIZATION ==========
-function initSkillsChart() {
-  const chartContainer = document.getElementById('skillsChart');
-  if (!chartContainer) return;
-
-  // Check if Chart.js is loaded
-  if (typeof Chart === 'undefined') {
-    console.warn('Chart.js not loaded. Skipping chart initialization.');
-    return;
-  }
-
-  const ctx = chartContainer.getContext('2d');
-  
-  const skillsData = {
-    labels: ['Revit API', 'Dynamo', 'C#', 'Python', 'Navisworks', 'AutoCAD'],
-    datasets: [{
-      label: 'Proficiency Level',
-      data: [95, 90, 88, 80, 75, 85],
-      backgroundColor: [
-        'rgba(255, 107, 107, 0.2)',
-        'rgba(78, 205, 196, 0.2)',
-        'rgba(255, 230, 109, 0.2)',
-        'rgba(168, 230, 207, 0.2)',
-        'rgba(255, 167, 38, 0.2)',
-        'rgba(156, 39, 176, 0.2)'
-      ],
-      borderColor: [
-        'rgba(255, 107, 107, 1)',
-        'rgba(78, 205, 196, 1)',
-        'rgba(255, 230, 109, 1)',
-        'rgba(168, 230, 207, 1)',
-        'rgba(255, 167, 38, 1)',
-        'rgba(156, 39, 176, 1)'
-      ],
-      borderWidth: 2
-    }]
-  };
-
-  new Chart(ctx, {
-    type: 'radar',
-    data: skillsData,
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      scales: {
-        r: {
-          beginAtZero: true,
-          max: 100,
-          ticks: {
-            stepSize: 20,
-            color: getComputedStyle(document.documentElement)
-              .getPropertyValue('--text-secondary')
-          },
-          grid: {
-            color: getComputedStyle(document.documentElement)
-              .getPropertyValue('--border')
-          },
-          pointLabels: {
-            color: getComputedStyle(document.documentElement)
-              .getPropertyValue('--text-primary'),
-            font: {
-              size: 12,
-              weight: '500'
-            }
-          }
-        }
-      },
-      plugins: {
-        legend: {
-          display: false
-        }
-      }
-    }
-  });
-}
 
 // ========== LAZY LOADING IMAGES ==========
 function initLazyLoading() {
@@ -840,10 +765,6 @@ document.addEventListener('DOMContentLoaded', () => {
   new MouseSpotlight();
   new AnimatedGrid();
   
-  // Initialize skills chart (if Chart.js is loaded)
-  setTimeout(() => {
-    initSkillsChart();
-  }, 500);
   
   // Add ripple effect to buttons
   document.querySelectorAll('.ripple, .btn, .filter-btn').forEach(button => {
