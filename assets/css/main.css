@@ -198,7 +198,7 @@ button{font-family:var(--font-sans);cursor:pointer;}
 .form-input::placeholder,.form-textarea::placeholder{color:transparent;}
 .form-input:focus,.form-textarea:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-dim);}
 .form-input:focus+label,.form-input:not(:placeholder-shown)+label{transform:translateY(-32px) scale(0.8);color:var(--accent);}
-.form-textarea{min-height:120px;resize:vertical;padding-top:var(--sp-4);}
+.form-textarea{min-height:120px;resize:vertical;padding-top:32px;}
 .form-textarea:focus+label,.form-textarea:not(:placeholder-shown)+label{transform:translateY(-8px) scale(0.8);color:var(--accent);}
 .form-row{display:grid;grid-template-columns:1fr 1fr;gap:var(--sp-4);}
 .form-error{font-size:0.75rem;color:#F87171;margin-top:4px;display:none;}

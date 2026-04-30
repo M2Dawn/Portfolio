@@ -180,7 +180,10 @@ if (form) {
 
     try {
       if (typeof emailjs !== 'undefined') {
-        if (!window._ejsInit) { emailjs.init('0o6S42Yn8J2Sleaw1'); window._ejsInit = true; }
+        if (!window._ejsInit) {
+          emailjs.init({ publicKey: '0o6S42Yn8J2Sleaw1' });
+          window._ejsInit = true;
+        }
         await emailjs.send('service_f6ehl85', 'template_dks5llc', {
           from_name: form.querySelector('[name="name"]').value,
           from_email: form.querySelector('[name="email"]').value,
@@ -194,7 +197,8 @@ if (form) {
       form.reset();
       btn.textContent = 'Sent ✓';
       setTimeout(() => { succ?.classList.remove('show'); btn.textContent = 'Send Message'; btn.disabled = false; }, 4000);
-    } catch {
+    } catch (err) {
+      console.error('EmailJS Error:', err);
       btn.textContent = 'Failed — try again';
       btn.disabled = false;
     }
