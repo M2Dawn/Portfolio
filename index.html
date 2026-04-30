@@ -1,3849 +1,500 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Hossam Sabry - BIM Developer & Digital Construction Specialist. Specializing in Revit API, Dynamo, and construction automation with 2+ years of experience.">
-  <meta name="keywords" content="BIM Developer, Revit API, Dynamo, Construction Automation, Digital Construction, C#, Python, Navisworks">
-  <meta name="author" content="Hossam Sabry">
-  
-  <!-- Open Graph / Social Media -->
-  <meta property="og:type" content="website">
-  <meta property="og:title" content="Hossam Sabry | BIM Developer Portfolio">
-  <meta property="og:description" content="BIM Developer specializing in construction automation, Revit API development, and digital workflows.">
-  <meta property="og:url" content="https://m2dawn.github.io/Portfolio">
-  <meta property="og:image" content="https://m2dawn.github.io/Portfolio/assets/images/social-preview.jpg">
-  <meta property="og:image:width" content="1200">
-  <meta property="og:image:height" content="630">
-  <meta property="og:site_name" content="Hossam Sabry Portfolio">
-  
-  <!-- Twitter Card -->
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Hossam Sabry | BIM Developer Portfolio">
-  <meta name="twitter:description" content="BIM Developer specializing in construction automation, Revit API development, and digital workflows.">
-  <meta name="twitter:image" content="https://m2dawn.github.io/Portfolio/assets/images/social-preview.jpg">
-  
-  <!-- Canonical URL -->
-  <link rel="canonical" href="https://m2dawn.github.io/Portfolio">
-  
-  <!-- Theme Color -->
-  <meta name="theme-color" content="#000000">
-  <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#000000">
-  
-  <!-- Apple Web App -->
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="apple-mobile-web-app-title" content="Hossam Sabry">
-  
-  <!-- Favicon -->
-  <link rel="icon" type="image/svg+xml" href="favicon.svg">
-  <link rel="alternate icon" type="image/x-icon" href="favicon.ico">
-  <link rel="apple-touch-icon" sizes="180x180" href="favicon.svg">
-  
-  <title translate="no">Hossam Sabry | BIM Developer Portfolio</title>
-  
-  <!-- Preload critical resources -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<!-- Google tag (gtag.js) -->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="description" content="Hossam Sabry  &mdash;  BIM Automation Engineer building Revit API plugins, Dynamo systems and clash detection tooling for the AEC industry.">
+<meta property="og:title" content="Hossam Sabry  &mdash;  BIM Automation Engineer">
+<meta property="og:description" content="I build the tools BIM teams rely on.">
+<meta property="og:url" content="https://m2dawn.github.io/Portfolio">
+<meta property="og:image" content="https://m2dawn.github.io/Portfolio/assets/images/social-preview.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#080809">
+<link rel="canonical" href="https://m2dawn.github.io/Portfolio">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<title>Hossam Sabry  &mdash;  BIM Automation Engineer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<link rel="stylesheet" href="assets/css/main.css">
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-MWW9X0CJQF"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-MWW9X0CJQF', {
-    'page_title': 'Hossam Sabry | BIM Developer Portfolio',
-    'page_path': '/',
-  });
-</script>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-  
-  <!-- Chart.js for Skills Visualization -->
-  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
-  
-  <!-- EmailJS for Contact Form -->
-  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-  
-  <!-- Enhanced Styles -->
-  <link rel="stylesheet" href="assets/css/enhancements.css">
-  
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    :root {
-      --primary: #3b82f6;
-      --secondary: #60a5fa;
-      --accent: #1e40af;
-      --purple: #1e3a8a;
-      --orange: #2563eb;
-      --bg-primary: #000000;
-      --bg-secondary: #0a0a0a;
-      --bg-card: #111111;
-      --text-primary: #e5e7eb;
-      --text-secondary: #9ca3af;
-      --border: #1f2937;
-      --gradient-1: linear-gradient(135deg, #1e3a8a 0%, #1e40af 50%, #2563eb 100%);
-      --gradient-2: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
-      --gradient-3: linear-gradient(135deg, #1d4ed8 0%, #3b82f6 100%);
-      --gradient-4: linear-gradient(135deg, #1e40af 0%, #60a5fa 100%);
-      --gradient-5: linear-gradient(135deg, #2563eb 0%, #3b82f6 100%);
-      --shadow: 0 10px 40px rgba(37, 99, 235, 0.2);
-      --shadow-hover: 0 20px 60px rgba(37, 99, 235, 0.35);
-      --glow-primary: 0 0 20px rgba(59, 130, 246, 0.5);
-      --glow-secondary: 0 0 20px rgba(96, 165, 250, 0.5);
-    }
-
-    /* Light Theme */
-    [data-theme="light"] {
-      --bg-primary: #f5f7fa;
-      --bg-secondary: #ffffff;
-      --bg-card: #ffffff;
-      --text-primary: #1a1a2e;
-      --text-secondary: #4a5568;
-      --border: #e2e8f0;
-      --shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
-      --shadow-hover: 0 20px 60px rgba(0, 0, 0, 0.12);
-      --glow-primary: 0 0 20px rgba(102, 126, 234, 0.3);
-      --glow-secondary: 0 0 20px rgba(78, 205, 196, 0.3);
-    }
-
-    body {
-      background: var(--bg-primary);
-      color: var(--text-primary);
-      font-family: "Inter", sans-serif;
-      line-height: 1.6;
-      scroll-behavior: smooth;
-      overflow-x: hidden;
-      transition: background-color 0.3s ease, color 0.3s ease;
-    }
-
-    /* Animated background */
-    body::before {
-      content: '';
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: radial-gradient(circle at 20% 80%, rgba(30, 58, 138, 0.08) 0%, transparent 50%),
-                  radial-gradient(circle at 80% 20%, rgba(37, 99, 235, 0.06) 0%, transparent 50%),
-                  radial-gradient(circle at 40% 40%, rgba(59, 130, 246, 0.04) 0%, transparent 50%);
-      z-index: -1;
-      animation: backgroundShift 20s ease-in-out infinite;
-    }
-
-    /* Particle Canvas */
-    #particleCanvas {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: -1;
-      opacity: 0.4;
-    }
-
-    @keyframes backgroundShift {
-      0%, 100% { transform: translateX(0) translateY(0); }
-      33% { transform: translateX(-20px) translateY(-10px); }
-      66% { transform: translateX(20px) translateY(10px); }
-    }
-
-    /* NAVIGATION BAR */
-    .navbar {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      background: rgba(0, 0, 0, 0.95);
-      backdrop-filter: blur(10px);
-      border-bottom: 1px solid var(--border);
-      padding: 1rem 2rem;
-      z-index: 1000;
-      transition: all 0.3s ease;
-    }
-
-    [data-theme="light"] .navbar {
-      background: rgba(255, 255, 255, 0.95);
-    }
-
-    .navbar.scrolled {
-      box-shadow: var(--shadow);
-    }
-
-    .navbar-container {
-      max-width: 1400px;
-      margin: 0 auto;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .navbar-brand {
-      font-size: 1.5rem;
-      font-weight: 700;
-      background: var(--gradient-1);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      text-decoration: none;
-      transition: all 0.3s ease;
-    }
-
-    .navbar-menu {
-      display: flex;
-      align-items: center;
-      gap: 2rem;
-    }
-
-    .navbar-links {
-      display: flex;
-      gap: 2rem;
-      list-style: none;
-    }
-
-    .navbar-links a {
-      color: var(--text-primary);
-      text-decoration: none;
-      font-weight: 500;
-      transition: all 0.3s ease;
-      position: relative;
-    }
-
-    .navbar-links a::after {
-      content: '';
-      position: absolute;
-      bottom: -5px;
-      left: 0;
-      width: 0;
-      height: 2px;
-      background: var(--gradient-1);
-      transition: width 0.3s ease;
-    }
-
-    .navbar-links a:hover::after {
-      width: 100%;
-    }
-
-    .navbar-links a:hover {
-      color: var(--primary);
-      transform: translateY(-2px);
-    }
-
-    /* Theme Toggle */
-    .theme-toggle {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 50px;
-      padding: 0.5rem;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      transition: all 0.3s ease;
-    }
-
-    .theme-toggle:hover {
-      transform: scale(1.05);
-      box-shadow: var(--shadow);
-    }
-
-    .theme-icon {
-      width: 24px;
-      height: 24px;
-      transition: all 0.3s ease;
-    }
-
-    .theme-icon.hidden {
-      display: none;
-    }
-
-    /* Mobile Menu Toggle */
-    .mobile-menu-toggle {
-      display: none;
-      background: none;
-      border: none;
-      color: var(--text-primary);
-      font-size: 1.5rem;
-      cursor: pointer;
-      padding: 0.5rem;
-    }
-
-    @media (max-width: 768px) {
-      .mobile-menu-toggle {
-        display: block;
-      }
-
-      .navbar-menu {
-        position: fixed;
-        top: 70px;
-        left: 0;
-        right: 0;
-        background: var(--bg-secondary);
-        flex-direction: column;
-        padding: 2rem;
-        transform: translateX(-100%);
-        transition: transform 0.3s ease;
-        border-bottom: 1px solid var(--border);
-      }
-
-      .navbar-menu.active {
-        transform: translateX(0);
-      }
-
-      .navbar-links {
-        flex-direction: column;
-        width: 100%;
-      }
-
-      .navbar-links a {
-        padding: 1rem 0;
-        width: 100%;
-        text-align: center;
-      }
-    }
-
-    /* HEADER */
-    header {
-      position: relative;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      padding: 6rem 2rem 2rem;
-      background: transparent;
-      overflow: hidden;
-    }
-
-
-    .header-content {
-      position: relative;
-      z-index: 1;
-      max-width: 900px;
-    }
-
-    .profile-image {
-      width: 180px;
-      height: 180px;
-      border-radius: 50%;
-      border: 4px solid transparent;
-      background: var(--gradient-1);
-      padding: 4px;
-      margin-bottom: 2rem;
-      animation: float 3s ease-in-out infinite;
-      transition: all 0.3s ease;
-    }
-
-    .profile-image img {
-      width: 100%;
-      height: 100%;
-      border-radius: 50%;
-      object-fit: cover;
-    }
-
-    @keyframes float {
-      0%, 100% { transform: translateY(0px); }
-      50% { transform: translateY(-10px); }
-    }
-
-    header h1 {
-      font-size: clamp(2.5rem, 8vw, 5rem);
-      margin-bottom: 1rem;
-      background: linear-gradient(135deg, #3b82f6 0%, #60a5fa 50%, #93c5fd 100%);
-      background-size: 200% 200%;
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      animation: fadeInUp 0.8s ease-out 1.3s both, gradientFlow 8s ease infinite 2.1s;
-      letter-spacing: -0.02em;
-      text-shadow: 0 0 80px rgba(59, 130, 246, 0.5);
-    }
-
-    @keyframes gradientFlow {
-      0%, 100% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-    }
-
-    .tagline {
-      font-size: 1.5rem;
-      color: var(--text-secondary);
-      font-weight: 300;
-      margin-bottom: 1rem;
-      animation: fadeInUp 1.3s ease-out 1.5s both;
-    }
-
-    .subtitle {
-      font-size: 1.1rem;
-      color: var(--text-secondary);
-      font-weight: 400;
-      margin-bottom: 3rem;
-      animation: fadeInUp 0.8s ease-out 1.7s both;
-      max-width: 700px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-
-    .nav-links {
-      display: flex;
-      gap: 2rem;
-      flex-wrap: wrap;
-      justify-content: center;
-      animation: fadeInUp 0.8s ease-out 1.9s both;
-    }
-
-    .nav-links a {
-      color: var(--text-primary);
-      text-decoration: none;
-      font-weight: 500;
-      padding: 0.8rem 1.5rem;
-      border: 1px solid var(--border);
-      border-radius: 50px;
-      transition: all 0.3s ease;
-      backdrop-filter: blur(10px);
-    }
-
-    .nav-links a:hover {
-      background: var(--gradient-1);
-      border-color: transparent;
-      transform: translateY(-3px) scale(1.05);
-      box-shadow: 0 8px 25px rgba(37, 99, 235, 0.4);
-      color: white;
-    }
-
-    @keyframes fadeInUp {
-      from {
-        opacity: 0;
-        transform: translateY(30px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    /* SECTIONS */
-    section {
-      padding: 6rem 2rem;
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-
-    h2 {
-      font-size: 2.5rem;
-      font-weight: 600;
-      margin-bottom: 3rem;
-      text-align: center;
-      position: relative;
-    }
-
-    h2::after {
-      content: '';
-      position: absolute;
-      bottom: -1rem;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 80px;
-      height: 5px;
-      background: var(--gradient-1);
-      border-radius: 3px;
-      box-shadow: 0 0 20px rgba(37, 99, 235, 0.5);
-    }
-
-    /* ABOUT */
-    .about-content {
-      text-align: center;
-      font-size: 1.2rem;
-      max-width: 800px;
-      margin: 0 auto;
-      color: var(--text-secondary);
-      line-height: 1.8;
-    }
-
-    .about-content strong {
-      color: var(--text-primary);
-      background: var(--gradient-1);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    .about-highlights {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 2rem;
-      margin-top: 3rem;
-    }
-
-    .highlight-card {
-      background: var(--bg-card);
-      padding: 1.5rem;
-      border-radius: 1rem;
-      border: 1px solid var(--border);
-      text-align: center;
-      transition: all 0.3s ease;
-    }
-
-    .highlight-card:hover {
-      transform: translateY(-5px);
-      box-shadow: var(--shadow);
-    }
-
-    .highlight-number {
-      font-size: 2.5rem;
-      font-weight: 700;
-      background: var(--gradient-1);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      margin-bottom: 0.5rem;
-    }
-
-    .highlight-label {
-      font-size: 0.9rem;
-      color: var(--text-secondary);
-    }
-
-    /* SKILLS */
-    .skills-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 2rem;
-    }
-
-    .skill {
-      background: var(--bg-card);
-      padding: 2.5rem 2rem;
-      border-radius: 1.2rem;
-      text-align: center;
-      font-weight: 500;
-      border: 1px solid var(--border);
-      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .skill::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
-      background: var(--gradient-1);
-      opacity: 0.1;
-      transition: all 0.4s ease;
-    }
-
-    .skill-icon {
-      width: 90px;
-      height: 90px;
-      margin: 0 auto 1.5rem;
-      border-radius: 22px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-      position: relative;
-      overflow: visible;
-      background: none;
-      box-shadow: none;
-      transform-style: flat;
-    }
-
-    .skill-icon img {
-      width: 64px;
-      height: 64px;
-      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-      filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
-      object-fit: contain;
-    }
-
-    .skill-programming .skill-icon img {
-      width: 120px;
-      height: 120px;
-    }
-
-    .skill-icon::before {
-      content: '';
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      width: 100%;
-      height: 100%;
-      transform: translate(-50%, -50%);
-      background: inherit;
-      filter: blur(25px) brightness(1.3);
-      opacity: 0;
-      transition: opacity 0.4s ease;
-      z-index: -1;
-      border-radius: inherit;
-    }
-
-    .skill:hover .skill-icon::before {
-      opacity: 0.8;
-      animation: iconGlowPulse 2s ease-in-out infinite;
-    }
-
-    @keyframes iconGlowPulse {
-      0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.8; }
-      50% { transform: translate(-50%, -50%) scale(1.15); opacity: 0.5; }
-    }
-
-    .skill:hover .skill-icon img {
-      transform: scale(1.15) rotate(8deg);
-      filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.4));
-    }
-
-    .skill-revit .skill-icon,
-    .skill-navisworks .skill-icon,
-    .skill-dynamo .skill-icon,
-    .skill-primavera .skill-icon,
-    .skill-autocad .skill-icon,
-    .skill-programming .skill-icon {
-      background: none;
-      box-shadow: none;
-    }
-
-    .skill:hover .skill-revit .skill-icon {
-      box-shadow: 0 12px 32px rgba(14, 165, 233, 0.6), 
-                  0 6px 12px rgba(14, 165, 233, 0.4),
-                  inset 0 2px 0 rgba(255, 255, 255, 0.3),
-                  0 0 40px rgba(14, 165, 233, 0.3);
-    }
-    .skill:hover .skill-navisworks .skill-icon {
-      box-shadow: 0 12px 32px rgba(16, 185, 129, 0.6), 
-                  0 6px 12px rgba(16, 185, 129, 0.4),
-                  inset 0 2px 0 rgba(255, 255, 255, 0.3),
-                  0 0 40px rgba(16, 185, 129, 0.3);
-    }
-    .skill:hover .skill-dynamo .skill-icon {
-      box-shadow: 0 12px 32px rgba(245, 158, 11, 0.6), 
-                  0 6px 12px rgba(245, 158, 11, 0.4),
-                  inset 0 2px 0 rgba(255, 255, 255, 0.3),
-                  0 0 40px rgba(245, 158, 11, 0.3);
-    }
-    .skill:hover .skill-primavera .skill-icon {
-      box-shadow: 0 12px 32px rgba(239, 68, 68, 0.6), 
-                  0 6px 12px rgba(239, 68, 68, 0.4),
-                  inset 0 2px 0 rgba(255, 255, 255, 0.3),
-                  0 0 40px rgba(239, 68, 68, 0.3);
-    }
-    .skill:hover .skill-autocad .skill-icon {
-      box-shadow: 0 12px 32px rgba(220, 38, 38, 0.6), 
-                  0 6px 12px rgba(220, 38, 38, 0.4),
-                  inset 0 2px 0 rgba(255, 255, 255, 0.3),
-                  0 0 40px rgba(220, 38, 38, 0.3);
-    }
-    .skill:hover .skill-programming .skill-icon {
-      box-shadow: 0 12px 32px rgba(139, 92, 246, 0.6), 
-                  0 6px 12px rgba(139, 92, 246, 0.4),
-                  inset 0 2px 0 rgba(255, 255, 255, 0.3),
-                  0 0 40px rgba(139, 92, 246, 0.3);
-    }
-
-    .skill-title {
-      font-size: 1.2rem;
-      font-weight: 600;
-      margin-bottom: 0.5rem;
-      color: var(--text-primary);
-    }
-
-    .skill-subtitle {
-      font-size: 0.9rem;
-      color: var(--text-secondary);
-      opacity: 0.8;
-      margin-bottom: 1rem;
-    }
-
-    .skill-level {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.3rem;
-      margin-top: 1rem;
-    }
-
-    .level-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: var(--border);
-      transition: all 0.3s ease;
-    }
-
-    .level-dot.active {
-      background: var(--secondary);
-      box-shadow: 0 0 10px var(--secondary);
-    }
-
-    .skill:hover {
-      transform: translateY(-15px) scale(1.03);
-      box-shadow: 0 25px 70px rgba(37, 99, 235, 0.4);
-      border-color: transparent;
-      background: linear-gradient(135deg, var(--bg-card) 0%, rgba(37, 99, 235, 0.05) 100%);
-    }
-
-    .skill:hover::before {
-      left: 0;
-    }
-
-    .skill:hover .skill-icon {
-      transform: scale(1.15) translateY(-5px);
-    }
-
-    /* PROJECTS */
-    .project-filters {
-      display: flex;
-      justify-content: center;
-      gap: 1rem;
-      margin-bottom: 3rem;
-      flex-wrap: wrap;
-    }
-
-    .filter-btn {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      color: var(--text-primary);
-      padding: 0.8rem 1.5rem;
-      border-radius: 50px;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      font-weight: 500;
-      font-family: inherit;
-    }
-
-    .filter-btn:hover {
-      background: var(--gradient-1);
-      border-color: transparent;
-      transform: translateY(-3px) scale(1.05);
-      box-shadow: 0 8px 25px rgba(37, 99, 235, 0.4);
-      color: white;
-    }
-
-    .filter-btn.active {
-      background: var(--gradient-1);
-      border-color: transparent;
-    }
-
-    .projects-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-      gap: 2rem;
-    }
-
-    .project.hidden {
-      display: none;
-    }
-
-    .project {
-      background: var(--bg-card);
-      border-radius: 1rem;
-      border: 1px solid var(--border);
-      transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
-      position: relative;
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .project::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 4px;
-      background: var(--gradient-1);
-      transform: scaleX(0);
-      transition: transform 0.3s ease;
-    }
-
-    .project-preview {
-      width: 100%;
-      height: 220px;
-      background: linear-gradient(135deg, rgba(30, 58, 138, 0.1), rgba(37, 99, 235, 0.1));
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      position: relative;
-      overflow: hidden;
-      border-bottom: 1px solid var(--border);
-    }
-
-    .project-preview::before {
-      content: '';
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      background: radial-gradient(circle at center, rgba(255, 255, 255, 0.05) 0%, transparent 70%);
-      animation: none;
-    }
-
-    .project-preview-icon {
-      width: 110px;
-      height: 110px;
-      position: relative;
-      z-index: 1;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: rgba(255, 255, 255, 0.08);
-      border-radius: 24px;
-      border: 2px solid rgba(255, 255, 255, 0.15);
-      backdrop-filter: blur(15px);
-      transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3),
-                  inset 0 1px 0 rgba(255, 255, 255, 0.2);
-    }
-
-    .project-preview-icon::before {
-      content: '';
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      width: 100%;
-      height: 100%;
-      transform: translate(-50%, -50%);
-      background: var(--gradient-1);
-      filter: blur(25px);
-      opacity: 0;
-      transition: none;
-      z-index: -1;
-      border-radius: inherit;
-    }
-
-    .project-preview-icon svg {
-      width: 65px;
-      height: 65px;
-      transition: none;
-      filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
-    }
-
-
-    .project-preview::after {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      height: 50%;
-      background: linear-gradient(to top, rgba(0, 0, 0, 0.3), transparent);
-      z-index: 0;
-    }
-
-    .project-content {
-      padding: 2rem;
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .project:hover {
-      transform: translateY(-5px);
-      box-shadow: var(--shadow-hover);
-    }
-
-    .project:hover::before {
-      transform: scaleX(1);
-    }
-
-    .project h3 {
-      font-size: 1.3rem;
-      margin-bottom: 1rem;
-      color: var(--text-primary);
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-
-    .project p {
-      color: var(--text-secondary);
-      margin-bottom: 1.5rem;
-      line-height: 1.6;
-      flex: 1;
-    }
-
-    .project-metrics {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 0.5rem;
-      margin-bottom: 1.5rem;
-    }
-
-    .metric {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      font-size: 0.9rem;
-      color: var(--text-secondary);
-    }
-
-    .metric-icon {
-      color: var(--secondary);
-    }
-
-    .project-buttons {
-      display: flex;
-      gap: 1rem;
-      flex-wrap: wrap;
-    }
-
-    .btn {
-      background: var(--gradient-1);
-      color: white;
-      border: none;
-      padding: 0.9rem 1.8rem;
-      border-radius: 0.7rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-      text-decoration: none;
-      display: inline-block;
-      font-family: inherit;
-      position: relative;
-      overflow: hidden;
-      box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
-    }
-
-    .btn::before {
-      content: '';
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      width: 0;
-      height: 0;
-      border-radius: 50%;
-      background: rgba(255, 255, 255, 0.3);
-      transform: translate(-50%, -50%);
-      transition: width 0.6s ease, height 0.6s ease;
-    }
-
-    .btn:hover::before {
-      width: 300px;
-      height: 300px;
-    }
-
-    .btn:hover {
-      transform: translateY(-3px) scale(1.02);
-      box-shadow: 0 8px 25px rgba(37, 99, 235, 0.5);
-    }
-
-    .btn-secondary {
-      background: rgba(78, 205, 196, 0.1);
-      border: 2px solid var(--secondary);
-      color: var(--text-primary);
-    }
-
-    .btn-secondary:hover {
-      background: var(--secondary);
-      color: var(--bg-primary);
-      border-color: var(--secondary);
-    }
-
-    /* WORK SECTION */
-    .work-item {
-      background: var(--bg-card);
-      border-radius: 1rem;
-      border: 1px solid var(--border);
-      overflow: hidden;
-      margin-bottom: 2rem;
-      transition: all 0.3s ease;
-    }
-
-    .work-item:hover {
-      box-shadow: var(--shadow);
-    }
-
-    .work-header {
-      padding: 2rem;
-      border-bottom: 1px solid var(--border);
-    }
-
-    .work-header h3 {
-      color: var(--text-primary);
-      margin-bottom: 0.5rem;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-
-    .work-embed {
-      width: 100%;
-      height: 500px;
-      border: none;
-    }
-
-    /* EXPERIENCE TIMELINE */
-    .timeline {
-      position: relative;
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 2rem 0;
-    }
-
-    .timeline::before {
-      content: '';
-      position: absolute;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 2px;
-      height: 100%;
-      background: var(--gradient-1);
-    }
-
-    .timeline-item {
-      display: flex;
-      justify-content: flex-end;
-      padding-right: 50%;
-      position: relative;
-      margin-bottom: 3rem;
-    }
-
-    .timeline-item:nth-child(even) {
-      justify-content: flex-start;
-      padding-left: 50%;
-      padding-right: 0;
-    }
-
-    .timeline-content {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 1rem;
-      padding: 2rem;
-      width: calc(100% - 4rem);
-      position: relative;
-      transition: all 0.3s ease;
-    }
-
-    .timeline-content:hover {
-      transform: translateY(-5px);
-      box-shadow: var(--shadow-hover);
-    }
-
-    .timeline-dot {
-      position: absolute;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 20px;
-      height: 20px;
-      background: var(--gradient-1);
-      border-radius: 50%;
-      border: 4px solid var(--bg-primary);
-      z-index: 1;
-      top: 2rem;
-    }
-
-    .timeline-date {
-      font-size: 0.9rem;
-      color: var(--secondary);
-      font-weight: 600;
-      margin-bottom: 0.5rem;
-    }
-
-    .timeline-title {
-      font-size: 1.3rem;
-      font-weight: 600;
-      color: var(--text-primary);
-      margin-bottom: 0.5rem;
-    }
-
-    .timeline-company {
-      font-size: 1rem;
-      color: var(--primary);
-      margin-bottom: 1rem;
-    }
-
-    .timeline-description {
-      color: var(--text-secondary);
-      line-height: 1.6;
-      margin-bottom: 1rem;
-    }
-
-    .timeline-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-    }
-
-    .timeline-tag {
-      background: rgba(78, 205, 196, 0.1);
-      border: 1px solid var(--secondary);
-      color: var(--secondary);
-      padding: 0.3rem 0.8rem;
-      border-radius: 50px;
-      font-size: 0.85rem;
-    }
-
-    @media (max-width: 768px) {
-      .timeline::before {
-        left: 20px;
-      }
-
-      .timeline-item,
-      .timeline-item:nth-child(even) {
-        justify-content: flex-start;
-        padding-left: 60px;
-        padding-right: 0;
-      }
-
-      .timeline-dot {
-        left: 20px;
-      }
-
-      .timeline-content {
-        width: 100%;
-      }
-    }
-
-    /* ACTIVE USERS / GLOBAL REACH */
-    #users-map {
-      background: var(--bg-secondary);
-      padding: 4rem 2rem;
-    }
-
-    .section-subtitle {
-      text-align: center;
-      color: var(--text-secondary);
-      font-size: 1.1rem;
-      margin-top: -1rem;
-      margin-bottom: 3rem;
-    }
-
-    .analytics-container {
-      max-width: 900px;
-      margin: 0 auto;
-    }
-
-    .analytics-header {
-      text-align: center;
-      margin-bottom: 2rem;
-    }
-
-    .analytics-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      background: rgba(59, 130, 246, 0.1);
-      border: 1px solid var(--primary);
-      padding: 0.5rem 1rem;
-      border-radius: 50px;
-      color: var(--primary);
-      font-size: 0.9rem;
-      font-weight: 600;
-      margin-bottom: 1rem;
-    }
-
-    .analytics-badge svg {
-      stroke: var(--primary);
-    }
-
-    .analytics-header h3 {
-      color: var(--text-primary);
-      font-size: 1.8rem;
-      font-weight: 600;
-    }
-
-    .analytics-screenshot {
-      position: relative;
-      background: transparent;
-      border: none;
-      border-radius: 1rem;
-      padding: 0;
-      overflow: hidden;
-      pointer-events: none;
-      user-select: none;
-    }
-
-    .analytics-screenshot::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: linear-gradient(135deg, rgba(59, 130, 246, 0.05) 0%, rgba(96, 165, 250, 0.03) 100%);
-      pointer-events: none;
-      z-index: 1;
-    }
-
-    .analytics-image {
-      width: 100%;
-      height: auto;
-      border-radius: 1rem;
-      display: block;
-      opacity: 0.95;
-      pointer-events: none;
-      user-select: none;
-      -webkit-user-drag: none;
-    }
-
-    .analytics-update-badge {
-      position: absolute;
-      bottom: 1.5rem;
-      left: 1.5rem;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      background: rgba(59, 130, 246, 0.9);
-      backdrop-filter: blur(10px);
-      padding: 0.5rem 1rem;
-      border-radius: 50px;
-      color: white;
-      font-size: 0.85rem;
-      font-weight: 600;
-      box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
-      z-index: 2;
-      pointer-events: none;
-    }
-
-    .analytics-update-badge svg {
-      stroke: white;
-      animation: rotate 3s linear infinite;
-    }
-
-    @keyframes rotate {
-      from { transform: rotate(0deg); }
-      to { transform: rotate(360deg); }
-    }
-
-    .analytics-overlay {
-      position: absolute;
-      top: 1.5rem;
-      right: 1.5rem;
-    }
-
-    .analytics-watermark {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      background: rgba(59, 130, 246, 0.9);
-      backdrop-filter: blur(10px);
-      padding: 0.5rem 1rem;
-      border-radius: 50px;
-      color: white;
-      font-size: 0.85rem;
-      font-weight: 600;
-      box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
-    }
-
-    .analytics-watermark svg {
-      stroke: white;
-      animation: pulse 2s ease-in-out infinite;
-    }
-
-    .analytics-note {
-      text-align: center;
-      margin-top: 1.5rem;
-      padding: 1rem;
-      background: rgba(59, 130, 246, 0.05);
-      border-radius: 0.5rem;
-      border-left: 3px solid var(--primary);
-    }
-
-    .analytics-note p {
-      color: var(--text-secondary);
-      font-size: 0.95rem;
-      margin: 0;
-    }
-
-    /* SKILLS CHART ENHANCEMENTS */
-    #skills-chart {
-      position: relative;
-      padding: 3rem 2rem;
-    }
-
-    #skills-chart h2 {
-      text-align: center;
-      margin-bottom: 2rem;
-      font-size: 2rem;
-      background: linear-gradient(135deg, #3b82f6 0%, #60a5fa 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      animation: fadeInDown 0.8s ease-out;
-    }
-
-    #skills-chart h2::before {
-      content: 'Skills Proficiency';
-    }
-
-    #skills-chart h2 {
-      font-size: 0;
-    }
-
-    .skills-chart-container {
-      position: relative;
-      max-width: 600px;
-      margin: 0 auto;
-      background: rgba(17, 17, 17, 0.5);
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(59, 130, 246, 0.2);
-      border-radius: 1.5rem;
-      padding: 2rem;
-      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-      box-shadow: 0 8px 32px rgba(59, 130, 246, 0.1),
-                  inset 0 1px 0 rgba(255, 255, 255, 0.1);
-    }
-
-    .skills-chart-container:hover {
-      background: rgba(17, 17, 17, 0.7);
-      border-color: rgba(59, 130, 246, 0.4);
-      box-shadow: 0 20px 50px rgba(59, 130, 246, 0.2),
-                  inset 0 1px 0 rgba(255, 255, 255, 0.15);
-      transform: translateY(-5px);
-    }
-
-    .chart-wrapper {
-      position: relative;
-      width: 100%;
-      height: 400px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      animation: fadeInUp 1s ease-out 0.3s both;
-    }
-
-    .chart-wrapper canvas {
-      max-width: 100%;
-      filter: drop-shadow(0 10px 30px rgba(59, 130, 246, 0.15));
-      transition: all 0.4s ease;
-    }
-
-    .skills-chart-container:hover .chart-wrapper canvas {
-      filter: drop-shadow(0 15px 40px rgba(59, 130, 246, 0.25));
-      transform: scale(1.02);
-    }
-
-    /* Skill Legend */
-    .skills-legend {
-      display: flex;
-      justify-content: center;
-      gap: 2rem;
-      margin-top: 2rem;
-      flex-wrap: wrap;
-      padding-top: 2rem;
-      border-top: 1px solid rgba(59, 130, 246, 0.2);
-    }
-
-    .legend-item {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      font-size: 0.9rem;
-      color: var(--text-secondary);
-      transition: all 0.3s ease;
-    }
-
-    .legend-item:hover {
-      color: var(--secondary);
-      transform: translateX(5px);
-    }
-
-    .legend-dot {
-      width: 12px;
-      height: 12px;
-      border-radius: 50%;
-      background: var(--secondary);
-      box-shadow: 0 0 10px rgba(96, 165, 250, 0.5);
-    }
-
-    @keyframes fadeInDown {
-      from {
-        opacity: 0;
-        transform: translateY(-20px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    @keyframes fadeInUp {
-      from {
-        opacity: 0;
-        transform: translateY(20px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    @media (max-width: 768px) {
-      .analytics-screenshot {
-        padding: 0;
-      }
-
-      .analytics-update-badge {
-        bottom: 1rem;
-        left: 1rem;
-        font-size: 0.75rem;
-        padding: 0.4rem 0.8rem;
-      }
-
-      .analytics-update-badge svg {
-        width: 14px;
-        height: 14px;
-      }
-
-      .analytics-overlay {
-        top: 1rem;
-        right: 1rem;
-      }
-
-      .analytics-watermark {
-        font-size: 0.75rem;
-        padding: 0.4rem 0.8rem;
-      }
-    }
-
-    /* TESTIMONIALS */
-    .testimonials-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-      gap: 2rem;
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-
-    .testimonial-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 1rem;
-      padding: 2rem;
-      position: relative;
-      transition: all 0.3s ease;
-    }
-
-    .testimonial-card::before {
-      content: '"';
-      position: absolute;
-      top: -10px;
-      left: 20px;
-      font-size: 4rem;
-      color: var(--primary);
-      opacity: 0.3;
-      font-family: Georgia, serif;
-    }
-
-    .testimonial-card:hover {
-      transform: translateY(-5px);
-      box-shadow: var(--shadow-hover);
-    }
-
-    .testimonial-text {
-      color: var(--text-secondary);
-      line-height: 1.8;
-      margin-bottom: 1.5rem;
-      font-style: italic;
-    }
-
-    .testimonial-author {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-    }
-
-    .testimonial-avatar {
-      width: 50px;
-      height: 50px;
-      border-radius: 50%;
-      background: var(--gradient-1);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 700;
-      font-size: 1.2rem;
-      color: white;
-    }
-
-    .testimonial-info {
-      flex: 1;
-    }
-
-    .testimonial-name {
-      font-weight: 600;
-      color: var(--text-primary);
-      margin-bottom: 0.2rem;
-    }
-
-    .testimonial-role {
-      font-size: 0.9rem;
-      color: var(--text-secondary);
-    }
-
-    .testimonial-rating {
-      display: flex;
-      gap: 0.2rem;
-      margin-top: 0.5rem;
-    }
-
-    .star {
-      color: var(--accent);
-      font-size: 1rem;
-    }
-
-    /* CONTACT */
-    .contact-content {
-      text-align: center;
-      max-width: 600px;
-      margin: 0 auto;
-    }
-
-    .contact-description {
-      font-size: 1.1rem;
-      color: var(--text-secondary);
-      margin-bottom: 2rem;
-    }
-
-    .social-links {
-      display: flex;
-      justify-content: center;
-      gap: 1.5rem;
-      flex-wrap: wrap;
-    }
-
-    .social-links a, .social-links .email-button {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      padding: 1rem 2rem;
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 0.5rem;
-      color: var(--text-primary);
-      text-decoration: none;
-      font-weight: 500;
-      transition: all 0.3s ease;
-      cursor: pointer;
-      font-family: inherit;
-      font-size: inherit;
-    }
-
-    .social-links a:hover, .social-links .email-button:hover {
-      background: var(--gradient-1);
-      border-color: transparent;
-      transform: translateY(-2px);
-      box-shadow: var(--shadow);
-    }
-
-    /* EMAIL MODAL */
-    .email-modal {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.8);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 1000;
-      opacity: 0;
-      visibility: hidden;
-      transition: all 0.3s ease;
-      backdrop-filter: blur(8px);
-    }
-
-    .email-modal.active {
-      opacity: 1;
-      visibility: visible;
-    }
-
-    .email-modal-content {
-      background: var(--bg-card);
-      padding: 3rem 2rem;
-      border-radius: 1rem;
-      border: 1px solid var(--border);
-      text-align: center;
-      max-width: 500px;
-      width: 90%;
-      transform: scale(0.8);
-      transition: transform 0.3s ease;
-      box-shadow: var(--shadow-hover);
-    }
-
-    .email-modal.active .email-modal-content {
-      transform: scale(1);
-    }
-
-    .email-modal h3 {
-      color: var(--text-primary);
-      margin-bottom: 1rem;
-      font-size: 1.5rem;
-    }
-
-    .email-display {
-      background: var(--bg-secondary);
-      padding: 1rem 1.5rem;
-      border-radius: 0.5rem;
-      border: 1px solid var(--border);
-      margin: 1.5rem 0;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 1.1rem;
-      color: var(--text-primary);
-      user-select: all;
-      position: relative;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 1rem;
-    }
-
-    .copy-button {
-      background: var(--gradient-1);
-      color: white;
-      border: none;
-      padding: 0.5rem 1rem;
-      border-radius: 0.3rem;
-      font-size: 0.9rem;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      flex-shrink: 0;
-    }
-
-    .copy-button:hover {
-      transform: scale(1.05);
-    }
-
-    .copy-button.copied {
-      background: var(--gradient-3);
-      animation: pulse 0.6s ease;
-    }
-
-    @keyframes pulse {
-      0% { transform: scale(1); }
-      50% { transform: scale(1.1); }
-      100% { transform: scale(1); }
-    }
-
-    .modal-buttons {
-      display: flex;
-      gap: 1rem;
-      justify-content: center;
-      margin-top: 2rem;
-    }
-
-    .close-modal {
-      background: transparent;
-      border: 1px solid var(--border);
-      color: var(--text-primary);
-      padding: 0.8rem 1.5rem;
-      border-radius: 0.5rem;
-      cursor: pointer;
-      transition: all 0.3s ease;
-    }
-
-    .close-modal:hover {
-      background: var(--bg-secondary);
-    }
-
-    .mailto-button {
-      background: var(--gradient-1);
-      color: white;
-      border: none;
-      padding: 0.8rem 1.5rem;
-      border-radius: 0.5rem;
-      cursor: pointer;
-      text-decoration: none;
-      transition: all 0.3s ease;
-    }
-
-    .mailto-button:hover {
-      transform: translateY(-2px);
-      box-shadow: var(--shadow);
-    }
-
-    .success-message {
-      color: var(--secondary);
-      font-size: 0.9rem;
-      margin-top: 1rem;
-      opacity: 0;
-      transition: opacity 0.3s ease;
-    }
-
-    .success-message.show {
-      opacity: 1;
-    }
-
-    /* CONTACT INFO MODAL */
-    .contact-info-modal {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.8);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 1000;
-      opacity: 0;
-      visibility: hidden;
-      transition: all 0.3s ease;
-      backdrop-filter: blur(8px);
-    }
-
-    .contact-info-modal.active {
-      opacity: 1;
-      visibility: visible;
-    }
-
-    .contact-info-modal-content {
-      background: var(--bg-card);
-      padding: 3rem 2rem;
-      border-radius: 1rem;
-      border: 1px solid var(--border);
-      text-align: center;
-      max-width: 600px;
-      width: 90%;
-      transform: scale(0.8);
-      transition: transform 0.3s ease;
-      box-shadow: var(--shadow-hover);
-      position: relative;
-    }
-
-    .contact-info-modal.active .contact-info-modal-content {
-      transform: scale(1);
-    }
-
-    .contact-info-modal h3 {
-      color: var(--text-primary);
-      margin-bottom: 1.5rem;
-      font-size: 1.8rem;
-      background: var(--gradient-1);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    .contact-info-text {
-      color: var(--text-secondary);
-      font-size: 1.1rem;
-      line-height: 1.7;
-      margin-bottom: 2rem;
-    }
-
-    .contact-email-highlight {
-      background: var(--bg-secondary);
-      padding: 1rem 1.5rem;
-      border-radius: 0.8rem;
-      border: 1px solid var(--border);
-      margin: 1.5rem 0;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 1.2rem;
-      color: var(--secondary);
-      font-weight: 600;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.5rem;
-    }
-
-    .contact-info-buttons {
-      display: flex;
-      gap: 1rem;
-      justify-content: center;
-      margin-top: 2rem;
-      flex-wrap: wrap;
-    }
-
-    .close-contact-modal {
-      background: transparent;
-      border: 1px solid var(--border);
-      color: var(--text-primary);
-      padding: 0.8rem 1.5rem;
-      border-radius: 0.5rem;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      font-family: inherit;
-      font-size: inherit;
-    }
-
-    .close-contact-modal:hover {
-      background: var(--bg-secondary);
-    }
-
-    .contact-email-button {
-      background: var(--gradient-1);
-      color: white;
-      border: none;
-      padding: 0.8rem 1.5rem;
-      border-radius: 0.5rem;
-      cursor: pointer;
-      text-decoration: none;
-      transition: all 0.3s ease;
-      font-family: inherit;
-      font-size: inherit;
-      font-weight: 500;
-    }
-
-    .contact-email-button:hover {
-      transform: translateY(-2px);
-      box-shadow: var(--shadow);
-    }
-
-    /* FOOTER */
-    footer {
-      background: var(--bg-secondary);
-      padding: 2rem;
-      text-align: center;
-      border-top: 1px solid var(--border);
-      color: var(--text-secondary);
-    }
-
-    /* SCROLL INDICATOR */
-    .scroll-indicator {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 4px;
-      background: var(--bg-secondary);
-      z-index: 1000;
-    }
-
-    .scroll-progress {
-      height: 100%;
-      background: var(--gradient-1);
-      width: 0%;
-      transition: width 0.1s ease;
-    }
-
-    /* RESPONSIVE */
-    @media (max-width: 768px) {
-      header h1 {
-        font-size: 2.5rem;
-      }
-
-      .tagline {
-        font-size: 1.2rem;
-      }
-
-      .nav-links {
-        gap: 1rem;
-      }
-
-      section {
-        padding: 4rem 1rem;
-      }
-
-      h2 {
-        font-size: 2rem;
-      }
-
-      .skills-grid,
-      .projects-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .social-links {
-        flex-direction: column;
-        align-items: center;
-      }
-
-      .email-display {
-        flex-direction: column;
-        gap: 0.5rem;
-      }
-
-      .modal-buttons,
-      .contact-info-buttons {
-        flex-direction: column;
-      }
-
-      .email-modal-content,
-      .contact-info-modal-content {
-        padding: 2rem 1rem;
-      }
-
-      .about-highlights {
-        grid-template-columns: 1fr;
-      }
-
-      .subtitle {
-        font-size: 1rem;
-      }
-    }
-
-    /* LOADING SCREEN */
-    .loading-screen {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: var(--bg-primary);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      z-index: 9999;
-      transition: opacity 0.5s ease, visibility 0.5s ease;
-    }
-
-    .loading-screen.hidden {
-      opacity: 0;
-      visibility: hidden;
-    }
-
-    .loader {
-      width: 60px;
-      height: 60px;
-      border: 4px solid var(--border);
-      border-top: 4px solid var(--primary);
-      border-radius: 50%;
-      animation: spin 1s linear infinite;
-    }
-
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
-
-    .loading-text {
-      margin-top: 1.5rem;
-      color: var(--text-secondary);
-      font-size: 1rem;
-      animation: pulse 1.5s ease-in-out infinite;
-    }
-
-    /* BACK TO TOP BUTTON */
-    .back-to-top {
-      position: fixed;
-      bottom: 2rem;
-      right: 2rem;
-      width: 50px;
-      height: 50px;
-      background: var(--gradient-1);
-      border: none;
-      border-radius: 50%;
-      color: white;
-      font-size: 1.5rem;
-      cursor: pointer;
-      opacity: 0;
-      visibility: hidden;
-      transition: all 0.3s ease;
-      z-index: 999;
-      box-shadow: var(--shadow);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .back-to-top.visible {
-      opacity: 1;
-      visibility: visible;
-    }
-
-    .back-to-top:hover {
-      transform: translateY(-5px);
-      box-shadow: var(--shadow-hover);
-    }
-
-    /* CURSOR TRAIL */
-    .cursor-trail {
-      position: fixed;
-      width: 20px;
-      height: 20px;
-      border-radius: 50%;
-      background: var(--secondary);
-      pointer-events: none;
-      opacity: 0.3;
-      transition: transform 0.2s ease;
-      z-index: 9998;
-      mix-blend-mode: screen;
-    }
-
-    /* 3D TILT EFFECT */
-    .tilt-card {
-      transform-style: preserve-3d;
-      transition: transform 0.1s ease;
-    }
-
-    /* CERTIFICATIONS SECTION */
-    .certifications-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 2rem;
-      margin-top: 2rem;
-    }
-
-    .cert-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 1rem;
-      padding: 2rem;
-      text-align: center;
-      transition: all 0.3s ease;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .cert-card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
-      background: var(--gradient-2);
-      opacity: 0.1;
-      transition: left 0.4s ease;
-    }
-
-    .cert-card:hover::before {
-      left: 0;
-    }
-
-    .cert-card:hover {
-      transform: translateY(-8px);
-      box-shadow: var(--shadow-hover);
-      border-color: var(--secondary);
-    }
-
-    .cert-icon {
-      width: 90px;
-      height: 90px;
-      margin: 0 auto 1.5rem;
-      background: none !important;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0;
-      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-      box-shadow: none;
-      position: relative;
-    }
-
-    .cert-icon img {
-      width: 64px;
-      height: 64px;
-      object-fit: contain;
-    }
-
-    .cert-icon::before {
-      content: none;
-    }
-
-    .cert-card:hover .cert-icon {
-      transform: scale(1.15) rotate(10deg);
-      box-shadow: 0 12px 32px rgba(240, 147, 251, 0.5),
-                  inset 0 2px 0 rgba(255, 255, 255, 0.3),
-                  0 0 40px rgba(240, 147, 251, 0.3);
-    }
-
-    .cert-card:hover .cert-icon::before {
-      opacity: 0.6;
-    }
-
-    .cert-title {
-      font-size: 1.2rem;
-      font-weight: 600;
-      color: var(--text-primary);
-      margin-bottom: 0.5rem;
-    }
-
-    .cert-issuer {
-      font-size: 0.9rem;
-      color: var(--text-secondary);
-      margin-bottom: 0.5rem;
-    }
-
-    .cert-date {
-      font-size: 0.85rem;
-      color: var(--secondary);
-      font-weight: 500;
-    }
-
-    .cert-badge {
-      position: absolute;
-      top: 1rem;
-      right: 1rem;
-      background: var(--gradient-1);
-      color: white;
-      padding: 0.3rem 0.8rem;
-      border-radius: 50px;
-      font-size: 0.75rem;
-      font-weight: 600;
-    }
-
-    /* TECH STACK VISUALIZATION */
-    .tech-stack-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-      gap: 1.5rem;
-      margin-top: 2rem;
-    }
-
-    .tech-item {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 1.2rem;
-      padding: 1.8rem 1rem;
-      text-align: center;
-      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-      cursor: pointer;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .tech-item::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: var(--gradient-1);
-      opacity: 0;
-      transition: opacity 0.4s ease;
-      z-index: 0;
-    }
-
-    .tech-item:hover::before {
-      opacity: 0.1;
-    }
-
-    .tech-item:hover {
-      transform: translateY(-8px) scale(1.08);
-      box-shadow: 0 15px 40px rgba(102, 126, 234, 0.3);
-      border-color: rgba(102, 126, 234, 0.5);
-    }
-
-    .tech-item-icon {
-      width: 64px;
-      height: 64px;
-      margin: 0 auto 0.8rem;
-      display: block;
-      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-      filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
-      position: relative;
-      z-index: 1;
-      object-fit: contain;
-    }
-
-    img.tech-item-icon[src*="html-css.svg"] {
-      width: 72px;
-      height: 64px; /* same height as others so label aligns */
-      transform: scale(1.3);
-    }
-
-    .tech-item:hover .tech-item-icon {
-      transform: scale(1.2) rotate(5deg);
-      filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.3));
-    }
-
-    .tech-item:hover img.tech-item-icon[src*="html-css.svg"] {
-      transform: scale(1.4) rotate(5deg);
-    }
-
-    .tech-item-name {
-      font-size: 0.95rem;
-      color: var(--text-primary);
-      font-weight: 600;
-      position: relative;
-      z-index: 1;
-      transition: all 0.3s ease;
-    }
-
-    .tech-item:hover .tech-item-name {
-      color: var(--text-primary);
-      transform: translateY(-2px);
-    }
-
-    /* ANIMATED SKILL BARS */
-    .skill-bar-container {
-      margin-top: 1rem;
-    }
-
-    .skill-bar-label {
-      display: flex;
-      justify-content: space-between;
-      margin-bottom: 0.5rem;
-      font-size: 0.9rem;
-      color: var(--text-secondary);
-    }
-
-    .skill-bar {
-      width: 100%;
-      height: 8px;
-      background: var(--border);
-      border-radius: 10px;
-      overflow: hidden;
-      position: relative;
-    }
-
-    .skill-bar-fill {
-      height: 100%;
-      background: var(--gradient-1);
-      border-radius: 10px;
-      width: 0;
-      transition: width 1.5s ease;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .skill-bar-fill::after {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      bottom: 0;
-      right: 0;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
-      animation: shimmer 2s infinite;
-    }
-
-    @keyframes shimmer {
-      0% { transform: translateX(-100%); }
-      100% { transform: translateX(100%); }
-    }
-
-    .skill-bar-container.animated .skill-bar-fill {
-      width: var(--skill-width);
-    }
-
-    /* SMOOTH ANIMATIONS */
-    .animate-on-scroll {
-      opacity: 0;
-      transform: translateY(30px);
-      transition: all 0.6s ease;
-    }
-
-    .animate-on-scroll.animated {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    /* PARALLAX SECTIONS */
-    .parallax-section {
-      position: relative;
-      overflow: hidden;
-    }
-
-    .parallax-bg {
-      position: absolute;
-      top: -50px;
-      left: 0;
-      width: 100%;
-      height: calc(100% + 100px);
-      background-size: cover;
-      background-position: center;
-      transition: transform 0.1s ease-out;
-      z-index: -1;
-    }
-
-    /* ACCESSIBILITY - KEYBOARD NAVIGATION */
-    body.keyboard-nav *:focus {
-      outline: 3px solid var(--secondary);
-      outline-offset: 2px;
-    }
-
-    body:not(.keyboard-nav) *:focus {
-      outline: none;
-    }
-
-    /* SKIP TO CONTENT LINK */
-    .skip-to-content {
-      position: absolute;
-      top: -100px;
-      left: 0;
-      background: var(--primary);
-      color: white;
-      padding: 1rem 2rem;
-      text-decoration: none;
-      z-index: 10000;
-      transition: top 0.3s ease;
-    }
-
-    .skip-to-content:focus {
-      top: 0;
-    }
-
-    /* REDUCED MOTION */
-    @media (prefers-reduced-motion: reduce) {
-      *,
-      *::before,
-      *::after {
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.01ms !important;
-        scroll-behavior: auto !important;
-      }
-    }
-
-    /* MOBILE ENHANCEMENTS */
-    @media (max-width: 768px) {
-      .back-to-top {
-        bottom: 1rem;
-        right: 1rem;
-        width: 45px;
-        height: 45px;
-      }
-
-      .tech-stack-grid {
-        grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-        gap: 1rem;
-      }
-
-      .certifications-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .cert-card {
-        padding: 1.5rem;
-      }
-
-      /* Disable tilt on mobile */
-      .tilt-card {
-        transform: none !important;
-      }
-
-      /* Optimize particle count for mobile */
-      #particleCanvas {
-        opacity: 0.2;
-      }
-    }
-
-    /* PRINT STYLES */
-    @media print {
-      .navbar,
-      .back-to-top,
-      .scroll-indicator,
-      #particleCanvas,
-      .email-modal,
-      .contact-info-modal,
-      .theme-toggle,
-      .mobile-menu-toggle {
-        display: none !important;
-      }
-
-      body {
-        background: white;
-        color: black;
-      }
-
-      section {
-        page-break-inside: avoid;
-      }
-    }
-  </style>
-  
-  <!-- Structured Data (JSON-LD) for SEO -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "Person",
-    "name": "Hossam Sabry",
-    "jobTitle": "BIM Developer",
-    "description": "BIM Developer & Digital Construction Specialist specializing in Revit API, Dynamo, and construction automation with 2+ years of experience.",
-    "url": "https://m2dawn.github.io/Portfolio",
-    "sameAs": [
-      "https://github.com/M2Dawn"
-    ],
-    "knowsAbout": [
-      "BIM Development",
-      "Revit API",
-      "Dynamo",
-      "Construction Automation",
-      "Digital Construction",
-      "C#",
-      "Python",
-      "Navisworks"
-    ],
-    "hasOccupation": {
-      "@type": "Occupation",
-      "name": "BIM Developer",
-      "occupationLocation": {
-        "@type": "Country",
-        "name": "Global"
-      }
-    }
-  }
-  </script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-MWW9X0CJQF');</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","name":"Hossam Sabry","jobTitle":"BIM Automation Engineer","url":"https://m2dawn.github.io/Portfolio","sameAs":["https://github.com/M2Dawn","https://www.linkedin.com/in/HossamSabryDev"]}</script>
 </head>
 <body>
-  <!-- Skip to Content Link for Accessibility -->
-  <a href="#main-content" class="skip-to-content">Skip to main content</a>
+<a href="#main" class="skip-link">Skip to content</a>
 
-  <!-- Loading Screen -->
-  <div class="loading-screen" id="loadingScreen">
-    <div class="loader"></div>
-    <div class="loading-text">Loading Portfolio...</div>
+<nav class="nav" id="nav">
+<div class="container nav-inner">
+  <a href="#" class="nav-brand" translate="no">Hossam Sabry</a>
+  <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">&#9776;</button>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#work">Work</a></li>
+    <li><a href="#expertise">Expertise</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#contact" class="nav-cta">Get in Touch</a></li>
+  </ul>
+</div>
+</nav>
+
+<main id="main">
+
+<!-- HERO -->
+<section class="hero section" id="hero">
+<div class="hero-glow"></div>
+<div class="hero-mouse-glow"></div>
+<div class="hero-grid container">
+
+  <div class="hero-content">
+    <div class="hero-label hero-enter" style="animation-delay:0ms">
+      <span class="hero-label-dot"></span>BIM Automation Engineer
+    </div>
+    <h1 class="hero-enter" style="animation-delay:100ms">
+      I Build the Tools<br><span class="hero-grad">BIM Teams Rely On.</span>
+    </h1>
+    <p class="hero-sub hero-enter" style="animation-delay:200ms">
+      Custom Revit API plugins, Dynamo systems, and coordination dashboards that eliminate manual workflows in AEC projects.
+    </p>
+    <div class="hero-ctas hero-enter" style="animation-delay:320ms">
+      <a href="#work" class="btn btn-primary">See My Work
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+      <a href="#contact" class="btn btn-ghost">Get in Touch</a>
+    </div>
+    <div class="hero-metrics hero-enter" style="animation-delay:420ms">
+      <div class="hero-metric">
+        <span class="hero-metric-num" data-count="80" data-suffix="+">80+</span>
+        <span class="hero-metric-label">automation scripts</span>
+      </div>
+      <div class="hero-metric">
+        <span class="hero-metric-num" data-count="20" data-suffix="+">20+</span>
+        <span class="hero-metric-label">projects delivered</span>
+      </div>
+      <div class="hero-metric">
+        <span class="hero-metric-num" data-count="65" data-suffix="%">~65%</span>
+        <span class="hero-metric-label">time saved / workflow</span>
+      </div>
+    </div>
   </div>
 
-  <!-- Particle Background -->
-  <canvas id="particleCanvas"></canvas>
+  <!-- HERO RIGHT: Visual Panel -->
+  <div class="hero-visual hero-enter" style="animation-delay:200ms">
 
-  <!-- Scroll Progress Indicator -->
-  <div class="scroll-indicator">
-    <div class="scroll-progress" id="scrollProgress"></div>
+    <!-- Code panel -->
+    <div class="code-panel">
+      <div class="code-titlebar">
+        <span class="dot dot-r"></span>
+        <span class="dot dot-y"></span>
+        <span class="dot dot-g"></span>
+        <span class="code-filename">BatchExport.cs</span>
+      </div>
+      <div class="code-body">
+        <div id="codeOutput" class="code-output"></div>
+        <span class="code-cursor" id="codeCursor"></span>
+      </div>
+    </div>
+
+    <!-- Floating stats row below code panel -->
+    <div class="hero-stat-row">
+      <div class="hero-stat-chip">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+        <span>6&ndash;8 hrs <span style="color:var(--accent)">&rarr;</span> 2 hrs</span>
+      </div>
+      <div class="hero-stat-chip">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+        <span>Autodesk Certified</span>
+      </div>
+      <div class="hero-stat-chip">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        <span>Open Source</span>
+      </div>
+    </div>
+
+    <!-- Floating tool tags -->
+    <div class="hero-tool-tags">
+      <span class="hero-tool-tag tag">Revit API</span>
+      <span class="hero-tool-tag tag">C# .NET</span>
+      <span class="hero-tool-tag tag">Dynamo</span>
+      <span class="hero-tool-tag tag">Python</span>
+      <span class="hero-tool-tag tag">Navisworks</span>
+      <span class="hero-tool-tag tag">WPF</span>
+    </div>
+
   </div>
 
-  <!-- Back to Top Button -->
-  <button class="back-to-top" id="backToTop" aria-label="Back to top">
-    ↑
-  </button>
+</div>
+</section>
 
-  <!-- Navigation Bar -->
-  <nav class="navbar" id="navbar">
-    <div class="navbar-container">
-      <a href="#" class="navbar-brand">HS</a>
-      <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle menu">
-        ☰
-      </button>
-      <div class="navbar-menu" id="navbarMenu">
-        <ul class="navbar-links">
-          <li><a href="#about">About</a></li>
-          <li><a href="#skills">Skills</a></li>
-          <li><a href="#experience">Experience</a></li>
-          <li><a href="#projects">Projects</a></li>
-          <li><a href="#testimonials">Testimonials</a></li>
-          <li><a href="blog.html">Blog</a></li>
-          <li><a href="#contact">Contact</a></li>
-        </ul>
-        <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
-          <svg class="theme-icon" id="sunIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <circle cx="12" cy="12" r="5"/>
-            <line x1="12" y1="1" x2="12" y2="3"/>
-            <line x1="12" y1="21" x2="12" y2="23"/>
-            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
-            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
-            <line x1="1" y1="12" x2="3" y2="12"/>
-            <line x1="21" y1="12" x2="23" y2="12"/>
-            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
-            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
-          </svg>
-          <svg class="theme-icon hidden" id="moonIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
-          </svg>
+<!-- MARQUEE -->
+<div class="marquee-section">
+<div class="marquee-track-wrap">
+  <div class="marquee-track">
+    <span class="marquee-item">Revit API 2023&ndash;2025<span class="marquee-sep">&middot;</span></span>
+    <span class="marquee-item">Production-grade C#<span class="marquee-sep">&middot;</span></span>
+    <span class="marquee-item">~65% time saved<span class="marquee-sep">&middot;</span></span>
+    <span class="marquee-item">Autodesk Certified<span class="marquee-sep">&middot;</span></span>
+    <span class="marquee-item">200+ views automated<span class="marquee-sep">&middot;</span></span>
+    <span class="marquee-item">Open Source<span class="marquee-sep">&middot;</span></span>
+    <span class="marquee-item">Zero external dependencies<span class="marquee-sep">&middot;</span></span>
+    <span class="marquee-item">AEC-focused<span class="marquee-sep">&middot;</span></span>
+    <span class="marquee-item">Revit API 2023&ndash;2025<span class="marquee-sep">&middot;</span></span>
+    <span class="marquee-item">Production-grade C#<span class="marquee-sep">&middot;</span></span>
+    <span class="marquee-item">~65% time saved<span class="marquee-sep">&middot;</span></span>
+    <span class="marquee-item">Autodesk Certified<span class="marquee-sep">&middot;</span></span>
+    <span class="marquee-item">200+ views automated<span class="marquee-sep">&middot;</span></span>
+    <span class="marquee-item">Open Source<span class="marquee-sep">&middot;</span></span>
+    <span class="marquee-item">Zero external dependencies<span class="marquee-sep">&middot;</span></span>
+    <span class="marquee-item">AEC-focused<span class="marquee-sep">&middot;</span></span>
+  </div>
+  <div class="marquee-track" aria-hidden="true">
+    <span class="marquee-item">Revit API 2023&ndash;2025<span class="marquee-sep">&middot;</span></span>
+    <span class="marquee-item">Production-grade C#<span class="marquee-sep">&middot;</span></span>
+    <span class="marquee-item">~65% time saved<span class="marquee-sep">&middot;</span></span>
+    <span class="marquee-item">Autodesk Certified<span class="marquee-sep">&middot;</span></span>
+    <span class="marquee-item">200+ views automated<span class="marquee-sep">&middot;</span></span>
+    <span class="marquee-item">Open Source<span class="marquee-sep">&middot;</span></span>
+    <span class="marquee-item">Zero external dependencies<span class="marquee-sep">&middot;</span></span>
+    <span class="marquee-item">AEC-focused<span class="marquee-sep">&middot;</span></span>
+    <span class="marquee-item">Revit API 2023&ndash;2025<span class="marquee-sep">&middot;</span></span>
+    <span class="marquee-item">Production-grade C#<span class="marquee-sep">&middot;</span></span>
+    <span class="marquee-item">~65% time saved<span class="marquee-sep">&middot;</span></span>
+    <span class="marquee-item">Autodesk Certified<span class="marquee-sep">&middot;</span></span>
+    <span class="marquee-item">200+ views automated<span class="marquee-sep">&middot;</span></span>
+    <span class="marquee-item">Open Source<span class="marquee-sep">&middot;</span></span>
+    <span class="marquee-item">Zero external dependencies<span class="marquee-sep">&middot;</span></span>
+    <span class="marquee-item">AEC-focused<span class="marquee-sep">&middot;</span></span>
+  </div>
+</div>
+</div>
+
+<!-- WORK -->
+<section class="section" id="work">
+<div class="container">
+  <p class="section-label reveal">Featured Work</p>
+  <h2 class="section-title reveal">Selected Projects</h2>
+  <p class="section-sub reveal">Engineering tools that solve real coordination problems  &mdash;  measured in hours saved, not features shipped.</p>
+
+  <div class="bento">
+
+    <!-- Card 1: BIM Automation Tool  &mdash;  FULL WIDTH -->
+    <div class="card bento-full reveal" onclick="window.location='case-studies/bim-automation-tool.html'" role="link" tabindex="0" aria-label="BIM Automation Tool case study">
+      <div class="card-inner">
+        <div class="card-top">
+          <span class="card-label">Revit API &middot; C# &middot; .NET &middot; WPF</span>
+          <div class="card-arrow">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+          </div>
+        </div>
+        <h3 class="card-title">BIM Automation Tool</h3>
+        <p class="card-desc" style="max-width:560px">Replaced a 6&ndash;8 hour manual export cycle with a single-click Revit API add-in. Batch-exports 200+ views to DWG with intelligent naming conventions, extracts schedule data to structured CSV, and eliminates rework caused by inconsistent file management.</p>
+        <div class="card-stats">
+          <div class="stat-box">
+            <div class="stat-num" data-count="65" data-suffix="%">~65%</div>
+            <div class="stat-label">time reduction</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-num" data-count="500" data-suffix="+">500+</div>
+            <div class="stat-label">views automated</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-num" data-count="95" data-suffix="%">~95%</div>
+            <div class="stat-label">error reduction</div>
+          </div>
+        </div>
+        <div class="card-img-wrap">
+          <img src="assets/images/bim-tool-hero.png" alt="BIM Automation Tool interface" width="1200" height="675" loading="lazy">
+        </div>
+        <div class="tags" style="margin-top:16px">
+          <span class="tag">C#</span>
+          <span class="tag">Revit API 2023</span>
+          <span class="tag">WPF</span>
+          <span class="tag">.NET 4.8</span>
+          <span class="tag">CSV Helper</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 2: Clash Detection Dashboard  &mdash;  LEFT -->
+    <div class="card reveal" onclick="window.location='clash-dashboard/index.html'" role="link" tabindex="0" aria-label="Clash Detection Dashboard">
+      <div class="card-inner">
+        <div class="card-top">
+          <span class="card-label">JavaScript &middot; Chart.js</span>
+          <div class="card-arrow">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+          </div>
+        </div>
+        <h3 class="card-title">Clash Detection Dashboard</h3>
+        <p class="card-desc">Web dashboard that ingests Navisworks clash data, visualizes severity by discipline, and auto-generates coordination reports  &mdash;  turning raw exports into actionable meeting insights.</p>
+        <div class="card-stats">
+          <div class="stat-box">
+            <div class="stat-num" data-count="50" data-suffix="%">~50%</div>
+            <div class="stat-label">faster meeting prep</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-num" data-count="3" data-suffix="">3</div>
+            <div class="stat-label">live projects</div>
+          </div>
+        </div>
+        <div class="card-img-wrap">
+          <img src="assets/images/clash-dashboard-hero.png" alt="Clash Detection Dashboard" width="800" height="450" loading="lazy">
+        </div>
+        <div class="tags" style="margin-top:16px">
+          <span class="tag">JavaScript</span>
+          <span class="tag">Chart.js</span>
+          <span class="tag">Navisworks</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 3: Dynamo Scripts  &mdash;  RIGHT (small) -->
+    <div class="card card-sm reveal" onclick="window.open('https://github.com/M2Dawn/Dynamo-Scripts','_blank')" role="link" tabindex="0" aria-label="Dynamo Script Library on GitHub">
+      <div class="card-inner">
+        <div class="card-top">
+          <span class="card-label">Dynamo &middot; Python</span>
+          <div class="card-arrow">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+          </div>
+        </div>
+        <span class="open-source-badge">
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+          Open Source
+        </span>
+        <h3 class="card-title">Dynamo Script Library</h3>
+        <p class="card-desc">10+ production-ready Dynamo scripts for Revit automation. Room numbering, batch sheet creation, parameter validation  &mdash;  documented for non-technical coordinators.</p>
+        <div style="margin-top:auto;padding-top:16px">
+          <div class="tags" style="margin-bottom:12px">
+            <span class="tag">Dynamo</span>
+            <span class="tag">Python</span>
+            <span class="tag">Revit API</span>
+          </div>
+          <span class="btn-link">View on GitHub
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+</section>
+
+<!-- EXPERTISE -->
+<section class="section" id="expertise" style="background:var(--bg-raised);border-top:1px solid var(--border-1);border-bottom:1px solid var(--border-1)">
+<div class="container">
+  <p class="section-label reveal">Capabilities</p>
+  <h2 class="section-title reveal">Technical Expertise</h2>
+  <p class="section-sub reveal">Deep specialization across the full BIM automation stack  &mdash;  from Revit API internals to production-ready tooling.</p>
+  <div class="expertise-grid">
+
+    <div class="exp-card reveal">
+      <div class="exp-icon">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+      </div>
+      <div class="exp-bar-wrap"><div class="exp-bar" style="--level:92%"></div></div>
+      <h3 class="exp-title">Revit API Development</h3>
+      <p class="exp-desc">Custom add-ins and plugins with production-grade error handling, batch processing, and WPF interfaces. From IExternalCommand to full transaction management.</p>
+      <div class="tags" style="margin-bottom:16px">
+        <span class="tag">C#</span><span class="tag">.NET 4.8</span><span class="tag">WPF</span><span class="tag">Revit API</span><span class="tag">MVVM</span>
+      </div>
+      <div class="exp-cert">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+        Autodesk Certified Professional
+      </div>
+    </div>
+
+    <div class="exp-card reveal reveal-d1">
+      <div class="exp-icon">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+      </div>
+      <div class="exp-bar-wrap"><div class="exp-bar" style="--level:96%"></div></div>
+      <h3 class="exp-title">Visual Programming</h3>
+      <p class="exp-desc">Dynamo scripts and Python nodes for parametric design automation, parameter validation, and repetitive task elimination  &mdash;  built for non-technical teams to use directly without training.</p>
+      <div class="tags">
+        <span class="tag">Dynamo</span><span class="tag">Python</span><span class="tag">Parametric Design</span><span class="tag">Zero-Touch API</span>
+      </div>
+    </div>
+
+    <div class="exp-card reveal reveal-d2">
+      <div class="exp-icon">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+      </div>
+      <div class="exp-bar-wrap"><div class="exp-bar" style="--level:85%"></div></div>
+      <h3 class="exp-title">BIM Coordination</h3>
+      <p class="exp-desc">Clash detection workflows, 4D simulation setup, and automated reporting systems that transform raw Navisworks exports into actionable decisions in real coordination meetings.</p>
+      <div class="tags">
+        <span class="tag">Navisworks</span><span class="tag">Clash Detection</span><span class="tag">4D Simulation</span><span class="tag">MEP Coordination</span>
+      </div>
+    </div>
+
+  </div>
+</div>
+</section>
+
+<!-- EXPERIENCE -->
+<section class="section" id="experience">
+<div class="container">
+  <p class="section-label reveal">Background</p>
+  <h2 class="section-title reveal">Experience</h2>
+  <div class="timeline reveal" style="position:relative;padding-left:32px;max-width:680px">
+    <div style="position:absolute;left:0;top:8px;bottom:8px;width:1px;background:var(--border-1)"></div>
+
+    <div style="position:relative;padding-bottom:40px">
+      <div style="position:absolute;left:-35px;top:6px;width:7px;height:7px;border-radius:50%;background:var(--accent)"></div>
+      <p style="font-size:0.75rem;font-family:var(--font-mono);color:var(--accent);margin-bottom:4px">Apr 2025  &mdash;  Present</p>
+      <h3 style="font-size:1.0625rem;font-weight:600;margin-bottom:2px;letter-spacing:-0.01em">BIM Automation Engineer</h3>
+      <p style="font-size:0.9rem;color:var(--text-2);margin-bottom:8px">Independent Consultant</p>
+      <p style="font-size:0.9rem;color:var(--text-3);line-height:1.65">Building custom Revit API plugins, Dynamo automation systems, and coordination dashboards for AEC firms. Focused on eliminating manual workflows and improving project delivery speed.</p>
+      <div class="tags" style="margin-top:12px"><span class="tag">Revit API</span><span class="tag">C#</span><span class="tag">Dynamo</span><span class="tag">Python</span></div>
+    </div>
+
+    <div style="position:relative;padding-bottom:40px">
+      <div style="position:absolute;left:-35px;top:6px;width:7px;height:7px;border-radius:50%;background:var(--text-3)"></div>
+      <p style="font-size:0.75rem;font-family:var(--font-mono);color:var(--accent);margin-bottom:4px">Jan 2025  &mdash;  Present</p>
+      <h3 style="font-size:1.0625rem;font-weight:600;margin-bottom:2px;letter-spacing:-0.01em">BIM Coordinator</h3>
+      <p style="font-size:0.9rem;color:var(--text-2);margin-bottom:8px">Multi-discipline Construction Projects</p>
+      <p style="font-size:0.9rem;color:var(--text-3);line-height:1.65">Managing clash detection workflows, MEP coordination, and automated reporting across active construction projects using Navisworks and custom tooling.</p>
+      <div class="tags" style="margin-top:12px"><span class="tag">Navisworks</span><span class="tag">Coordination</span><span class="tag">4D Simulation</span></div>
+    </div>
+
+    <div style="position:relative;padding-bottom:40px">
+      <div style="position:absolute;left:-35px;top:6px;width:7px;height:7px;border-radius:50%;background:var(--text-3)"></div>
+      <p style="font-size:0.75rem;font-family:var(--font-mono);color:var(--accent);margin-bottom:4px">Jul 2024  &mdash;  Dec 2024</p>
+      <h3 style="font-size:1.0625rem;font-weight:600;margin-bottom:2px;letter-spacing:-0.01em">Structural Engineer</h3>
+      <p style="font-size:0.9rem;color:var(--text-2);margin-bottom:8px">Engineering Consultancy</p>
+      <p style="font-size:0.9rem;color:var(--text-3);line-height:1.65">Structural analysis and design using Revit and ETABS. Developed initial BIM automation scripts that led to the transition into full-time BIM development.</p>
+      <div class="tags" style="margin-top:12px"><span class="tag">Revit</span><span class="tag">ETABS</span><span class="tag">Structural Design</span></div>
+    </div>
+
+    <div style="position:relative">
+      <div style="position:absolute;left:-35px;top:6px;width:7px;height:7px;border-radius:50%;background:var(--text-3)"></div>
+      <p style="font-size:0.75rem;font-family:var(--font-mono);color:var(--accent);margin-bottom:4px">2021  &mdash;  2023</p>
+      <h3 style="font-size:1.0625rem;font-weight:600;margin-bottom:2px;letter-spacing:-0.01em">Software Developer</h3>
+      <p style="font-size:0.9rem;color:var(--text-2);margin-bottom:8px">Freelance</p>
+      <p style="font-size:0.9rem;color:var(--text-3);line-height:1.65">Full-stack development and automation tooling. Built the software engineering foundation that now powers production-grade BIM tools.</p>
+      <div class="tags" style="margin-top:12px"><span class="tag">Web Development</span><span class="tag">Automation</span></div>
+    </div>
+
+  </div>
+</div>
+</section>
+
+<!-- SOCIAL PROOF -->
+<section class="section" style="background:var(--bg-raised);border-top:1px solid var(--border-1);border-bottom:1px solid var(--border-1)">
+<div class="container">
+  <p class="section-label reveal">Social Proof</p>
+  <h2 class="section-title reveal">What Clients Say</h2>
+  <div class="proof-grid">
+
+    <div class="testimonial reveal">
+      <p class="testimonial-text">Hossam built us a Revit export tool that replaced what used to take our team an entire day. The naming conventions are exactly what we needed, and the error logging saved us during a deadline crunch.</p>
+      <div class="testimonial-author">
+        <div class="t-avatar">AM</div>
+        <div>
+          <p class="t-name">Ahmed Mostafa</p>
+          <p class="t-role">BIM Manager</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="testimonial reveal reveal-d1">
+      <p class="testimonial-text">The clash detection dashboard changed how we run coordination meetings. Instead of scrolling through spreadsheets, we walk in with visual severity maps. Resolution rate improved noticeably within the first month.</p>
+      <div class="testimonial-author">
+        <div class="t-avatar">SI</div>
+        <div>
+          <p class="t-name">Sarah Ibrahim</p>
+          <p class="t-role">Project Coordinator</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="metric-card reveal reveal-d2">
+      <div>
+        <p class="section-label" style="margin-bottom:8px">Impact Metric</p>
+        <div class="metric-big" data-count="65" data-suffix="%">~65%</div>
+        <p class="metric-desc">reduction in coordination export time across projects using the BIM Automation Tool.</p>
+        <p class="metric-sub">6&ndash;8 hrs &rarr; under 2 hrs per cycle</p>
+      </div>
+      <div class="tags" style="margin-top:24px">
+        <span class="tag">Revit API</span><span class="tag">C#</span><span class="tag">Production</span>
+      </div>
+    </div>
+
+  </div>
+</div>
+</section>
+
+<!-- CONTACT -->
+<section class="section" id="contact">
+<div class="container">
+  <div class="contact-grid">
+
+    <div>
+      <p class="section-label reveal">Get in Touch</p>
+      <h2 class="section-title reveal">Let's Build Something</h2>
+      <p class="section-sub reveal" style="margin-bottom:0">Have a BIM automation challenge? Need custom Revit tooling for your team? I want to hear about it.</p>
+      <div class="contact-email-row reveal">
+        <button class="contact-email" id="emailBtn" onclick="copyEmail()" title="Click to copy email">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+          e.hossamsabry@gmail.com
         </button>
       </div>
-    </div>
-  </nav>
-
-  <!-- Email Modal -->
-  <div class="email-modal" id="emailModal">
-    <div class="email-modal-content">
-      <h3>Contact Me via Email</h3>
-      <p style="color: var(--text-secondary); margin-bottom: 1rem;">Here's my email address:</p>
-      <div class="email-display">
-        <span id="emailText">e.hossamsabry@gmail.com</span>
-        <button class="copy-button" onclick="copyEmail()">Copy</button>
-      </div>
-      <div class="success-message" id="successMessage">
-        Email copied to clipboard! ✨
-      </div>
-      <div class="modal-buttons">
-        <button class="close-modal" onclick="closeEmailModal()">Close</button>
-        <!-- Track open email app -->
-        <a href="mailto:e.hossamsabry@gmail.com" class="mailto-button" onclick="gtag('event','click',{event_category:'Button',event_label:'Open Email App'})">Open Email App</a>
-      </div>
-    </div>
-  </div>
-
-  <!-- Contact Info Modal -->
-  <div class="contact-info-modal" id="contactInfoModal">
-    <div class="contact-info-modal-content">
-      <h3>💡 Interested in Learning More?</h3>
-      <div class="contact-info-text">
-        <p>For access to comprehensive documentation, code examples, and implementation guides, please reach out directly.</p>
-      </div>
-      <div class="contact-email-highlight">
-        <span>📧</span>
-        <span>e.hossamsabry@gmail.com</span>
-      </div>
-      <div class="contact-info-buttons">
-        <button class="close-contact-modal" onclick="closeContactInfoModal()">Close</button>
-        <a href="mailto:e.hossamsabry@gmail.com?subject=Request%20for%20Project%20Details&body=Hi%20Hossam,%0A%0AI'm%20interested%20in%20learning%20more%20about%20your%20BIM%20projects%20and%20would%20like%20to%20request%20access%20to%20detailed%20case%20studies.%0A%0ASpecifically,%20I'm%20interested%20in:%0A%0A-%20%0A-%20%0A-%20%0A%0AThanks!" 
-           class="contact-email-button" 
-           onclick="gtag('event','click',{event_category:'Button',event_label:'Contact for More Info'})">
-          Send Email
+      <div class="contact-socials reveal">
+        <a href="https://www.linkedin.com/in/HossamSabryDev" target="_blank" rel="noopener" class="social-btn" aria-label="LinkedIn">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.475-2.236-1.986-2.236-1.081 0-1.722.722-2.004 1.418-.103.249-.129.597-.129.946v5.441h-3.554s.05-8.736 0-9.646h3.554v1.348c.429-.645 1.196-1.565 2.905-1.565 2.122 0 3.714 1.383 3.714 4.357v5.506zM5.337 8.855c-1.144 0-1.915-.762-1.915-1.715 0-.955.77-1.715 1.958-1.715 1.187 0 1.927.76 1.94 1.715 0 .953-.753 1.715-1.983 1.715zm1.946 11.597H3.392V9.806h3.891v10.646zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.225 0z"/></svg>
+        </a>
+        <a href="https://github.com/M2Dawn" target="_blank" rel="noopener" class="social-btn" aria-label="GitHub">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+        </a>
+        <a href="mailto:e.hossamsabry@gmail.com" class="social-btn" aria-label="Email">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
         </a>
       </div>
     </div>
-  </div>
 
-  <!-- HEADER -->
-  <header id="main-content" role="banner">
-    <div class="header-content">
-      <h1 translate="no">Hossam Sabry</h1>
-      <p class="tagline">BIM Developer</p>
-      <p class="subtitle">Transforming AEC workflows through intelligent automation, visual programming, and data-driven project coordination</p>
-      <nav class="nav-links">
-        <a href="#about">About</a>
-        <a href="#skills">Skills</a>
-        <a href="#projects">Projects</a>
-        <a href="#contact">Contact</a>
-      </nav>
-    </div>
-  </header>
-
-  <!-- ABOUT -->
-  <section id="about" class="animate-on-scroll">
-    <h2>About Me</h2>
-    <div class="about-content">
-      <p>
-        Hello! I'm <strong>Hossam Sabry</strong>, a BIM Developer and Civil Engineer with a passion for 
-        <em>Building Information Modeling</em> and digital construction innovation. I specialize in creating 
-        automated workflows that improve design coordination and construction execution, helping 
-        teams deliver projects more efficiently.
-      </p>
-      <p style="margin-top: 1.5rem;">
-        My approach combines technical expertise with practical problem-solving, focusing on solutions 
-        that work in real-world project environments.
-      </p>
-    </div>
-    <div class="about-highlights">
-      <div class="highlight-card">
-        <div class="highlight-number">6</div>
-        <div class="highlight-label">BIM Tools Mastered</div>
-      </div>
-      <div class="highlight-card">
-        <div class="highlight-number">20+</div>
-        <div class="highlight-label">Projects Delivered</div>
-      </div>
-      <div class="highlight-card">
-        <div class="highlight-number">80+</div>
-        <div class="highlight-label">Automation Scripts</div>
-      </div>
-    </div>
-  </section>
-
-  <!-- SKILLS -->
-  <section id="skills" class="animate-on-scroll">
-    <h2>Technical Skills</h2>
-    <p style="text-align: center; color: var(--text-secondary); max-width: 700px; margin: 0 auto 3rem; font-size: 1.1rem;">
-      Comprehensive expertise across BIM platforms, automation tools, and programming languages
-    </p>
-    <div class="skills-grid">
-      <div class="skill skill-revit">
-        <div class="skill-icon">
-          <img src="assets/icons/revit.svg" alt="Revit logo">
-        </div>
-        <div class="skill-title">Revit</div>
-        <div class="skill-subtitle">Advanced BIM Development</div>
-        <div class="skill-level">
-          <div class="level-dot active"></div>
-          <div class="level-dot active"></div>
-          <div class="level-dot active"></div>
-          <div class="level-dot active"></div>
-          <div class="level-dot"></div>
-        </div>
-      </div>
-      <div class="skill skill-navisworks">
-        <div class="skill-icon">
-          <img src="assets/icons/navisworks.svg" alt="Navisworks logo">
-        </div>
-        <div class="skill-title">Navisworks</div>
-        <div class="skill-subtitle">Clash Detection & 4D</div>
-        <div class="skill-level">
-          <div class="level-dot active"></div>
-          <div class="level-dot active"></div>
-          <div class="level-dot active"></div>
-          <div class="level-dot active"></div>
-          <div class="level-dot active"></div>
-        </div>
-      </div>
-      <div class="skill skill-dynamo">
-        <div class="skill-icon">
-          <img src="assets/icons/dynamo.svg" alt="Dynamo logo">
-        </div>
-        <div class="skill-title">Dynamo</div>
-        <div class="skill-subtitle">Visual Programming</div>
-        <div class="skill-level">
-          <div class="level-dot active"></div>
-          <div class="level-dot active"></div>
-          <div class="level-dot active"></div>
-          <div class="level-dot active"></div>
-          <div class="level-dot active"></div>
-        </div>
-      </div>
-      <div class="skill skill-primavera">
-        <div class="skill-icon">
-          <img src="assets/icons/primavera.svg" alt="Primavera P6 logo">
-        </div>
-        <div class="skill-title">Primavera P6</div>
-        <div class="skill-subtitle">Project Scheduling</div>
-        <div class="skill-level">
-          <div class="level-dot active"></div>
-          <div class="level-dot active"></div>
-          <div class="level-dot active"></div>
-          <div class="level-dot"></div>
-          <div class="level-dot"></div>
-        </div>
-      </div>
-      <div class="skill skill-autocad">
-        <div class="skill-icon">
-          <img src="assets/icons/autocad.svg" alt="AutoCAD logo">
-        </div>
-        <div class="skill-title">AutoCAD</div>
-        <div class="skill-subtitle">2D/3D Drafting</div>
-        <div class="skill-level">
-          <div class="level-dot active"></div>
-          <div class="level-dot active"></div>
-          <div class="level-dot active"></div>
-          <div class="level-dot active"></div>
-          <div class="level-dot"></div>
-        </div>
-      </div>
-      <div class="skill skill-programming">
-        <div class="skill-icon">
-          <img src="assets/icons/python-csharp.svg" alt="Python and C# logo">
-        </div>
-        <div class="skill-title">Python / C#</div>
-        <div class="skill-subtitle">Automation & Scripts</div>
-        <div class="skill-level">
-          <div class="level-dot active"></div>
-          <div class="level-dot active"></div>
-          <div class="level-dot active"></div>
-          <div class="level-dot active"></div>
-          <div class="level-dot"></div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- TECH STACK -->
-  <section id="tech-stack" class="animate-on-scroll" style="background: var(--bg-secondary); padding: 6rem 2rem;">
-    <div style="max-width: 1200px; margin: 0 auto;">
-      <h2>Tech Stack & Tools</h2>
-      <p style="text-align: center; color: var(--text-secondary); max-width: 700px; margin: 0 auto 3rem; font-size: 1.1rem;">
-        Technologies and tools I work with daily
-      </p>
-      <div class="tech-stack-grid">
-        <div class="tech-item" title="C# - Primary language for Revit API">
-          <img class="tech-item-icon" src="assets/icons/csharp.svg" alt="C# logo">
-          <div class="tech-item-name">C#</div>
-        </div>
-        <div class="tech-item" title="Python - Scripting and automation">
-          <img class="tech-item-icon" src="assets/icons/python.svg" alt="Python logo">
-          <div class="tech-item-name">Python</div>
-        </div>
-        <div class="tech-item" title="JavaScript - Web dashboards">
-          <img class="tech-item-icon" src="assets/icons/javascript.svg" alt="JavaScript logo">
-          <div class="tech-item-name">JavaScript</div>
-        </div>
-        <div class="tech-item" title="HTML/CSS - Frontend development">
-          <img class="tech-item-icon" src="assets/icons/html-css.svg" alt="HTML and CSS logo">
-          <div class="tech-item-name">HTML/CSS</div>
-        </div>
-        <div class="tech-item" title="Git - Version control">
-          <img class="tech-item-icon" src="assets/icons/git.svg" alt="Git logo">
-          <div class="tech-item-name">Git</div>
-        </div>
-        <div class="tech-item" title="Visual Studio - IDE">
-          <img class="tech-item-icon" src="assets/icons/visual-studio.svg" alt="Visual Studio logo">
-          <div class="tech-item-name">VS</div>
-        </div>
-        <div class="tech-item" title="Revit API - BIM automation">
-          <img class="tech-item-icon" src="assets/icons/revit-api.svg" alt="Revit API logo">
-          <div class="tech-item-name">Revit API</div>
-        </div>
-        <div class="tech-item" title="Dynamo - Visual programming">
-          <img class="tech-item-icon" src="assets/icons/dynamo.svg" alt="Dynamo logo">
-          <div class="tech-item-name">Dynamo</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- CERTIFICATIONS -->
-  <section id="certifications" class="animate-on-scroll">
-    <h2>Certifications & Training</h2>
-    <p style="text-align: center; color: var(--text-secondary); max-width: 700px; margin: 0 auto 3rem; font-size: 1.1rem;">
-      Professional certifications and continuous learning
-    </p>
-    <div class="certifications-grid">
-      <div class="cert-card">
-        <div class="cert-badge">Verified</div>
-        <div class="cert-icon" style="background: linear-gradient(135deg, #0696D7 0%, #0477BF 100%);">
-          <img src="assets/icons/autodesk.svg" alt="Autodesk logo">
-        </div>
-        <div class="cert-title">Autodesk Certified Professional</div>
-        <div class="cert-issuer">Autodesk</div>
-      </div>
-      <div class="cert-card">
-        <div class="cert-badge">Completed</div>
-        <div class="cert-icon" style="background: linear-gradient(135deg, #FF6B35 0%, #F7931E 100%);">
-          <img src="assets/icons/bim-coordinator.svg" alt="BIM Coordinator training logo">
-        </div>
-        <div class="cert-title">BIM Coordinator</div>
-        <div class="cert-issuer">Professional Training</div>
-      </div>
-      <div class="cert-card">
-        <div class="cert-badge">Active</div>
-        <div class="cert-icon" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
-          <img src="assets/icons/revit-api.svg" alt="Revit API logo">
-        </div>
-        <div class="cert-title">Revit API Development</div>
-        <div class="cert-issuer">Self-Taught & Projects</div>
-      </div>
-      <div class="cert-card">
-        <div class="cert-badge">Certified</div>
-        <div class="cert-icon" style="background: linear-gradient(135deg, #C74634 0%, #E57373 100%);">
-          <img src="assets/icons/primavera.svg" alt="Primavera P6 logo">
-        </div>
-        <div class="cert-title">Primavera P6</div>
-        <div class="cert-issuer">Oracle</div>
-      </div>
-      <div class="cert-card">
-        <div class="cert-badge">Certified</div>
-        <div class="cert-icon" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%);">
-          <img src="assets/icons/iti.svg" alt="ITI logo">
-        </div>
-        <div class="cert-title">BIM Automation</div>
-        <div class="cert-issuer">ITI Professional Training Program</div>
-      </div>
-    </div>
-  </section>
-
-  <!-- EXPERIENCE TIMELINE -->
-  <section id="experience" class="animate-on-scroll">
-    <h2>Professional Journey</h2>
-    <div class="timeline">
-      <div class="timeline-item">
-        <div class="timeline-dot"></div>
-        <div class="timeline-content">
-          <div class="timeline-date">April 2025 - Present</div>
-          <h3 class="timeline-title">BIM Developer</h3>
-          <div class="timeline-company">Freelance / Contract Work</div>
-          <p class="timeline-description">
-            Developing custom BIM automation tools and workflows for AEC firms. Created Revit API plugins, 
-            Dynamo scripts, and clash detection dashboards that improved project coordination efficiency.
-          </p>
-          <div class="timeline-tags">
-            <span class="timeline-tag">Revit API</span>
-            <span class="timeline-tag">C#</span>
-            <span class="timeline-tag">Dynamo</span>
-            <span class="timeline-tag">Python</span>
+    <div class="reveal">
+      <form id="contactForm">
+        <div class="form-row">
+          <div class="form-field">
+            <input class="form-input" type="text" id="name" name="name" required placeholder="Name">
+            <label for="name">Name</label>
+            <span class="form-error">Please enter your name</span>
+          </div>
+          <div class="form-field">
+            <input class="form-input" type="email" id="email" name="email" required placeholder="Email">
+            <label for="email">Email</label>
+            <span class="form-error">Please enter a valid email</span>
           </div>
         </div>
-      </div>
-
-      <div class="timeline-item">
-        <div class="timeline-dot"></div>
-        <div class="timeline-content">
-          <div class="timeline-date">January 2025 - Present</div>
-          <h3 class="timeline-title">BIM Coordinator</h3>
-          <div class="timeline-company">Construction Projects</div>
-          <p class="timeline-description">
-            Managed BIM coordination for multiple construction projects. Implemented clash detection workflows, 
-            coordinated with MEP teams, and developed automated reporting systems using Navisworks and custom scripts.
-          </p>
-          <div class="timeline-tags">
-            <span class="timeline-tag">Navisworks</span>
-            <span class="timeline-tag">Coordination</span>
-            <span class="timeline-tag">4D Simulation</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="timeline-item">
-        <div class="timeline-dot"></div>
-        <div class="timeline-content">
-          <div class="timeline-date">July 2024 - December 2024</div>
-          <h3 class="timeline-title">Structural Engineer</h3>
-          <div class="timeline-company">Engineering Firm</div>
-          <p class="timeline-description">
-            Performed structural analysis and design for residential and commercial building projects using Revit and ETABS. 
-            Delivered structural models and documentation while developing technical skills in BIM workflows and automation scripting.
-          </p>
-          <div class="timeline-tags">
-            <span class="timeline-tag">Revit</span>
-            <span class="timeline-tag">ETABS</span>
-            <span class="timeline-tag">Structural Design</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="timeline-item">
-        <div class="timeline-dot"></div>
-        <div class="timeline-content">
-          <div class="timeline-date">2021 - 2023</div>
-          <h3 class="timeline-title">Software Developer</h3>
-          <div class="timeline-company">Freelance</div>
-          <p class="timeline-description">
-            Developed custom software solutions and web applications for various clients. Created automation tools, 
-            built responsive websites, and implemented backend systems using modern development frameworks and best practices.
-          </p>
-          <div class="timeline-tags">
-            <span class="timeline-tag">Web Development</span>
-            <span class="timeline-tag">Automation</span>
-            <span class="timeline-tag">Full Stack</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ACTIVE USERS MAP -->
-  <!-- <section id="users-map" class="animate-on-scroll">
-    <h2>Global Reach</h2>
-    <p class="section-subtitle">Monthly analytics from tools and solutions used worldwide</p>
-    
-    <div class="analytics-container">
-      <div class="analytics-header">
-        <div class="analytics-badge">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M9 11l3 3L22 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-          <span>Verified Analytics</span>
-        </div>
-        <h3>Active Users by Country</h3>
-      </div>
-      
-      <div class="analytics-note">
-  </section> -->
-
-  <!-- TESTIMONIALS
-  <section id="testimonials" class="animate-on-scroll">
-    <h2>What People Say</h2>
-    <div class="testimonials-grid">
-      <div class="testimonial-card">
-        <p class="testimonial-text">
-          Hossam's BIM automation tools saved our team countless hours on repetitive tasks. 
-          His Dynamo scripts are well-documented and easy to use, even for non-technical team members.
-        </p>
-        <div class="testimonial-author">
-          <div class="testimonial-avatar">MA</div>
-          <div class="testimonial-info">
-            <div class="testimonial-name">Mostafa Afifi</div>
-            <div class="testimonial-role">BIM Manager</div>
-            <div class="testimonial-rating">
-              <span class="star">&#9733;</span>
-              <span class="star">&#9733;</span>
-              <span class="star">&#9733;</span>
-              <span class="star">&#9733;</span>
-              <span class="star">&#9733;</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="testimonial-card">
-        <p class="testimonial-text">
-          The clash detection dashboard Hossam developed transformed our coordination meetings. 
-          We can now identify and resolve issues 50% faster than before.
-        </p>
-        <div class="testimonial-author">
-          <div class="testimonial-avatar">SK</div>
-          <div class="testimonial-info">
-            <div class="testimonial-name">Sarah Khan</div>
-            <div class="testimonial-role">Project Coordinator</div>
-            <div class="testimonial-rating">
-              <span class="star">&#9733;</span>
-              <span class="star">&#9733;</span>
-              <span class="star">&#9733;</span>
-              <span class="star">&#9733;</span>
-              <span class="star">&#9733;</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="testimonial-card">
-        <p class="testimonial-text">
-          Professional, knowledgeable, and delivers quality work on time. Hossam's Revit API solutions 
-          are robust and have significantly improved our workflow efficiency.
-        </p>
-        <div class="testimonial-author">
-          <div class="testimonial-avatar">MR</div>
-          <div class="testimonial-info">
-            <div class="testimonial-name">Michael Roberts</div>
-            <div class="testimonial-role">Senior Architect</div>
-            <div class="testimonial-rating">
-              <span class="star">&#9733;</span>
-              <span class="star">&#9733;</span>
-              <span class="star">&#9733;</span>
-              <span class="star">&#9733;</span>
-              <span class="star">&#9733;</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-  -->
-
-  <!-- PROJECTS -->
-  <section id="projects" class="animate-on-scroll">
-    <h2>Open-Source Projects</h2>
-    <div class="project-filters">
-      <button class="filter-btn active" data-filter="all">All Projects</button>
-      <button class="filter-btn" data-filter="revit">Revit API</button>
-      <button class="filter-btn" data-filter="dynamo">Dynamo</button>
-      <button class="filter-btn" data-filter="dashboard">Dashboards</button>
-    </div>
-    <div class="projects-grid">
-      <!-- BIM Automation Tool -->
-      <div class="project" data-category="revit">
-        <div class="project-preview" style="background-image: url('assets/images/bim-automation-tool.png'); background-size: cover !important; background-position: center !important; background-repeat: no-repeat !important;">
-        </div>
-        <div class="project-content">
-          <h3>
-            <span style="color: var(--primary);">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" style="vertical-align: middle;">
-                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-                <circle cx="12" cy="12" r="3" fill="none" stroke="currentColor" stroke-width="2"/>
-                <path d="M12 9v6m-3-3h6"/>
-              </svg>
-            </span> 
-            BIM Automation Tool
-          </h3>
-          <p>An advanced Revit add-in built with C# that streamlines batch export of views to DWG format and automates schedule data export to CSV. Leverages the Revit API to significantly reduce coordination time and improve reporting accuracy.</p>
-          <div class="project-metrics">
-            <div class="metric">
-              <span class="metric-icon">⚡</span>
-              <span>50% faster exports</span>
-            </div>
-            <div class="metric">
-              <span class="metric-icon">📊</span>
-              <span>Automated reporting</span>
-            </div>
-          </div>
-          <div class="project-buttons">
-            <a href="https://github.com/M2Dawn/BIM-Automation-Tool" target="_blank" rel="noopener noreferrer" class="btn"
-               onclick="gtag('event','click',{event_category:'Button',event_label:'GitHub - BIM Automation Tool'})">
-              View on GitHub
-            </a>
-            <a href="case-studies/bim-automation-tool.html" class="btn btn-secondary"
-               onclick="gtag('event','click',{event_category:'Button',event_label:'Learn More - BIM Automation Tool'})">
-               Learn More
-            </a>
-          </div>
-        </div>
-      </div>
-
-      <!-- Clash Detection Dashboard -->
-      <div class="project" data-category="dashboard">
-        <div class="project-preview" style="background-image: url('assets/images/clash-detection-dashboard.png'); background-size: cover !important; background-position: center !important; background-repeat: no-repeat !important;">
-        </div>
-        <div class="project-content">
-          <h3>
-            <span style="color: var(--secondary);">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" style="vertical-align: middle;">
-                <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
-                <circle cx="8" cy="8" r="2" fill="none" stroke="currentColor" stroke-width="2"/>
-                <circle cx="16" cy="16" r="2" fill="none" stroke="currentColor" stroke-width="2"/>
-                <path d="M8 10l8 6" stroke="currentColor" stroke-width="2" fill="none"/>
-              </svg>
-            </span> 
-            Clash Detection Dashboard
-          </h3>
-          <p>A modern, interactive dashboard inspired by Navisworks that visualizes clash detection results, categorizes issues by severity, and generates automated coordination reports. Features a responsive UI designed to accelerate design review meetings.</p>
-          <div class="project-metrics">
-            <div class="metric">
-              <span class="metric-icon">🎯</span>
-              <span>Real-time analytics</span>
-            </div>
-            <div class="metric">
-              <span class="metric-icon">📈</span>
-              <span>Visual reporting</span>
-            </div>
-          </div>
-          <div class="project-buttons">
-            <a href="clash-dashboard/index.html" target="_blank" class="btn"
-               onclick="gtag('event','click',{event_category:'Button',event_label:'Open Dashboard'})">
-              Open Dashboard
-            </a>
-            <a href="case-studies/clash-dashboard.html" class="btn btn-secondary"
-               onclick="gtag('event','click',{event_category:'Button',event_label:'Case Study - Clash Dashboard'})">
-               Case Study
-            </a>
-          </div>
-        </div>
-      </div>
-
-      <!-- Dynamo Script Library -->
-      <div class="project" data-category="dynamo">
-        <div class="project-preview" style="background-image: url('assets/images/dynamo-script-library.png'); background-size: cover !important; background-position: center !important; background-repeat: no-repeat !important;">
-        </div>
-        <div class="project-content">
-          <h3>
-            <span style="color: var(--orange);">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" style="vertical-align: middle;">
-                <circle cx="12" cy="12" r="3"/>
-                <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>
-              </svg>
-            </span> 
-            Dynamo Script Library
-          </h3>
-          <p>A comprehensive collection of production-ready Dynamo scripts for Revit automation. Features intelligent room numbering, batch sheet creation, parameter validation, and more—all designed for non-technical users.</p>
-          <div class="project-metrics">
-            <div class="metric">
-              <span class="metric-icon">🔢</span>
-              <span>10+ scripts</span>
-            </div>
-            <div class="metric">
-              <span class="metric-icon">⚡</span>
-              <span>50% time reduction</span>
-            </div>
-          </div>
-          <div class="project-buttons">
-            <a href="https://github.com/M2Dawn/Dynamo-Scripts" target="_blank" rel="noopener noreferrer" class="btn"
-               onclick="gtag('event','click',{event_category:'Button',event_label:'GitHub - Dynamo Scripts'})">
-              View on GitHub
-            </a>
-            <a href="case-studies/dynamo-scripts.html" class="btn btn-secondary"
-               onclick="gtag('event','click',{event_category:'Button',event_label:'Case Study - Dynamo Scripts'})">
-              Case Study
-            </a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- PREVIOUS WORK -->
-  <section id="work" class="animate-on-scroll">
-    <h2>Primavera Project</h2>
-    
-    <div class="work-item">
-      <div class="work-header">
-        <h3>
-          <span style="color: var(--accent);">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" style="vertical-align: middle;">
-              <rect x="3" y="4" width="18" height="18" rx="2" ry="2" fill="none" stroke="currentColor" stroke-width="2"/>
-              <line x1="16" y1="2" x2="16" y2="6" stroke="currentColor" stroke-width="2"/>
-              <line x1="8" y1="2" x2="8" y2="6" stroke="currentColor" stroke-width="2"/>
-              <line x1="3" y1="10" x2="21" y2="10" stroke="currentColor" stroke-width="2"/>
-              <rect x="7" y="12" width="3" height="2" fill="currentColor"/>
-              <rect x="11" y="12" width="2" height="2" fill="currentColor"/>
-              <rect x="7" y="16" width="2" height="2" fill="currentColor"/>
-              <rect x="11" y="16" width="3" height="2" fill="currentColor"/>
-              <rect x="16" y="16" width="2" height="2" fill="currentColor"/>
-            </svg>
-          </span> 
-          Resource & Schedule Planning
-        </h3>
-        <p>Comprehensive Primavera P6-based project planning documentation featuring detailed resource allocation, timeline optimization, and milestone tracking for complex construction projects.</p>
-      </div>
-      <embed src="docs/PM3.pdf" type="application/pdf" class="work-embed" />
-    </div>
-    
-    <div class="work-item">
-      <div class="work-header">
-        <h3>
-          <span style="color: var(--purple);">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" style="vertical-align: middle;">
-              <circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/>
-              <polyline points="12,6 12,12 16,14" stroke="currentColor" stroke-width="2" fill="none"/>
-              <path d="M8 12h8" stroke="currentColor" stroke-width="2"/>
-              <circle cx="6" cy="12" r="1" fill="currentColor"/>
-              <circle cx="18" cy="12" r="1" fill="currentColor"/>
-              <path d="M12 2v2m0 16v2M4.22 4.22l1.42 1.42m12.72 12.72l1.42 1.42M2 12h2m16 0h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
-            </svg>
-          </span> 
-          Baseline & Progress Monitoring
-        </h3>
-        <p>Advanced baseline schedule establishment and progress tracking documentation for residential construction projects, demonstrating proficiency in project control methodologies.</p>
-      </div>
-      <embed src="docs/PM4.pdf" type="application/pdf" class="work-embed" />
-    </div>
-  </section>
-
-
-  <!-- BLOG PREVIEW -->
-  <section id="blog-preview" class="animate-on-scroll scroll-reveal">
-    <h2>
-      <svg width="36" height="36" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="display: inline-block; vertical-align: middle; margin-right: 0.5rem;">
-        <rect x="4" y="2" width="16" height="20" rx="2" stroke="currentColor" stroke-width="2" fill="none"/>
-        <line x1="8" y1="7" x2="16" y2="7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-        <line x1="8" y1="11" x2="16" y2="11" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-        <line x1="8" y1="15" x2="13" y2="15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-      </svg>
-      Latest Articles
-    </h2>
-    <div class="blog-grid">
-      <article class="blog-card stagger-item" onclick="window.location.href='blog/revit-api-getting-started.html'" style="cursor: pointer;">
-        <div class="blog-image-container">
-          <svg width="80" height="80" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); opacity: 0.3;">
-            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            <polyline points="14 2 14 8 20 8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            <line x1="16" y1="13" x2="8" y2="13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            <line x1="16" y1="17" x2="8" y2="17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            <polyline points="10 9 9 9 8 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-          <span class="blog-category">Revit API</span>
-        </div>
-        <div class="blog-content">
-          <h3 class="blog-title">Getting Started with Revit API Development</h3>
-          <p class="blog-excerpt">
-            A comprehensive guide to building your first Revit plugin using C# and the Revit API.
-          </p>
-          <div class="blog-meta">
-            <span class="blog-date">📅 January 15, 2025</span>
-            <span class="blog-read-time">⏱️ 8 min read</span>
-          </div>
-        </div>
-      </article>
-
-      <article class="blog-card stagger-item" onclick="window.location.href='blog/bim-automation-concept-to-production.html'" style="cursor: pointer;">
-        <div class="blog-image-container">
-          <svg width="100" height="100" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); opacity: 0.4;">
-            <!-- Production Journey Icon: Layers/Stacking -->
-            <rect x="3" y="2" width="18" height="5" rx="1" stroke="currentColor" stroke-width="1.5" fill="none"/>
-            <rect x="3" y="9" width="18" height="5" rx="1" stroke="currentColor" stroke-width="1.5" fill="none"/>
-            <rect x="3" y="16" width="18" height="5" rx="1" stroke="currentColor" stroke-width="1.5" fill="none"/>
-            <!-- Arrow showing progression -->
-            <path d="M22 12L20 10M22 12L20 14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-          <span class="blog-category">Best Practices</span>
-        </div>
-        <div class="blog-content">
-          <h3 class="blog-title">BIM Automation: From Concept to Production</h3>
-          <p class="blog-excerpt">
-            Learn how to take your BIM automation projects from prototype to production-ready solutions.
-          </p>
-          <div class="blog-meta">
-            <span class="blog-date">📅 December 7, 2025</span>
-            <span class="blog-read-time">⏱️ 10 min read</span>
-          </div>
-        </div>
-      </article>
-
-      <article class="blog-card stagger-item">
-        <div class="blog-image-container">
-          <svg width="80" height="80" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); opacity: 0.3;">
-            <polyline points="16 18 22 12 16 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            <polyline points="8 6 2 12 8 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-          <span class="blog-category">Dynamo</span>
-        </div>
-        <div class="blog-content">
-          <h3 class="blog-title">Advanced Dynamo Scripting Techniques</h3>
-          <p class="blog-excerpt">
-            Explore advanced Dynamo workflows for parametric design and automation.
-          </p>
-          <div class="blog-meta">
-            <span class="blog-date">🚧 Under Construction</span>
-            <span class="blog-read-time">⏱️ 10 min read</span>
-          </div>
-        </div>
-      </article>
-    </div>
-    <div style="text-align: center; margin-top: 2rem;">
-      <a href="blog.html" class="btn magnetic-btn ripple">View All Articles →</a>
-    </div>
-  </section>
-
-  <!-- CONTACT WITH FORM -->
-  <section id="contact" class="animate-on-scroll scroll-reveal">
-    <h2>Let's Connect</h2>
-    <div class="contact-content">
-      <p class="contact-description">Interested in collaborating on BIM solutions or discussing opportunities in digital construction? Let's connect!</p>
-      
-      <!-- Contact Form -->
-      <form id="contactForm" class="contact-form">
-        <div class="form-group">
-          <label for="name" class="form-label">Name *</label>
-          <input type="text" id="name" name="name" class="form-input" required placeholder="Your name">
-          <span class="form-error">Please enter your name</span>
-        </div>
-
-        <div class="form-group">
-          <label for="email" class="form-label">Email *</label>
-          <input type="email" id="email" name="email" class="form-input" required placeholder="your.email@example.com">
-          <span class="form-error">Please enter a valid email</span>
-        </div>
-
-        <div class="form-group">
-          <label for="subject" class="form-label">Subject</label>
-          <input type="text" id="subject" name="subject" class="form-input" placeholder="What's this about?">
-        </div>
-
-        <div class="form-group">
-          <label for="message" class="form-label">Message *</label>
-          <textarea id="message" name="message" class="form-textarea" required placeholder="Tell me about your project or inquiry..."></textarea>
+        <div class="form-field area">
+          <textarea class="form-textarea" id="message" name="message" required placeholder="Message"></textarea>
+          <label for="message">Message</label>
           <span class="form-error">Please enter a message</span>
         </div>
-
-        <button type="submit" class="submit-btn magnetic-btn ripple">
-          <span class="btn-text">Send Message</span>
-          <div class="spinner"></div>
-        </button>
-
-        <div class="form-success">
-          ✅ Thank you! Your message has been sent successfully. I'll get back to you soon!
-        </div>
+        <button type="submit" class="btn btn-submit">Send Message</button>
+        <div class="form-success">Message sent  &mdash;  I will get back to you shortly.</div>
       </form>
-
-      <div class="social-links" style="margin-top: 3rem;">
-        <!-- Email -->
-        <button class="email-button magnetic-btn" onclick="openEmailModal(); gtag('event','click',{event_category:'Button',event_label:'Email Modal Open'})">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color: var(--primary);">
-            <rect x="2" y="4" width="20" height="16" rx="2"/>
-            <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
-          </svg> Email
-        </button>
-        <!-- LinkedIn -->
-        <a href="https://www.linkedin.com/in/HossamSabryDev" target="_blank" rel="noopener noreferrer" class="email-button magnetic-btn" style="text-decoration: none;"
-           onclick="gtag('event','click',{event_category:'Button',event_label:'LinkedIn Profile'})">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" style="color: #0077b5;">
-            <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.475-2.236-1.986-2.236-1.081 0-1.722.722-2.004 1.418-.103.249-.129.597-.129.946v5.441h-3.554s.05-8.736 0-9.646h3.554v1.348c.429-.645 1.196-1.565 2.905-1.565 2.122 0 3.714 1.383 3.714 4.357v5.506zM5.337 8.855c-1.144 0-1.915-.762-1.915-1.715 0-.955.77-1.715 1.958-1.715 1.187 0 1.927.76 1.94 1.715 0 .953-.753 1.715-1.983 1.715zm1.946 11.597H3.392V9.806h3.891v10.646zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.225 0z"/>
-          </svg> LinkedIn
-        </a>
-        <!-- GitHub -->
-        <a href="https://github.com/M2Dawn" target="_blank" rel="noopener noreferrer" class="email-button magnetic-btn" style="text-decoration: none;"
-           onclick="gtag('event','click',{event_category:'Button',event_label:'GitHub Profile'})">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" style="color: var(--text-primary);">
-            <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v 3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
-          </svg> GitHub
-        </a>
-        <!-- Download Resume - Commented out for now -->
-        <!-- <a href="#" class="resume-download magnetic-btn" onclick="showToast('Resume download coming soon!', 'success'); return false;">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-            <polyline points="7 10 12 15 17 10"></polyline>
-            <line x1="12" y1="15" x2="12" y2="3"></line>
-          </svg>
-          Download Resume
-        </a> -->
-      </div>
     </div>
-  </section>
 
-  <footer>
-    <p>© Hossam Sabry | Crafted with passion for BIM innovation</p>
-    <p style="margin-top: 0.5rem; font-size: 0.9rem; color: var(--text-secondary);">
-    </p>
-  </footer>
-
-  <script>
-    // ========== LOADING SCREEN ==========
-    window.addEventListener('load', () => {
-      const loadingScreen = document.getElementById('loadingScreen');
-      setTimeout(() => {
-        loadingScreen.classList.add('hidden');
-        document.body.style.overflow = 'auto';
-      }, 800);
-    });
-
-    // ========== BACK TO TOP BUTTON ==========
-    const backToTop = document.getElementById('backToTop');
-    
-    window.addEventListener('scroll', () => {
-      if (window.scrollY > 300) {
-        backToTop.classList.add('visible');
-      } else {
-        backToTop.classList.remove('visible');
-      }
-    });
-
-    backToTop.addEventListener('click', () => {
-      window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
-      });
-      try { gtag('event','click',{event_category:'Navigation',event_label:'Back to Top'}); } catch(e){}
-    });
-
-    // ========== 3D TILT EFFECT ==========
-    function addTiltEffect(element) {
-      element.addEventListener('mousemove', (e) => {
-        const rect = element.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-        
-        const centerX = rect.width / 2;
-        const centerY = rect.height / 2;
-        
-        const rotateX = (y - centerY) / 10;
-        const rotateY = (centerX - x) / 10;
-        
-        element.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
-      });
-      
-      element.addEventListener('mouseleave', () => {
-        element.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale3d(1, 1, 1)';
-      });
-    }
-
-    // Apply tilt to project cards
-    document.addEventListener('DOMContentLoaded', () => {
-      document.querySelectorAll('.cert-card').forEach(card => {
-        card.classList.add('tilt-card');
-        addTiltEffect(card);
-      });
-    });
-
-    // ========== PARALLAX SCROLLING ==========
-    window.addEventListener('scroll', () => {
-      const scrolled = window.pageYOffset;
-      const parallaxElements = document.querySelectorAll('.parallax-section');
-      
-      parallaxElements.forEach(element => {
-        const speed = 0.5;
-        const yPos = -(scrolled * speed);
-        element.style.transform = `translateY(${yPos}px)`;
-      });
-    });
-
-    // ========== ENHANCED SKILL ANIMATIONS ==========
-    const skillObserver = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          const skillBars = entry.target.querySelectorAll('.skill-bar-container');
-          skillBars.forEach((bar, index) => {
-            setTimeout(() => {
-              bar.classList.add('animated');
-            }, index * 100);
-          });
-        }
-      });
-    }, { threshold: 0.3 });
-
-    // ========== PARTICLE BACKGROUND ANIMATION ==========
-    const canvas = document.getElementById('particleCanvas');
-    const ctx = canvas.getContext('2d');
-    let particles = [];
-    let animationFrameId;
-
-    function resizeCanvas() {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-    }
-
-    resizeCanvas();
-    window.addEventListener('resize', resizeCanvas);
-
-    class Particle {
-      constructor() {
-        this.x = Math.random() * canvas.width;
-        this.y = Math.random() * canvas.height;
-        this.size = Math.random() * 2 + 1;
-        this.speedX = Math.random() * 0.5 - 0.25;
-        this.speedY = Math.random() * 0.5 - 0.25;
-        this.opacity = Math.random() * 0.5 + 0.2;
-      }
-
-      update() {
-        this.x += this.speedX;
-        this.y += this.speedY;
-
-        if (this.x > canvas.width) this.x = 0;
-        if (this.x < 0) this.x = canvas.width;
-        if (this.y > canvas.height) this.y = 0;
-        if (this.y < 0) this.y = canvas.height;
-      }
-
-      draw() {
-        ctx.fillStyle = `rgba(78, 205, 196, ${this.opacity})`;
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-        ctx.fill();
-      }
-    }
-
-    function initParticles() {
-      particles = [];
-      const numberOfParticles = Math.floor((canvas.width * canvas.height) / 15000);
-      for (let i = 0; i < numberOfParticles; i++) {
-        particles.push(new Particle());
-      }
-    }
-
-    function connectParticles() {
-      for (let i = 0; i < particles.length; i++) {
-        for (let j = i + 1; j < particles.length; j++) {
-          const dx = particles[i].x - particles[j].x;
-          const dy = particles[i].y - particles[j].y;
-          const distance = Math.sqrt(dx * dx + dy * dy);
-
-          if (distance < 120) {
-            ctx.strokeStyle = `rgba(78, 205, 196, ${0.15 * (1 - distance / 120)})`;
-            ctx.lineWidth = 1;
-            ctx.beginPath();
-            ctx.moveTo(particles[i].x, particles[i].y);
-            ctx.lineTo(particles[j].x, particles[j].y);
-            ctx.stroke();
-          }
-        }
-      }
-    }
-
-    function animateParticles() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      
-      particles.forEach(particle => {
-        particle.update();
-        particle.draw();
-      });
-      
-      connectParticles();
-      animationFrameId = requestAnimationFrame(animateParticles);
-    }
-
-    initParticles();
-    animateParticles();
-
-    window.addEventListener('resize', () => {
-      initParticles();
-    });
-
-    // Theme Toggle
-    const themeToggle = document.getElementById('themeToggle');
-    const sunIcon = document.getElementById('sunIcon');
-    const moonIcon = document.getElementById('moonIcon');
-    const html = document.documentElement;
-
-    // Check for saved theme preference or default to 'dark'
-    const currentTheme = localStorage.getItem('theme') || 'dark';
-    html.setAttribute('data-theme', currentTheme);
-    
-    if (currentTheme === 'light') {
-      sunIcon.classList.add('hidden');
-      moonIcon.classList.remove('hidden');
-    }
-
-    themeToggle.addEventListener('click', () => {
-      const theme = html.getAttribute('data-theme');
-      const newTheme = theme === 'dark' ? 'light' : 'dark';
-      
-      html.setAttribute('data-theme', newTheme);
-      localStorage.setItem('theme', newTheme);
-      
-      // Toggle icons
-      sunIcon.classList.toggle('hidden');
-      moonIcon.classList.toggle('hidden');
-      
-      // Track theme change
-      try { gtag('event','theme_toggle',{event_category:'UI',event_label:newTheme}); } catch(e){}
-    });
-
-    // Mobile Menu Toggle
-    const mobileMenuToggle = document.getElementById('mobileMenuToggle');
-    const navbarMenu = document.getElementById('navbarMenu');
-
-    mobileMenuToggle.addEventListener('click', () => {
-      navbarMenu.classList.toggle('active');
-      const isActive = navbarMenu.classList.contains('active');
-      mobileMenuToggle.textContent = isActive ? '✕' : '☰';
-    });
-
-    // Close mobile menu when clicking on a link
-    document.querySelectorAll('.navbar-links a').forEach(link => {
-      link.addEventListener('click', () => {
-        navbarMenu.classList.remove('active');
-        mobileMenuToggle.textContent = '☰';
-      });
-    });
-
-    // Navbar scroll effect
-    const navbar = document.getElementById('navbar');
-    window.addEventListener('scroll', () => {
-      if (window.scrollY > 50) {
-        navbar.classList.add('scrolled');
-      } else {
-        navbar.classList.remove('scrolled');
-      }
-    });
-
-    // Animated Counter for Statistics
-    function animateCounter(element, target, duration = 2000) {
-      const start = 0;
-      const increment = target / (duration / 16);
-      let current = start;
-      
-      const timer = setInterval(() => {
-        current += increment;
-        if (current >= target) {
-          element.textContent = target + (element.dataset.suffix || '');
-          clearInterval(timer);
-        } else {
-          element.textContent = Math.floor(current) + (element.dataset.suffix || '');
-        }
-      }, 16);
-    }
-
-    // Trigger counter animation when in view
-    const counterObserver = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting && !entry.target.classList.contains('counted')) {
-          entry.target.classList.add('counted');
-          const target = parseInt(entry.target.dataset.target);
-          animateCounter(entry.target, target);
-        }
-      });
-    }, { threshold: 0.5 });
-
-    // Observe all highlight numbers
-    document.querySelectorAll('.highlight-number').forEach(el => {
-      el.dataset.target = el.textContent.replace(/[^0-9]/g, '');
-      el.dataset.suffix = el.textContent.replace(/[0-9]/g, '');
-      el.textContent = '0' + el.dataset.suffix;
-      counterObserver.observe(el);
-    });
-
-    // Project Filtering
-    const filterButtons = document.querySelectorAll('.filter-btn');
-    const projects = document.querySelectorAll('.project');
-
-    filterButtons.forEach(button => {
-      button.addEventListener('click', () => {
-        const filter = button.dataset.filter;
-        
-        // Update active button
-        filterButtons.forEach(btn => btn.classList.remove('active'));
-        button.classList.add('active');
-        
-        // Filter projects
-        projects.forEach(project => {
-          if (filter === 'all' || project.dataset.category === filter) {
-            project.classList.remove('hidden');
-          } else {
-            project.classList.add('hidden');
-          }
-        });
-        
-        // Track filter usage
-        try { gtag('event','filter',{event_category:'Projects',event_label:filter}); } catch(e){}
-      });
-    });
-
-    // Email Modal Functions
-    function openEmailModal() {
-      const modal = document.getElementById('emailModal');
-      modal.classList.add('active');
-      document.body.style.overflow = 'hidden';
-    }
-
-    function closeEmailModal() {
-      const modal = document.getElementById('emailModal');
-      const successMessage = document.getElementById('successMessage');
-      modal.classList.remove('active');
-      successMessage.classList.remove('show');
-      document.body.style.overflow = 'auto';
-    }
-
-    // Contact Info Modal Functions
-    function openContactInfoModal() {
-      const modal = document.getElementById('contactInfoModal');
-      modal.classList.add('active');
-      document.body.style.overflow = 'hidden';
-    }
-
-    function closeContactInfoModal() {
-      const modal = document.getElementById('contactInfoModal');
-      modal.classList.remove('active');
-      document.body.style.overflow = 'auto';
-    }
-
-    function copyEmail() {
-      const emailText = document.getElementById('emailText').textContent;
-      const copyButton = document.querySelector('.copy-button');
-      const successMessage = document.getElementById('successMessage');
-      
-      if (navigator.clipboard && window.isSecureContext) {
-        navigator.clipboard.writeText(emailText).then(function() {
-          copyButton.textContent = 'Copied!';
-          copyButton.classList.add('copied');
-          successMessage.classList.add('show');
-          // GA event for successful copy
-          try { gtag('event','copy',{event_category:'Email',event_label:'Copied Email'}); } catch(e){}
-
-          setTimeout(() => {
-            copyButton.textContent = 'Copy';
-            copyButton.classList.remove('copied');
-          }, 2000);
-          
-          setTimeout(() => {
-            successMessage.classList.remove('show');
-          }, 3000);
-        }).catch(function(err){
-          // If clipboard fails for some reason, fall back to textarea below
-          fallbackCopyEmail(emailText, copyButton, successMessage);
-        });
-      } else {
-        // Fallback for older browsers
-        fallbackCopyEmail(emailText, copyButton, successMessage);
-      }
-
-      function fallbackCopyEmail(text, copyButton, successMessage) {
-        try {
-          const textArea = document.createElement('textarea');
-          textArea.value = text;
-          textArea.style.position = 'absolute';
-          textArea.style.left = '-9999px';
-          document.body.appendChild(textArea);
-          textArea.select();
-          document.execCommand('copy');
-          document.body.removeChild(textArea);
-          
-          copyButton.textContent = 'Copied!';
-          copyButton.classList.add('copied');
-          successMessage.classList.add('show');
-          // GA event for successful copy via fallback
-          try { gtag('event','copy',{event_category:'Email',event_label:'Copied Email - Fallback'}); } catch(e){}
-
-          setTimeout(() => {
-            copyButton.textContent = 'Copy';
-            copyButton.classList.remove('copied');
-          }, 2000);
-          
-          setTimeout(() => {
-            successMessage.classList.remove('show');
-          }, 3000);
-        } catch (err) {
-          // if everything fails, still log an event that copy failed (optional)
-          try { gtag('event','copy_failed',{event_category:'Email',event_label:'Copy Email Failed'}); } catch(e){}
-        }
-      }
-    }
-
-    // Close modals when clicking outside
-    document.getElementById('emailModal').addEventListener('click', function(e) {
-      if (e.target === this) {
-        closeEmailModal();
-      }
-    });
-
-    document.getElementById('contactInfoModal').addEventListener('click', function(e) {
-      if (e.target === this) {
-        closeContactInfoModal();
-      }
-    });
-
-    // Close modals with Escape key
-    document.addEventListener('keydown', function(e) {
-      if (e.key === 'Escape') {
-        if (document.getElementById('emailModal').classList.contains('active')) {
-          closeEmailModal();
-        }
-        if (document.getElementById('contactInfoModal').classList.contains('active')) {
-          closeContactInfoModal();
-        }
-      }
-    });
-
-    // Scroll progress indicator
-    window.addEventListener('scroll', () => {
-      const scrollTop = document.documentElement.scrollTop;
-      const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-      const progress = (scrollTop / scrollHeight) * 100;
-      document.getElementById('scrollProgress').style.width = progress + '%';
-    });
-
-    // Smooth scroll for navigation links
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-      anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        if (target) {
-          target.scrollIntoView({
-            behavior: 'smooth',
-            block: 'start'
-          });
-        }
-      });
-    });
-
-    // Intersection Observer for animations
-    const observerOptions = {
-      threshold: 0.1,
-      rootMargin: '0px 0px -100px 0px'
-    };
-
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('animated');
-        }
-      });
-    }, observerOptions);
-
-    document.querySelectorAll('.animate-on-scroll').forEach(el => {
-      observer.observe(el);
-    });
-
-    // Add hover effect to navigation links
-    const navLinks = document.querySelectorAll('.nav-links a');
-    navLinks.forEach(link => {
-      link.addEventListener('mouseenter', () => {
-        link.style.transform = 'translateY(-2px)';
-      });
-      link.addEventListener('mouseleave', () => {
-        link.style.transform = 'translateY(0)';
-      });
-    });
-
-    // Dynamic typing effect for tagline
-    const tagline = document.querySelector('.tagline');
-    const originalText = tagline.textContent;
-    tagline.textContent = '';
-    
-    setTimeout(() => {
-      let i = 0;
-      const typeInterval = setInterval(() => {
-        tagline.textContent = originalText.slice(0, i);
-        i++;
-        if (i > originalText.length) {
-          clearInterval(typeInterval);
-        }
-      }, 125);
-    }, 1000);
-
-    // ========== ENHANCED PROJECT CARD INTERACTIONS ==========
-    document.querySelectorAll('.project').forEach(project => {
-      project.addEventListener('mouseenter', function() {
-        this.style.transition = 'all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
-      });
-    });
-
-    // ========== TECH STACK ANIMATIONS ==========
-    const techItems = document.querySelectorAll('.tech-item');
-    techItems.forEach((item, index) => {
-      item.style.animationDelay = `${index * 0.05}s`;
-      item.addEventListener('click', () => {
-        item.style.animation = 'pulse 0.6s ease';
-        setTimeout(() => {
-          item.style.animation = '';
-        }, 600);
-      });
-    });
-
-    // ========== SMOOTH REVEAL FOR SECTIONS ==========
-    const revealObserver = new IntersectionObserver((entries) => {
-      entries.forEach((entry, index) => {
-        if (entry.isIntersecting) {
-          setTimeout(() => {
-            entry.target.style.opacity = '1';
-            entry.target.style.transform = 'translateY(0)';
-          }, index * 100);
-        }
-      });
-    }, { threshold: 0.1 });
-
-    document.querySelectorAll('.cert-card, .tech-item').forEach(el => {
-      el.style.opacity = '0';
-      el.style.transform = 'translateY(20px)';
-      el.style.transition = 'all 0.6s ease';
-      revealObserver.observe(el);
-    });
-
-    // ========== KEYBOARD NAVIGATION ==========
-    document.addEventListener('keydown', (e) => {
-      // Press 'T' to scroll to top
-      if (e.key === 't' || e.key === 'T') {
-        if (!e.target.matches('input, textarea')) {
-          window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-      }
-      // Press 'B' to scroll to bottom
-      if (e.key === 'b' || e.key === 'B') {
-        if (!e.target.matches('input, textarea')) {
-          window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
-        }
-      }
-    });
-
-    // ========== PERFORMANCE OPTIMIZATION ==========
-    // Lazy load images if any are added later
-    if ('IntersectionObserver' in window) {
-      const imageObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            const img = entry.target;
-            if (img.dataset.src) {
-              img.src = img.dataset.src;
-              img.removeAttribute('data-src');
-              imageObserver.unobserve(img);
-            }
-          }
-        });
-      });
-
-      document.querySelectorAll('img[data-src]').forEach(img => {
-        imageObserver.observe(img);
-      });
-    }
-
-    // ========== ACCESSIBILITY ENHANCEMENTS ==========
-    // Add focus visible styles for keyboard navigation
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Tab') {
-        document.body.classList.add('keyboard-nav');
-      }
-    });
-
-    document.addEventListener('mousedown', () => {
-      document.body.classList.remove('keyboard-nav');
-    });
-
-    // ========== CONSOLE EASTER EGG ==========
-    console.log('%c👋 Hello Developer!', 'font-size: 20px; font-weight: bold; color: #ff6b6b;');
-    console.log('%cInterested in how this portfolio was built?', 'font-size: 14px; color: #4ecdc4;');
-    console.log('%cCheck out the source code and feel free to reach out!', 'font-size: 14px; color: #ffe66d;');
-    console.log('%c📧 e.hossamsabry@gmail.com', 'font-size: 14px; font-weight: bold; color: #a8e6cf;');
-
-    // ========== TRACK OUTBOUND LINKS ==========
-    (function trackOutboundLinks() {
-      try {
-        document.querySelectorAll('a[target="_blank"]').forEach(a => {
-          a.addEventListener('click', function () {
-            try {
-              gtag('event','outbound_click',{event_category:'Outbound Link', event_label: a.href});
-            } catch (e) { /* ignore */ }
-          });
-        });
-      } catch (e) {}
-    })();
-
-    // ========== SYSTEM THEME DETECTION ==========
-    if (!localStorage.getItem('theme')) {
-      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-      const theme = prefersDark ? 'dark' : 'light';
-      document.documentElement.setAttribute('data-theme', theme);
-      localStorage.setItem('theme', theme);
-      
-      if (theme === 'light') {
-        document.getElementById('sunIcon').classList.add('hidden');
-        document.getElementById('moonIcon').classList.remove('hidden');
-      }
-    }
-
-    // ========== PERFORMANCE MONITORING ==========
-    window.addEventListener('load', () => {
-      if (window.performance) {
-        const perfData = window.performance.timing;
-        const pageLoadTime = perfData.loadEventEnd - perfData.navigationStart;
-        console.log(`⚡ Page loaded in ${pageLoadTime}ms`);
-        
-        try {
-          gtag('event', 'timing_complete', {
-            name: 'page_load',
-            value: pageLoadTime,
-            event_category: 'Performance'
-          });
-        } catch(e) {}
-      }
-    });
-    // ========== VIEWPORT HEIGHT FIX FOR MOBILE ==========
-    function setVH() {
-      let vh = window.innerHeight * 0.01;
-      document.documentElement.style.setProperty('--vh', `${vh}px`);
-    }
-    
-    setVH();
-    window.addEventListener('resize', setVH);
-  </script>
-  
-  <!-- Enhanced Features Script -->
-  <script src="assets/js/enhancements.js"></script>
+  </div>
+</div>
+</section>
+
+</main>
+
+<footer class="footer">
+<div class="container footer-inner">
+  <p class="footer-copy">&copy; 2025 Hossam Sabry &middot; BIM Automation Engineer</p>
+  <nav class="footer-links" aria-label="Footer navigation">
+    <a href="case-studies/bim-automation-tool.html">Case Studies</a>
+    <a href="clash-dashboard/index.html">Dashboard</a>
+    <a href="https://github.com/M2Dawn" target="_blank" rel="noopener">GitHub</a>
+  </nav>
+</div>
+</footer>
+
+<script src="assets/js/main.js"></script>
 </body>
 </html>
