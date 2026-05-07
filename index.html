@@ -218,7 +218,7 @@
     </div>
 
     <!-- Card 2: Clash Detection Dashboard  &mdash;  LEFT -->
-    <div class="card reveal" onclick="window.location='clash-dashboard/index.html'" role="link" tabindex="0" aria-label="Clash Detection Dashboard">
+    <div class="card reveal" onclick="window.location='case-studies/clash-dashboard.html'" role="link" tabindex="0" aria-label="Clash Detection Dashboard Case Study">
       <div class="card-inner">
         <div class="card-top">
           <span class="card-label">JavaScript &middot; Chart.js</span>
@@ -246,11 +246,16 @@
           <span class="tag">Chart.js</span>
           <span class="tag">Navisworks</span>
         </div>
+        <div style="display:flex;gap:16px;margin-top:12px;align-items:center">
+          <a href="clash-dashboard/index.html" class="btn-link" onclick="event.stopPropagation()">Try Live Tool
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+        </div>
       </div>
     </div>
 
     <!-- Card 3: Dynamo Scripts  &mdash;  RIGHT (small) -->
-    <div class="card card-sm reveal" onclick="window.open('https://github.com/M2Dawn/Dynamo-Scripts','_blank')" role="link" tabindex="0" aria-label="Dynamo Script Library on GitHub">
+    <div class="card card-sm reveal" onclick="window.location='case-studies/dynamo-scripts.html'" role="link" tabindex="0" aria-label="Dynamo Script Library Case Study">
       <div class="card-inner">
         <div class="card-top">
           <span class="card-label">Dynamo &middot; Python</span>
@@ -264,15 +269,60 @@
         </span>
         <h3 class="card-title">Dynamo Script Library</h3>
         <p class="card-desc">10+ production-ready Dynamo scripts for Revit automation. Room numbering, batch sheet creation, parameter validation  &mdash;  documented for non-technical coordinators.</p>
+        <div class="card-img-wrap" style="margin-top:16px;">
+          <img src="assets/images/dynamo-hero.png" alt="Dynamo Script Library" width="800" height="450" loading="lazy">
+        </div>
         <div style="margin-top:auto;padding-top:16px">
           <div class="tags" style="margin-bottom:12px">
             <span class="tag">Dynamo</span>
             <span class="tag">Python</span>
             <span class="tag">Revit API</span>
           </div>
-          <span class="btn-link">View on GitHub
+          <a href="https://github.com/M2Dawn/Dynamo-Scripts" target="_blank" class="btn-link" onclick="event.stopPropagation()">View on GitHub
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-          </span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 4: Sheet Set Manager — FULL WIDTH -->
+    <div class="card bento-full reveal" onclick="window.location='case-studies/sheet-manager.html'" role="link" tabindex="0" aria-label="Sheet Set Manager Case Study">
+      <div class="card-inner">
+        <div class="card-top">
+          <span class="card-label">JavaScript &middot; SheetJS &middot; BIM</span>
+          <div class="card-arrow">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+          </div>
+        </div>
+        <h3 class="card-title">Sheet Set Manager</h3>
+        <p class="card-desc" style="max-width:560px">Web-based document control platform that replaces fragmented Excel sheet indices. Manages Revit drawing sheets across 5 disciplines, tracks revisions, and auto-generates print sets &mdash; cutting transmittal prep from 2&ndash;3 hours to 15 minutes.</p>
+        <div class="card-stats">
+          <div class="stat-box">
+            <div class="stat-num" data-count="70" data-suffix="%">~70%</div>
+            <div class="stat-label">time saved</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-num" data-count="30" data-suffix="+">30+</div>
+            <div class="stat-label">sheets managed</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-num" data-count="5" data-suffix="">5</div>
+            <div class="stat-label">disciplines</div>
+          </div>
+        </div>
+        <div class="card-img-wrap">
+          <img src="assets/images/sheet-manager-hero.png" alt="Sheet Set Manager Dashboard" width="1200" height="675" loading="lazy">
+        </div>
+        <div class="tags" style="margin-top:16px">
+          <span class="tag">JavaScript</span>
+          <span class="tag">SheetJS</span>
+          <span class="tag">Document Control</span>
+          <span class="tag">Revit Integration</span>
+        </div>
+        <div style="display:flex;gap:16px;margin-top:12px;align-items:center">
+          <a href="sheet-manager/index.html" class="btn-link" onclick="event.stopPropagation()">Try Live Tool
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
         </div>
       </div>
     </div>

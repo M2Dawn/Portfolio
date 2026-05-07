@@ -1,1177 +1,565 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title translate="no">Dynamo Script Library - Case Study | Hossam Sabry</title>
-  
-  <!-- Favicon -->
-  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
-  <link rel="alternate icon" type="image/x-icon" href="../favicon.ico">
-  <link rel="apple-touch-icon" sizes="180x180" href="../favicon.svg">
-  
-  <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-MWW9X0CJQF"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-
-    gtag('config', 'G-MWW9X0CJQF', {
-      'page_title': 'Dynamo Script Library - Case Study | Hossam Sabry',
-      'page_path': '/case-studies/dynamo-scripts.html',
-    });
-  </script>
-  
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    :root {
-      --primary: #3b82f6;
-      --secondary: #60a5fa;
-      --accent: #1e40af;
-      --purple: #1e3a8a;
-      --orange: #2563eb;
-      --bg-primary: #000000;
-      --bg-secondary: #0a0a0a;
-      --bg-card: #111111;
-      --text-primary: #e5e7eb;
-      --text-secondary: #9ca3af;
-      --border: #1f2937;
-      --gradient-1: linear-gradient(135deg, #1e3a8a 0%, #2563eb 100%);
-      --gradient-2: linear-gradient(135deg, #2563eb 0%, #3b82f6 100%);
-      --gradient-3: linear-gradient(135deg, #1e40af 0%, #60a5fa 100%);
-      --shadow: 0 8px 32px rgba(37, 99, 235, 0.15);
-      --shadow-hover: 0 16px 64px rgba(37, 99, 235, 0.25);
-    }
-
-    body {
-      background: var(--bg-primary);
-      color: var(--text-primary);
-      font-family: "Inter", sans-serif;
-      line-height: 1.8;
-      scroll-behavior: smooth;
-      overflow-x: hidden;
-    }
-
-    /* Animated background */
-    body::before {
-      content: '';
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: radial-gradient(circle at 20% 80%, rgba(30, 58, 138, 0.08) 0%, transparent 50%),
-                  radial-gradient(circle at 80% 20%, rgba(37, 99, 235, 0.06) 0%, transparent 50%),
-                  radial-gradient(circle at 40% 40%, rgba(59, 130, 246, 0.04) 0%, transparent 50%);
-      z-index: -1;
-      animation: backgroundShift 20s ease-in-out infinite;
-    }
-
-    @keyframes backgroundShift {
-      0%, 100% { transform: translateX(0) translateY(0); }
-      33% { transform: translateX(-20px) translateY(-10px); }
-      66% { transform: translateX(20px) translateY(10px); }
-    }
-
-    /* Gradient Orbs */
-    .gradient-orb {
-      position: fixed;
-      border-radius: 50%;
-      filter: blur(80px);
-      opacity: 0.4;
-      pointer-events: none;
-      z-index: 0;
-      animation: orbFloat 20s ease-in-out infinite;
-    }
-
-    .gradient-orb-1 {
-      width: 500px;
-      height: 500px;
-      background: radial-gradient(circle, rgba(30, 58, 138, 0.6), transparent);
-      top: 10%;
-      left: 10%;
-      animation-delay: 0s;
-    }
-
-    .gradient-orb-2 {
-      width: 450px;
-      height: 450px;
-      background: radial-gradient(circle, rgba(37, 99, 235, 0.5), transparent);
-      top: 60%;
-      right: 10%;
-      animation-delay: -5s;
-    }
-
-    .gradient-orb-3 {
-      width: 400px;
-      height: 400px;
-      background: radial-gradient(circle, rgba(59, 130, 246, 0.4), transparent);
-      bottom: 10%;
-      left: 50%;
-      animation-delay: -10s;
-    }
-
-    @keyframes orbFloat {
-      0%, 100% {
-        transform: translate(0, 0) scale(1);
-      }
-      33% {
-        transform: translate(50px, -50px) scale(1.1);
-      }
-      66% {
-        transform: translate(-50px, 50px) scale(0.9);
-      }
-    }
-
-    nav {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      background: rgba(0, 0, 0, 0.95);
-      backdrop-filter: blur(10px);
-      border-bottom: 1px solid var(--border);
-      padding: 1rem 2rem;
-      z-index: 100;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .nav-brand {
-      font-weight: 600;
-      font-size: 1.2rem;
-      color: var(--text-primary);
-      text-decoration: none;
-    }
-
-    .nav-links {
-      display: flex;
-      gap: 2rem;
-      align-items: center;
-    }
-
-    .nav-links a {
-      color: var(--text-secondary);
-      text-decoration: none;
-      font-weight: 500;
-      transition: all 0.3s ease;
-    }
-
-    .nav-links a:hover {
-      color: var(--secondary);
-    }
-
-    .hero {
-      padding: 8rem 2rem 4rem;
-      max-width: 1200px;
-      margin: 0 auto;
-      text-align: center;
-      position: relative;
-      z-index: 1;
-    }
-
-    .hero-badge {
-      display: inline-block;
-      background: var(--bg-card);
-      padding: 0.5rem 1.5rem;
-      border-radius: 50px;
-      border: 1px solid var(--border);
-      font-size: 0.9rem;
-      color: var(--orange);
-      margin-bottom: 2rem;
-    }
-
-    .hero h1 {
-      font-size: 3.5rem;
-      font-weight: 700;
-      margin-bottom: 1.5rem;
-      background: var(--gradient-3);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      line-height: 1.2;
-    }
-
-    .hero-subtitle {
-      font-size: 1.3rem;
-      color: var(--text-secondary);
-      max-width: 700px;
-      margin: 0 auto 3rem;
-    }
-
-    .hero-stats {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 2rem;
-      max-width: 800px;
-      margin: 0 auto;
-    }
-
-    .stat-card {
-      background: var(--bg-card);
-      padding: 2rem;
-      border-radius: 1rem;
-      border: 1px solid var(--border);
-      transition: all 0.3s ease;
-    }
-
-    .stat-card:hover {
-      transform: translateY(-5px);
-      box-shadow: var(--shadow);
-    }
-
-    .stat-number {
-      font-size: 2.5rem;
-      font-weight: 700;
-      background: var(--gradient-3);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      margin-bottom: 0.5rem;
-    }
-
-    .stat-label {
-      color: var(--text-secondary);
-      font-size: 0.95rem;
-    }
-
-    .content-section {
-      padding: 4rem 2rem;
-      max-width: 900px;
-      margin: 0 auto;
-      position: relative;
-      z-index: 1;
-    }
-
-    .content-section h2 {
-      font-size: 2.5rem;
-      margin-bottom: 1.5rem;
-      color: var(--text-primary);
-    }
-
-    .content-section h3 {
-      font-size: 1.8rem;
-      margin: 3rem 0 1.5rem;
-      color: var(--text-primary);
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-
-    .content-section p {
-      color: var(--text-secondary);
-      margin-bottom: 1.5rem;
-      font-size: 1.1rem;
-    }
-
-    .section-divider {
-      height: 1px;
-      background: var(--border);
-      margin: 4rem auto;
-      max-width: 200px;
-    }
-
-    .box {
-      background: var(--bg-card);
-      padding: 2rem;
-      border-radius: 1rem;
-      border: 1px solid var(--border);
-      margin: 2rem 0;
-    }
-
-    .box-problem {
-      border-left: 4px solid var(--primary);
-    }
-
-    .box-solution {
-      border-left: 4px solid var(--secondary);
-    }
-
-    .box-result {
-      border-left: 4px solid var(--accent);
-    }
-
-    .box h4 {
-      font-size: 1.2rem;
-      margin-bottom: 1rem;
-      color: var(--text-primary);
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-
-    .box ul {
-      list-style: none;
-      padding-left: 0;
-    }
-
-    .box li {
-      padding-left: 1.5rem;
-      position: relative;
-      margin-bottom: 0.8rem;
-      color: var(--text-secondary);
-    }
-
-    .box li::before {
-      content: "→";
-      position: absolute;
-      left: 0;
-      color: var(--secondary);
-      font-weight: 600;
-    }
-
-    .features-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 1.5rem;
-      margin: 2rem 0;
-    }
-
-    .feature-card {
-      background: var(--bg-card);
-      padding: 1.5rem;
-      border-radius: 0.8rem;
-      border: 1px solid var(--border);
-      transition: all 0.3s ease;
-    }
-
-    .feature-card:hover {
-      transform: translateY(-3px);
-      box-shadow: var(--shadow);
-    }
-
-    .feature-icon {
-      font-size: 2rem;
-      margin-bottom: 1rem;
-    }
-
-    .feature-card h5 {
-      font-size: 1.1rem;
-      margin-bottom: 0.5rem;
-      color: var(--text-primary);
-    }
-
-    .feature-card p {
-      font-size: 0.95rem;
-      margin-bottom: 0;
-      color: var(--text-secondary);
-    }
-
-    .script-card {
-      background: var(--bg-card);
-      padding: 2rem;
-      border-radius: 1rem;
-      border: 1px solid var(--border);
-      margin-bottom: 1.5rem;
-      transition: all 0.3s ease;
-    }
-
-    .script-card:hover {
-      transform: translateY(-3px);
-      box-shadow: var(--shadow);
-      border-color: var(--orange);
-    }
-
-    .script-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: start;
-      margin-bottom: 1rem;
-    }
-
-    .script-title {
-      font-size: 1.3rem;
-      color: var(--text-primary);
-      font-weight: 600;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-
-    .script-category {
-      background: var(--bg-secondary);
-      padding: 0.3rem 0.8rem;
-      border-radius: 20px;
-      font-size: 0.8rem;
-      color: var(--orange);
-      border: 1px solid var(--border);
-    }
-
-    .script-description {
-      color: var(--text-secondary);
-      margin-bottom: 1rem;
-      line-height: 1.6;
-    }
-
-    .script-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-    }
-
-    .tag {
-      background: var(--bg-secondary);
-      padding: 0.3rem 0.8rem;
-      border-radius: 20px;
-      font-size: 0.85rem;
-      color: var(--text-secondary);
-      border: 1px solid var(--border);
-    }
-
-    .tech-stack {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 1rem;
-      margin: 2rem 0;
-    }
-
-    .tech-badge {
-      background: var(--bg-card);
-      padding: 0.6rem 1.2rem;
-      border-radius: 50px;
-      border: 1px solid var(--border);
-      font-size: 0.9rem;
-      color: var(--text-primary);
-      font-weight: 500;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-
-    .code-block {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 0.8rem;
-      padding: 1.5rem;
-      margin: 2rem 0;
-      overflow-x: auto;
-    }
-
-    .code-block pre {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.9rem;
-      color: var(--text-secondary);
-      line-height: 1.6;
-      margin: 0;
-    }
-
-    .code-comment {
-      color: #6a9955;
-    }
-
-    .code-node {
-      color: #dcdcaa;
-    }
-
-    .code-value {
-      color: #ce9178;
-    }
-
-    .screenshot {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 1rem;
-      padding: 3rem;
-      margin: 2rem 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 400px;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .screenshot::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: linear-gradient(135deg, rgba(168, 230, 207, 0.1), rgba(255, 167, 38, 0.1));
-      opacity: 0.3;
-    }
-
-    .screenshot-text {
-      position: relative;
-      z-index: 1;
-      text-align: center;
-      color: var(--text-secondary);
-      font-size: 1.2rem;
-    }
-
-    .cta-section {
-      background: var(--bg-card);
-      padding: 4rem 2rem;
-      border-radius: 1.5rem;
-      border: 1px solid var(--border);
-      text-align: center;
-      margin: 4rem auto;
-      max-width: 800px;
-    }
-
-    .cta-section h3 {
-      font-size: 2rem;
-      margin-bottom: 1rem;
-      display: block;
-    }
-
-    .cta-section p {
-      font-size: 1.1rem;
-      margin-bottom: 2rem;
-    }
-
-    .cta-buttons {
-      display: flex;
-      gap: 1rem;
-      justify-content: center;
-      flex-wrap: wrap;
-    }
-
-    .btn {
-      background: var(--gradient-3);
-      color: white;
-      border: none;
-      padding: 1rem 2rem;
-      border-radius: 0.5rem;
-      font-weight: 500;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      text-decoration: none;
-      display: inline-block;
-      font-family: inherit;
-      font-size: 1rem;
-    }
-
-    .btn:hover {
-      transform: translateY(-2px);
-      box-shadow: var(--shadow);
-    }
-
-    .btn-secondary {
-      background: transparent;
-      border: 1px solid var(--border);
-      color: var(--text-primary);
-    }
-
-    .btn-secondary:hover {
-      background: var(--bg-secondary);
-    }
-
-    footer {
-      background: var(--bg-secondary);
-      padding: 2rem;
-      text-align: center;
-      border-top: 1px solid var(--border);
-      color: var(--text-secondary);
-      margin-top: 4rem;
-    }
-
-    @media (max-width: 768px) {
-      nav {
-        flex-direction: column;
-        gap: 1rem;
-      }
-
-      .nav-links {
-        gap: 1rem;
-      }
-
-      .hero h1 {
-        font-size: 2.5rem;
-      }
-
-      .hero-subtitle {
-        font-size: 1.1rem;
-      }
-
-      .hero-stats {
-        grid-template-columns: 1fr;
-      }
-
-      .content-section {
-        padding: 3rem 1rem;
-      }
-
-      .content-section h2 {
-        font-size: 2rem;
-      }
-
-      .content-section h3 {
-        font-size: 1.5rem;
-      }
-
-      .features-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .script-header {
-        flex-direction: column;
-        gap: 0.5rem;
-      }
-
-      .cta-buttons {
-        flex-direction: column;
-      }
-    }
-  </style>
-</head>
-<body>
-  <!-- Gradient Orbs -->
-  <div class="gradient-orb gradient-orb-1"></div>
-  <div class="gradient-orb gradient-orb-2"></div>
-  <div class="gradient-orb gradient-orb-3"></div>
-
-  <nav>
-    <a href="../index.html" class="nav-brand">← Back to Portfolio</a>
-    <div class="nav-links">
-      <a href="#overview">Overview</a>
-      <a href="#scripts">Scripts</a>
-      <a href="#results">Results</a>
-      <a href="#technical">Technical</a>
-    </div>
-  </nav>
-
-  <section class="hero">
-    <div class="hero-badge">Case Study</div>
-    <h1>Dynamo Script Library</h1>
-    <p class="hero-subtitle">
-      Production-ready visual programming scripts for parametric modeling, automation, and quality control in Revit
-    </p>
-    <div class="hero-stats">
-      <div class="stat-card">
-        <div class="stat-number">10+</div>
-        <div class="stat-label">Scripts Created</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-number">~50%</div>
-        <div class="stat-label">Time Reduction</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-number">30+</div>
-        <div class="stat-label">Active Users</div>
-      </div>
-    </div>
-  </section>
-
-  <section id="overview" class="content-section">
-    <h2>Project Overview</h2>
-    <p>
-      Dynamo offers incredible power for Revit automation, but many teams struggle to create reliable, 
-      reusable scripts that non-technical users can confidently run. This library bridges that gap with 
-      production-tested workflows that solve real project challenges.
-    </p>
-
-    <div class="box box-problem">
-      <h4>🚨 The Challenge</h4>
-      <ul>
-        <li>Repetitive manual tasks consuming hours of BIM coordinator time</li>
-        <li>Inconsistent naming and numbering across project elements</li>
-        <li>Quality control checks requiring tedious manual verification</li>
-        <li>Lack of standardized Dynamo scripts across project teams</li>
-        <li>Complex scripts requiring programming knowledge to modify</li>
-      </ul>
-    </div>
-
-    <div class="screenshot">
-      <svg viewBox="0 0 800 400" style="max-width: 100%; height: auto;">
-        <defs>
-          <linearGradient id="dynamoGrad1" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" style="stop-color:#a8e6cf;stop-opacity:0.2" />
-            <stop offset="100%" style="stop-color:#ffa726;stop-opacity:0.2" />
-          </linearGradient>
-        </defs>
-        <rect width="800" height="400" fill="url(#dynamoGrad1)"/>
-        
-        <!-- Manual workflow -->
-        <g transform="translate(80, 100)">
-          <!-- Person working -->
-          <circle cx="40" cy="30" r="22" fill="#ffa726" opacity="0.3"/>
-          <rect x="23" y="57" width="34" height="45" rx="5" fill="#ffa726" opacity="0.3"/>
-          
-          <!-- Computer -->
-          <rect x="100" y="50" width="120" height="80" rx="8" fill="#16213e" stroke="#2d3748" stroke-width="2"/>
-          <rect x="110" y="60" width="100" height="60" rx="4" fill="#0f0f23"/>
-          <text x="160" y="95" fill="#b8bcc8" font-size="11" text-anchor="middle">Revit</text>
-          <rect x="140" y="135" width="40" height="5" rx="2" fill="#2d3748"/>
-          
-          <!-- Manual tasks icons -->
-          <g transform="translate(260, 50)">
-            <rect x="0" y="0" width="60" height="60" rx="6" fill="#1a1a2e" stroke="#ffa726" stroke-width="1"/>
-            <text x="30" y="25" fill="#b8bcc8" font-size="10" text-anchor="middle">Room</text>
-            <text x="30" y="40" fill="#b8bcc8" font-size="10" text-anchor="middle">Numbering</text>
-            <text x="30" y="55" fill="#ff6b6b" font-size="9" text-anchor="middle">2 hrs</text>
-          </g>
-          
-          <g transform="translate(340, 50)">
-            <rect x="0" y="0" width="60" height="60" rx="6" fill="#1a1a2e" stroke="#ffa726" stroke-width="1"/>
-            <text x="30" y="25" fill="#b8bcc8" font-size="10" text-anchor="middle">Sheet</text>
-            <text x="30" y="40" fill="#b8bcc8" font-size="10" text-anchor="middle">Creation</text>
-            <text x="30" y="55" fill="#ff6b6b" font-size="9" text-anchor="middle">3 hrs</text>
-          </g>
-          
-          <g transform="translate(420, 50)">
-            <rect x="0" y="0" width="60" height="60" rx="6" fill="#1a1a2e" stroke="#ffa726" stroke-width="1"/>
-            <text x="30" y="25" fill="#b8bcc8" font-size="10" text-anchor="middle">QC</text>
-            <text x="30" y="40" fill="#b8bcc8" font-size="10" text-anchor="middle">Checks</text>
-            <text x="30" y="55" fill="#ff6b6b" font-size="9" text-anchor="middle">2 hrs</text>
-          </g>
-        </g>
-        
-        <!-- Problems -->
-        <g transform="translate(100, 250)">
-          <text x="0" y="0" fill="#ffffff" font-size="16" font-weight="bold">Manual Process Challenges:</text>
-          <text x="0" y="30" fill="#ff6b6b" font-size="13">❌ Repetitive tasks</text>
-          <text x="0" y="55" fill="#ff6b6b" font-size="13">❌ Time consuming</text>
-          <text x="300" y="30" fill="#ff6b6b" font-size="13">❌ Human error</text>
-          <text x="300" y="55" fill="#ff6b6b" font-size="13">❌ Inconsistent results</text>
-        </g>
-        
-        <text x="400" y="380" fill="#ffa726" font-size="14" text-anchor="middle" opacity="0.7">Before: Manual Repetitive Tasks</text>
-      </svg>
-    </div>
-  </section>
-
-  <div class="section-divider"></div>
-
-  <section id="scripts" class="content-section">
-    <h2>Featured Scripts</h2>
-    <p>
-      Each script is designed to be intuitive, well-documented, and robust enough for daily production use. 
-      Here are some highlights from the library:
-    </p>
-
-    <div class="script-card">
-      <div class="script-header">
-        <div class="script-title">
-          <span style="color: var(--orange);">🔢</span>
-          Intelligent Room Numbering
-        </div>
-        <div class="script-category">Automation</div>
-      </div>
-      <p class="script-description">
-        Automatically numbers rooms based on floor level and spatial arrangement. Handles complex layouts with 
-        branching corridors and maintains consistency across project phases.
-      </p>
-      <div class="script-tags">
-        <span class="tag">Room Management</span>
-        <span class="tag">Parametric</span>
-        <span class="tag">Multi-Floor</span>
-      </div>
-    </div>
-
-    <div class="script-card">
-      <div class="script-header">
-        <div class="script-title">
-          <span style="color: var(--secondary);">📋</span>
-          Batch Sheet Creator
-        </div>
-        <div class="script-category">Documentation</div>
-      </div>
-      <p class="script-description">
-        Creates complete sheet sets from template with automatic view placement and title block population. 
-        Reduces sheet creation time from hours to minutes.
-      </p>
-      <div class="script-tags">
-        <span class="tag">Sheet Management</span>
-        <span class="tag">Batch Processing</span>
-        <span class="tag">Templates</span>
-      </div>
-    </div>
-
-    <div class="script-card">
-      <div class="script-header">
-        <div class="script-title">
-          <span style="color: var(--primary);">✓</span>
-          Parameter Validator
-        </div>
-        <div class="script-category">Quality Control</div>
-      </div>
-      <p class="script-description">
-        Scans model for missing or invalid parameter values across all elements. Generates detailed reports 
-        highlighting issues that need attention before coordination.
-      </p>
-      <div class="script-tags">
-        <span class="tag">QA/QC</span>
-        <span class="tag">Data Validation</span>
-        <span class="tag">Reporting</span>
-      </div>
-    </div>
-
-    <div class="script-card">
-      <div class="script-header">
-        <div class="script-title">
-          <span style="color: var(--accent);">🔄</span>
-          Family Instance Replacer
-        </div>
-        <div class="script-category">Modeling</div>
-      </div>
-      <p class="script-description">
-        Swaps family instances while preserving location, rotation, and shared parameters. Essential for 
-        design iterations and specification changes.
-      </p>
-      <div class="script-tags">
-        <span class="tag">Family Management</span>
-        <span class="tag">Design Changes</span>
-        <span class="tag">Bulk Operations</span>
-      </div>
-    </div>
-
-    <div class="script-card">
-      <div class="script-header">
-        <div class="script-title">
-          <span style="color: var(--purple);">📐</span>
-          Adaptive Grid Generator
-        </div>
-        <div class="script-category">Design</div>
-      </div>
-      <p class="script-description">
-        Creates parametric grid systems that adapt to site boundaries and design constraints. Perfect for 
-        early-stage layout studies and massing.
-      </p>
-      <div class="script-tags">
-        <span class="tag">Generative Design</span>
-        <span class="tag">Conceptual</span>
-        <span class="tag">Site Planning</span>
-      </div>
-    </div>
-
-    <h3>🛠️ Technical Stack</h3>
-    <div class="tech-stack">
-      <div class="tech-badge">🔷 Dynamo 2.13+</div>
-      <div class="tech-badge">🐍 Python</div>
-      <div class="tech-badge">🏗️ Revit API</div>
-      <div class="tech-badge">📦 Custom Packages</div>
-    </div>
-
-    <h3>💻 Sample Script Logic</h3>
-    <div class="code-block">
-      <pre><code><span class="code-comment"># Room Numbering Script - Python Node</span>
-<span class="code-comment"># Get all rooms sorted by level and location</span>
-
-rooms = IN[0]  <span class="code-comment"># Input rooms from Dynamo</span>
-prefix = IN[1]  <span class="code-comment"># Department prefix</span>
-
-<span class="code-comment"># Group rooms by level</span>
-rooms_by_level = {}
-for room in rooms:
-    level = room.Level.Name
-    if level not in rooms_by_level:
-        rooms_by_level[level] = []
-    rooms_by_level[level].append(room)
-
-<span class="code-comment"># Number rooms sequentially per level</span>
-output = []
-for level_name in sorted(rooms_by_level.keys()):
-    rooms_on_level = rooms_by_level[level_name]
-    for i, room in enumerate(rooms_on_level, 1):
-        new_number = f"{prefix}-{level_name}-{i:03d}"
-        room.Number = new_number
-        output.append(new_number)
-
-OUT = output</code></pre>
-    </div>
-
-    <div class="screenshot">
-      <svg viewBox="0 0 800 400" style="max-width: 100%; height: auto;">
-        <defs>
-          <linearGradient id="dynamoGrad2" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" style="stop-color:#a8e6cf;stop-opacity:0.2" />
-            <stop offset="100%" style="stop-color:#ffa726;stop-opacity:0.2" />
-          </linearGradient>
-        </defs>
-        <rect width="800" height="400" fill="url(#dynamoGrad2)"/>
-        
-        <!-- Dynamo canvas mockup -->
-        <g transform="translate(50, 40)">
-          <!-- Canvas background -->
-          <rect x="0" y="0" width="700" height="320" rx="8" fill="#0f0f23" stroke="#ffa726" stroke-width="2"/>
-          
-          <!-- Grid pattern -->
-          <defs>
-            <pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse">
-              <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#2d3748" stroke-width="0.5"/>
-            </pattern>
-          </defs>
-          <rect x="0" y="0" width="700" height="320" fill="url(#grid)"/>
-          
-          <!-- Input node -->
-          <rect x="30" y="80" width="120" height="60" rx="6" fill="#16213e" stroke="#4ecdc4" stroke-width="2"/>
-          <text x="90" y="105" fill="#4ecdc4" font-size="11" text-anchor="middle" font-weight="bold">Select Rooms</text>
-          <text x="90" y="120" fill="#b8bcc8" font-size="9" text-anchor="middle">Category.ByName</text>
-          <circle cx="150" cy="110" r="5" fill="#4ecdc4"/>
-          
-          <!-- Processing node -->
-          <rect x="200" y="80" width="120" height="60" rx="6" fill="#16213e" stroke="#ffa726" stroke-width="2"/>
-          <text x="260" y="105" fill="#ffa726" font-size="11" text-anchor="middle" font-weight="bold">Sort by Level</text>
-          <text x="260" y="120" fill="#b8bcc8" font-size="9" text-anchor="middle">List.SortByKey</text>
-          <circle cx="200" cy="110" r="5" fill="#ffa726"/>
-          <circle cx="320" cy="110" r="5" fill="#ffa726"/>
-          
-          <!-- Python node -->
-          <rect x="370" y="80" width="120" height="60" rx="6" fill="#16213e" stroke="#ffe66d" stroke-width="2"/>
-          <text x="430" y="105" fill="#ffe66d" font-size="11" text-anchor="middle" font-weight="bold">Number Rooms</text>
-          <text x="430" y="120" fill="#b8bcc8" font-size="9" text-anchor="middle">Python Script</text>
-          <circle cx="370" cy="110" r="5" fill="#ffe66d"/>
-          <circle cx="490" cy="110" r="5" fill="#ffe66d"/>
-          
-          <!-- Output node -->
-          <rect x="540" y="80" width="120" height="60" rx="6" fill="#16213e" stroke="#a8e6cf" stroke-width="2"/>
-          <text x="600" y="105" fill="#a8e6cf" font-size="11" text-anchor="middle" font-weight="bold">Set Parameter</text>
-          <text x="600" y="120" fill="#b8bcc8" font-size="9" text-anchor="middle">Element.SetParam</text>
-          <circle cx="540" cy="110" r="5" fill="#a8e6cf"/>
-          
-          <!-- Connections -->
-          <path d="M 155 110 L 195 110" stroke="#4ecdc4" stroke-width="2" fill="none"/>
-          <path d="M 325 110 L 365 110" stroke="#ffa726" stroke-width="2" fill="none"/>
-          <path d="M 495 110 L 535 110" stroke="#ffe66d" stroke-width="2" fill="none"/>
-          
-          <!-- Input parameter -->
-          <rect x="30" y="180" width="100" height="40" rx="6" fill="#1a1a2e" stroke="#4ecdc4" stroke-width="1"/>
-          <text x="80" y="203" fill="#4ecdc4" font-size="10" text-anchor="middle">Prefix: "RM"</text>
-          <circle cx="130" cy="200" r="4" fill="#4ecdc4"/>
-          <path d="M 134 200 Q 180 200 200 150" stroke="#4ecdc4" stroke-width="1.5" fill="none" stroke-dasharray="3,3"/>
-          
-          <!-- Status indicator -->
-          <rect x="10" y="10" width="100" height="25" rx="4" fill="#1a1a2e"/>
-          <circle cx="25" cy="22" r="5" fill="#4ecdc4"/>
-          <text x="40" y="26" fill="#4ecdc4" font-size="11">Running...</text>
-        </g>
-        
-        <text x="400" y="385" fill="#ffa726" font-size="14" text-anchor="middle" opacity="0.7">Dynamo: Visual Programming Workflow</text>
-      </svg>
-    </div>
-  </section>
-
-  <div class="section-divider"></div>
-
-  <section id="results" class="content-section">
-    <h2>Results & Impact</h2>
-    <p>
-      The script library has been adopted across multiple projects, becoming an essential part of the 
-      BIM workflow and significantly improving team productivity.
-    </p>
-
-    <div class="box box-result">
-      <h4>🎯 Measurable Outcomes</h4>
-      <ul>
-        <li>Room numbering reduced from 2 hours to 5 minutes per floor</li>
-        <li>Sheet creation time decreased by 75%</li>
-        <li>Quality control checks now completed in 10 minutes vs. 2 hours</li>
-        <li>Over 30 team members actively using the scripts</li>
-        <li>Scripts used on 8+ active projects</li>
-      </ul>
-    </div>
-
-    <h3>📊 Usage Statistics</h3>
-    <div class="features-grid">
-      <div class="feature-card">
-        <div class="feature-icon">🔢</div>
-        <h5>3,000+</h5>
-        <p>Rooms automatically numbered</p>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon">📋</div>
-        <h5>1,500+</h5>
-        <p>Sheets created via automation</p>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon">✓</div>
-        <h5>200+</h5>
-        <p>QC checks performed</p>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon">⏱️</div>
-        <h5>800</h5>
-        <p>Hours saved annually</p>
-      </div>
-    </div>
-
-    <h3>💬 User Feedback</h3>
-    <div class="box" style="border-left: 4px solid var(--purple);">
-      <p style="font-style: italic; font-size: 1.1rem; margin-bottom: 1rem;">
-        "These scripts are production-ready and incredibly well-documented. Even team members with no Dynamo 
-        experience can use them confidently. The room numbering script alone has saved us countless hours."
-      </p>
-      <p style="color: var(--text-primary); font-weight: 500;">
-        — BIM Manager, Architectural Firm
-      </p>
-    </div>
-  </section>
-
-  <div class="section-divider"></div>
-
-  <section id="technical" class="content-section">
-    <h2>Technical Deep Dive</h2>
-    
-    <h3>🏗️ Design Principles</h3>
-    <p>
-      Every script in the library follows strict design principles to ensure reliability and usability:
-    </p>
-
-    <div class="features-grid">
-      <div class="feature-card">
-        <div class="feature-icon">🎯</div>
-        <h5>User-Friendly</h5>
-        <p>Clear input prompts and intuitive parameter naming</p>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon">🛡️</div>
-        <h5>Error Handling</h5>
-        <p>Comprehensive validation and informative error messages</p>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon">📚</div>
-        <h5>Well-Documented</h5>
-        <p>Detailed comments and usage instructions in-graph</p>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon">⚡</div>
-        <h5>Performant</h5>
-        <p>Optimized for large models and batch operations</p>
-      </div>
-    </div>
-
-    <h3>🔑 Key Development Challenges</h3>
-    
-    <div class="box" style="border-left: 4px solid var(--orange);">
-      <h4>Challenge 1: Making Scripts User-Friendly</h4>
-      <p>
-        <strong>Problem:</strong> Non-technical users intimidated by Dynamo's complexity.<br>
-        <strong>Solution:</strong> Created custom UI nodes with clear prompts and added extensive in-graph 
-        documentation with visual guides.
-      </p>
-    </div>
-
-    <div class="box" style="border-left: 4px solid var(--orange);">
-      <h4>Challenge 2: Performance with Large Models</h4>
-      <p>
-        <strong>Problem:</strong> Scripts slowed significantly in models with 10,000+ elements.<br>
-        <strong>Solution:</strong> Implemented filtering before processing and used Python nodes for 
-        performance-critical operations.
-      </p>
-    </div>
-
-    <div class="box" style="border-left: 4px solid var(--orange);">
-      <h4>Challenge 3: Version Compatibility</h4>
-      <p>
-        <strong>Problem:</strong> Scripts broke when users updated Dynamo versions.<br>
-        <strong>Solution:</strong> Avoided version-specific packages and tested across multiple Dynamo 
-        releases before deployment.
-      </p>
-    </div>
-
-    <h3>📚 Lessons Learned</h3>
-    <ul style="list-style: none; padding-left: 0;">
-      <li style="padding-left: 2rem; position: relative; margin-bottom: 1rem; color: var(--text-secondary);">
-        <span style="position: absolute; left: 0; color: var(--secondary); font-weight: 600;">1.</span>
-        <strong style="color: var(--text-primary);">Documentation is everything:</strong> Scripts with good 
-        docs got 10x more usage than equivalent undocumented ones.
-      </li>
-      <li style="padding-left: 2rem; position: relative; margin-bottom: 1rem; color: var(--text-secondary);">
-        <span style="position: absolute; left: 0; color: var(--secondary); font-weight: 600;">2.</span>
-        <strong style="color: var(--text-primary);">Test with real data:</strong> Edge cases from actual 
-        projects revealed issues that synthetic test data missed.
-      </li>
-      <li style="padding-left: 2rem; position: relative; margin-bottom: 1rem; color: var(--text-secondary);">
-        <span style="position: absolute; left: 0; color: var(--secondary); font-weight: 600;">3.</span>
-        <strong style="color: var(--text-primary);">Keep dependencies minimal:</strong> Fewer package 
-        dependencies = fewer compatibility issues.
-      </li>
-      <li style="padding-left: 2rem; position: relative; margin-bottom: 1rem; color: var(--text-secondary);">
-        <span style="position: absolute; left: 0; color: var(--secondary); font-weight: 600;">4.</span>
-        <strong style="color: var(--text-primary);">User feedback drives improvement:</strong> The most 
-        valuable features came from watching users struggle with workflows.
-      </li>
-    </ul>
-
-    <h3>🚀 Future Development</h3>
-    <p>Planned enhancements based on team requests:</p>
-    <div class="features-grid" style="margin-top: 1.5rem;">
-      <div class="feature-card">
-        <div class="feature-icon">📦</div>
-        <h5>Custom Package</h5>
-        <p>Bundle scripts into a single installable Dynamo package</p>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon">🎨</div>
-        <h5>Custom UI</h5>
-        <p>Dedicated interface for easier script configuration</p>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon">☁️</div>
-        <h5>Cloud Storage</h5>
-        <p>Central repository for script updates and version control</p>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon">📊</div>
-        <h5>Analytics</h5>
-        <p>Track script usage and identify optimization opportunities</p>
-      </div>
-    </div>
-  </section>
-
-  <div class="cta-section">
-    <h3>Need Custom Dynamo Solutions?</h3>
-    <p>
-      Whether you need specific automation scripts for your workflow or want to build a comprehensive 
-      Dynamo library for your organization, I'd love to help bring your ideas to life.
-    </p>
-    <div class="cta-buttons">
-      <a href="../index.html#contact" class="btn">Discuss Your Needs</a>
-      <a href="../index.html" class="btn btn-secondary">View More Projects</a>
-    </div>
-  </div>
-
-  <footer>
-    <p>© 2025 Hossam Sabry | BIM Developer & Digital Construction Specialist</p>
-  </footer>
-
-  <script>
-    // Smooth scroll for internal navigation links only
-    document.querySelectorAll('.nav-links a[href^="#"]').forEach(anchor => {
-      anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        if (target) {
-          const navHeight = document.querySelector('nav').offsetHeight;
-          const targetPosition = target.offsetTop - navHeight - 20;
-          window.scrollTo({
-            top: targetPosition,
-            behavior: 'smooth'
-          });
-        }
-      });
-    });
-
-    window.addEventListener('scroll', () => {
-      const sections = document.querySelectorAll('section[id]');
-      const navLinks = document.querySelectorAll('.nav-links a[href^="#"]');
-      
-      let current = '';
-      sections.forEach(section => {
-        const sectionTop = section.offsetTop;
-        const sectionHeight = section.clientHeight;
-        if (window.pageYOffset >= sectionTop - 200) {
-          current = section.getAttribute('id');
-        }
-      });
-
-      navLinks.forEach(link => {
-        link.style.color = 'var(--text-secondary)';
-        if (link.getAttribute('href').slice(1) === current) {
-          link.style.color = 'var(--primary)';
-        }
-      });
-    });
-  </script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dynamo Script Library - Case Study | Hossam Sabry</title>
+<meta name="description" content="Case study: Production-ready Dynamo scripts for Revit automation — room numbering, batch sheets, parameter validation saving 50% workflow time.">
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-MWW9X0CJQF"></script>
+<script>
+window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
+gtag('js',new Date());
+gtag('config','G-MWW9X0CJQF',{'page_title':'Dynamo Script Library - Case Study','page_path':'/case-studies/dynamo-scripts.html'});
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+:root{
+--bg-base:#080809;--bg-raised:#0F0F11;--bg-card:#161619;--bg-inset:#1C1C20;
+--text-1:#F2F2F2;--text-2:#A1A1AA;--text-3:#52525B;
+--accent:#5B8DF3;--accent-2:#9B5CF6;--accent-dim:rgba(91,141,243,0.12);
+--accent-border:rgba(91,141,243,0.25);
+--border:rgba(255,255,255,0.09);--border-s:rgba(255,255,255,0.16);
+--grad:linear-gradient(135deg,#5B8DF3,#9B5CF6);
+--red:#ef4444;--green:#22c55e;
+--font-sans:'Geist','Inter',system-ui,sans-serif;
+--font-mono:'Geist Mono','JetBrains Mono',monospace;
+--r-sm:6px;--r-md:10px;--r-lg:14px;--r-xl:20px;
+}
+html{scroll-behavior:smooth;}
+body{background:var(--bg-base);color:var(--text-1);font-family:var(--font-sans);font-size:.9375rem;line-height:1.7;overflow-x:hidden;-webkit-font-smoothing:antialiased;}
+::selection{background:var(--accent-dim);color:var(--accent);}
+::-webkit-scrollbar{width:5px;}
+::-webkit-scrollbar-track{background:var(--bg-base);}
+::-webkit-scrollbar-thumb{background:var(--border);border-radius:99px;}
+a{color:var(--accent);text-decoration:none;transition:color .2s;}
+a:hover{color:#7BA5FF;}
+
+/* Progress */
+.progress-bar{position:fixed;top:0;left:0;height:2px;background:var(--grad);z-index:200;width:0;transition:width .1s linear;}
+
+/* Nav */
+nav{position:fixed;top:0;left:0;right:0;height:60px;z-index:100;display:flex;align-items:center;background:rgba(8,8,9,.85);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 32px;}
+.nav-inner{max-width:1100px;margin:0 auto;width:100%;display:flex;align-items:center;justify-content:space-between;}
+.nav-brand{font-size:.9375rem;font-weight:600;color:var(--text-1);display:flex;align-items:center;gap:8px;}
+.nav-brand span{color:var(--text-3);}
+.nav-links{display:flex;gap:24px;list-style:none;}
+.nav-links a{font-size:.875rem;color:var(--text-3);font-weight:400;position:relative;transition:color .2s;}
+.nav-links a:hover,.nav-links a.active{color:var(--text-1);}
+.nav-links a.active::after{content:'';position:absolute;bottom:-4px;left:0;right:0;height:1px;background:var(--accent);border-radius:99px;}
+
+/* Hero */
+.hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:120px 24px 80px;position:relative;overflow:hidden;}
+.hero::before{content:'';position:absolute;inset:0;background-image:radial-gradient(circle,rgba(91,141,243,.08) 1px,transparent 1px);background-size:24px 24px;opacity:.6;pointer-events:none;}
+.hero-orb{position:absolute;border-radius:50%;filter:blur(120px);pointer-events:none;opacity:.5;}
+.hero-orb-1{width:600px;height:600px;background:radial-gradient(circle,rgba(91,141,243,.12),transparent);top:-10%;left:-5%;}
+.hero-orb-2{width:500px;height:500px;background:radial-gradient(circle,rgba(155,92,246,.1),transparent);bottom:-10%;right:-5%;}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;padding:6px 16px;background:var(--bg-card);border:1px solid var(--border);border-radius:99px;font-size:.8125rem;font-weight:500;color:var(--accent);margin-bottom:24px;position:relative;z-index:1;}
+.pulse-dot{width:6px;height:6px;border-radius:50%;background:var(--accent);animation:pulse 2s ease-in-out infinite;}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.4;transform:scale(.7);}}
+.hero h1{font-size:clamp(2.5rem,5.5vw,4rem);font-weight:700;line-height:1.1;letter-spacing:-.03em;margin-bottom:20px;color:var(--text-1);position:relative;z-index:1;}
+.hero h1 .grad{background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.hero-sub{font-size:1.0625rem;color:var(--text-2);max-width:560px;margin:0 auto 40px;line-height:1.7;position:relative;z-index:1;}
+.hero-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;max-width:620px;width:100%;position:relative;z-index:1;}
+.stat-card{background:rgba(22,22,25,.7);backdrop-filter:blur(16px);border:1px solid var(--border);border-radius:var(--r-lg);padding:24px;transition:transform .2s,box-shadow .2s;}
+.stat-card:hover{transform:translateY(-4px);box-shadow:0 8px 32px rgba(91,141,243,.1);}
+.stat-num{font-size:2rem;font-weight:700;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;letter-spacing:-.03em;font-variant-numeric:tabular-nums;}
+.stat-label{font-size:.8125rem;color:var(--text-3);font-family:var(--font-mono);margin-top:4px;}
+.scroll-ind{margin-top:48px;display:flex;flex-direction:column;align-items:center;gap:8px;color:var(--text-3);font-size:.75rem;font-family:var(--font-mono);animation:bob 2s ease-in-out infinite;position:relative;z-index:1;}
+.scroll-ind .arr{width:16px;height:16px;border-right:1.5px solid var(--text-3);border-bottom:1.5px solid var(--text-3);transform:rotate(45deg);}
+@keyframes bob{0%,100%{transform:translateY(0);}50%{transform:translateY(6px);}}
+
+/* Sections */
+.section{max-width:900px;margin:0 auto;padding:96px 24px;position:relative;z-index:1;}
+.section h2{font-size:2rem;font-weight:700;letter-spacing:-.025em;margin-bottom:16px;}
+.section h3{font-size:1.375rem;font-weight:600;letter-spacing:-.02em;margin:48px 0 16px;color:var(--text-1);}
+.section p{color:var(--text-2);font-size:1rem;line-height:1.75;margin-bottom:16px;}
+.divider{height:1px;background:var(--border);max-width:200px;margin:0 auto;}
+
+/* Callouts */
+.callout{background:rgba(22,22,25,.6);backdrop-filter:blur(12px);border:1px solid var(--border);border-radius:var(--r-lg);padding:24px 28px;margin:24px 0;}
+.callout-red{border-left:3px solid var(--red);}
+.callout-blue{border-left:3px solid var(--accent);}
+.callout h4{font-size:1.0625rem;font-weight:600;margin-bottom:12px;display:flex;align-items:center;gap:8px;}
+.callout ul{list-style:none;padding:0;}
+.callout li{padding-left:20px;position:relative;margin-bottom:8px;color:var(--text-2);font-size:.9375rem;}
+.callout li::before{content:"→";position:absolute;left:0;color:var(--accent);font-weight:600;}
+
+/* Script Cards */
+.script-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--r-lg);padding:28px;margin:16px 0;transition:border-color .2s,box-shadow .2s;}
+.script-card:hover{border-color:var(--accent-border);box-shadow:0 8px 32px rgba(91,141,243,.06);}
+.sc-header{display:flex;align-items:center;gap:12px;margin-bottom:14px;flex-wrap:wrap;}
+.sc-icon{width:40px;height:40px;border-radius:var(--r-md);display:flex;align-items:center;justify-content:center;font-size:1.125rem;flex-shrink:0;}
+.sc-icon-blue{background:var(--accent-dim);border:1px solid var(--accent-border);}
+.sc-icon-purple{background:rgba(155,92,246,.12);border:1px solid rgba(155,92,246,.25);}
+.sc-icon-green{background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.2);}
+.sc-icon-amber{background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.2);}
+.sc-icon-rose{background:rgba(244,63,94,.1);border:1px solid rgba(244,63,94,.2);}
+.sc-title{font-size:1.125rem;font-weight:600;color:var(--text-1);}
+.sc-badge{padding:3px 10px;border-radius:99px;font-size:.6875rem;font-weight:600;font-family:var(--font-mono);letter-spacing:.03em;text-transform:uppercase;margin-left:auto;}
+.badge-auto{background:var(--accent-dim);color:var(--accent);border:1px solid var(--accent-border);}
+.badge-docs{background:rgba(155,92,246,.1);color:var(--accent-2);border:1px solid rgba(155,92,246,.2);}
+.badge-qc{background:rgba(34,197,94,.08);color:var(--green);border:1px solid rgba(34,197,94,.2);}
+.badge-model{background:rgba(245,158,11,.08);color:#f59e0b;border:1px solid rgba(245,158,11,.2);}
+.badge-design{background:rgba(244,63,94,.08);color:#f43f5e;border:1px solid rgba(244,63,94,.2);}
+.sc-desc{color:var(--text-2);font-size:.9375rem;margin-bottom:14px;line-height:1.65;}
+.sc-footer{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;}
+.tags{display:flex;flex-wrap:wrap;gap:6px;}
+.tag{padding:3px 8px;background:var(--bg-inset);border:1px solid var(--border);border-radius:var(--r-sm);font-size:.6875rem;font-weight:500;color:var(--text-2);font-family:var(--font-mono);}
+.sc-metric{font-size:.8125rem;font-family:var(--font-mono);color:var(--text-3);display:flex;align-items:center;gap:6px;}
+.sc-metric .val{color:var(--accent);font-weight:600;}
+
+/* Tech pills */
+.tech-pills{display:flex;flex-wrap:wrap;gap:8px;margin:24px 0;}
+.pill{display:inline-flex;align-items:center;gap:6px;padding:5px 12px;background:var(--bg-card);border:1px solid var(--border);border-radius:99px;font-size:.8125rem;color:var(--text-1);font-weight:500;font-family:var(--font-mono);}
+
+/* Code Block */
+.code-wrap{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--r-lg);margin:24px 0;overflow:hidden;position:relative;}
+.code-titlebar{display:flex;align-items:center;gap:6px;padding:10px 16px;border-bottom:1px solid var(--border);background:rgba(255,255,255,.02);}
+.dot{width:10px;height:10px;border-radius:50%;}
+.dot-r{background:#FF5F57;}.dot-y{background:#FFBD2E;}.dot-g{background:#28CA41;}
+.code-filename{margin-left:auto;font-size:.6875rem;font-family:var(--font-mono);color:var(--text-3);}
+.code-body{display:flex;overflow-x:auto;position:relative;}
+.code-body::after{content:'';position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,.03) 2px,rgba(0,0,0,.03) 4px);pointer-events:none;}
+.line-nums{padding:16px 0;text-align:right;user-select:none;border-right:1px solid var(--border);flex-shrink:0;}
+.line-nums span{display:block;padding:0 12px;font-family:var(--font-mono);font-size:.8125rem;line-height:1.7;color:var(--text-3);}
+.code-content{padding:16px 20px;flex:1;white-space:pre;overflow-x:auto;}
+.code-content code{font-family:var(--font-mono);font-size:.8125rem;line-height:1.7;color:var(--text-2);}
+.cm{color:#6A9955;font-style:italic;}.ck{color:#569CD6;}.cst{color:#CE9178;}.cn{color:#DCDCAA;}.cv{color:#9CDCFE;}
+
+/* Stats grid */
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:32px 0;}
+.stats-box{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--r-lg);padding:24px;text-align:center;}
+.stats-num{font-size:1.75rem;font-weight:700;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-variant-numeric:tabular-nums;}
+.stats-lbl{font-size:.75rem;color:var(--text-3);font-family:var(--font-mono);margin-top:4px;}
+
+/* Testimonial */
+.testimonial{background:rgba(15,15,17,.7);backdrop-filter:blur(12px);border:1px solid var(--border);border-radius:var(--r-xl);padding:32px;margin:32px 0;position:relative;overflow:hidden;}
+.testimonial::before{content:'\201C';position:absolute;top:-10px;right:20px;font-size:8rem;color:rgba(91,141,243,.06);font-family:Georgia,serif;pointer-events:none;user-select:none;line-height:1;}
+.testimonial p{font-style:italic;font-size:1.0625rem;color:var(--text-2);line-height:1.8;margin-bottom:16px;position:relative;z-index:1;}
+.testimonial cite{display:flex;align-items:center;gap:12px;font-style:normal;position:relative;z-index:1;}
+.t-avatar{width:36px;height:36px;border-radius:50%;background:var(--grad);display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:700;color:#fff;flex-shrink:0;}
+.t-name{font-size:.875rem;font-weight:600;color:var(--text-1);}
+.t-role{font-size:.75rem;color:var(--text-3);font-family:var(--font-mono);}
+
+/* Principles grid */
+.principles{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin:24px 0;}
+.principle{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--r-lg);padding:24px;transition:border-color .2s;}
+.principle:hover{border-color:var(--accent-border);}
+.principle .p-icon{width:36px;height:36px;border-radius:var(--r-md);background:var(--accent-dim);border:1px solid var(--accent-border);display:flex;align-items:center;justify-content:center;font-size:1rem;margin-bottom:12px;}
+.principle h5{font-size:.9375rem;font-weight:600;margin-bottom:6px;color:var(--text-1);}
+.principle p{font-size:.8125rem;color:var(--text-2);margin:0;line-height:1.6;}
+
+/* Accordion */
+.accordion{margin:24px 0;}
+.acc-item{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--r-lg);margin-bottom:8px;overflow:hidden;}
+.acc-header{padding:18px 24px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;font-weight:600;font-size:.9375rem;color:var(--text-1);transition:background .2s;}
+.acc-header:hover{background:rgba(255,255,255,.02);}
+.acc-chevron{transition:transform .2s;color:var(--text-3);font-size:1.25rem;}
+.acc-item.open .acc-chevron{transform:rotate(180deg);}
+.acc-body{max-height:0;overflow:hidden;transition:max-height .3s ease;}
+.acc-item.open .acc-body{max-height:300px;}
+.acc-body-inner{padding:0 24px 20px;color:var(--text-2);font-size:.9375rem;line-height:1.7;}
+
+/* Node graph */
+.node-graph{display:flex;align-items:center;justify-content:center;gap:0;flex-wrap:wrap;margin:24px 0;padding:32px 16px;background:var(--bg-card);border:1px solid var(--border);border-radius:var(--r-lg);position:relative;}
+.node-graph::before{content:'';position:absolute;inset:0;background-image:radial-gradient(circle,rgba(91,141,243,.04) 1px,transparent 1px);background-size:16px 16px;border-radius:inherit;pointer-events:none;}
+.node{padding:12px 20px;background:var(--bg-raised);border:1px solid var(--accent-border);border-radius:var(--r-md);font-size:.8125rem;font-weight:600;color:var(--accent);text-align:center;font-family:var(--font-mono);position:relative;z-index:1;}
+.node-arrow{color:var(--text-3);font-size:1.25rem;padding:0 8px;position:relative;z-index:1;}
+
+/* CTA */
+.cta{background:rgba(22,22,25,.7);backdrop-filter:blur(16px);border:1px solid var(--border);border-radius:var(--r-xl);padding:48px;text-align:center;margin:48px auto;max-width:700px;}
+.cta h3{font-size:1.5rem;font-weight:700;margin-bottom:12px;letter-spacing:-.02em;}
+.cta p{color:var(--text-2);margin-bottom:24px;}
+.cta-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:11px 22px;border-radius:var(--r-md);font-size:.875rem;font-weight:500;border:none;cursor:pointer;font-family:var(--font-sans);transition:all .2s;text-decoration:none;line-height:1;}
+.btn-primary{background:var(--accent);color:#fff;}
+.btn-primary:hover{background:#7BA5FF;color:#fff;box-shadow:0 0 0 4px rgba(91,141,243,.15);}
+.btn-ghost{background:transparent;border:1px solid var(--border);color:var(--text-1);}
+.btn-ghost:hover{border-color:var(--border-s);background:var(--bg-card);}
+
+/* Footer */
+footer{padding:32px 24px;border-top:1px solid var(--border);text-align:center;}
+footer a{color:var(--text-2);font-size:.875rem;}
+footer p{font-size:.8125rem;color:var(--text-3);font-family:var(--font-mono);margin-top:8px;}
+
+/* Reveal */
+.reveal{opacity:0;transform:translateY(20px);transition:opacity .5s cubic-bezier(.16,1,.3,1),transform .5s cubic-bezier(.16,1,.3,1);}
+.reveal.visible{opacity:1;transform:none;}
+
+/* Responsive */
+@media(max-width:960px){
+.hero-stats{grid-template-columns:repeat(3,1fr);gap:12px;}
+.stats-grid{grid-template-columns:repeat(2,1fr);}
+.principles{grid-template-columns:1fr;}
+.nav-links{display:none;}
+}
+@media(max-width:640px){
+.hero-stats{grid-template-columns:1fr;}
+.stats-grid{grid-template-columns:1fr 1fr;}
+.node-graph{flex-direction:column;}
+.node-arrow{transform:rotate(90deg);}
+nav{padding:0 16px;}
+.section{padding:64px 16px;}
+.sc-header{flex-direction:column;align-items:flex-start;}
+.sc-badge{margin-left:0;}
+.sc-footer{flex-direction:column;align-items:flex-start;}
+.cta{padding:32px 20px;margin:32px 16px;}
+}
+</style>
+</head><body>
+<div class="progress-bar" id="progressBar"></div>
+
+<nav>
+<div class="nav-inner">
+<a href="../index.html" class="nav-brand" aria-label="Back to portfolio"><span>←</span> Hossam Sabry</a>
+<div class="nav-links">
+<a href="#overview" aria-label="Overview">Overview</a>
+<a href="#scripts" aria-label="Scripts">Scripts</a>
+<a href="#results" aria-label="Results">Results</a>
+<a href="#technical" aria-label="Technical">Technical</a>
+</div>
+</div>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+<div class="hero-orb hero-orb-1"></div>
+<div class="hero-orb hero-orb-2"></div>
+<div class="hero-badge reveal"><span class="pulse-dot"></span>Case Study</div>
+<h1 class="reveal"><span class="grad">Dynamo</span> Script Library</h1>
+<p class="hero-sub reveal">Production-ready visual programming scripts for parametric modeling, automation, and QA in Revit — built for non-technical teams to use directly.</p>
+<div class="hero-stats reveal">
+<div class="stat-card">
+<div class="stat-num" data-count="10" data-suffix="+">10+</div>
+<div class="stat-label">Scripts</div>
+</div>
+<div class="stat-card">
+<div class="stat-num" data-count="50" data-prefix="~" data-suffix="%">~50%</div>
+<div class="stat-label">Time Reduction</div>
+</div>
+<div class="stat-card">
+<div class="stat-num" data-count="30" data-suffix="+">30+</div>
+<div class="stat-label">Active Users</div>
+</div>
+</div>
+<div class="scroll-ind reveal"><span>Scroll</span><div class="arr"></div></div>
+</section>
+
+<!-- Overview -->
+<section id="overview" class="section">
+<h2 class="reveal">Project Overview</h2>
+<p class="reveal">Dynamo is a powerful visual programming tool for Revit, but most BIM teams lack the programming knowledge to build reliable, production-grade scripts. This library bridges that gap — providing a curated collection of ready-to-use scripts that eliminate repetitive tasks, enforce project standards, and enable non-technical coordinators to leverage automation without writing a single line of code.</p>
+
+<div class="callout callout-red reveal">
+<h4>🚨 The Challenge</h4>
+<ul>
+<li>Repetitive manual tasks consuming hours of skilled labor each week</li>
+<li>Inconsistent naming and numbering conventions across project teams</li>
+<li>Manual QC verification leading to missed errors in coordination</li>
+<li>No standardized script library — teams re-inventing solutions per project</li>
+<li>Existing scripts requiring programming knowledge to modify or run</li>
+</ul>
+</div>
+</section>
+
+<div class="divider"></div>
+
+<!-- Scripts -->
+<section id="scripts" class="section">
+<h2 class="reveal">Featured Scripts</h2>
+<p class="reveal">Each script is designed as a self-contained, production-ready tool with built-in documentation, error handling, and user-friendly inputs.</p>
+
+<div class="script-card reveal">
+<div class="sc-header">
+<div class="sc-icon sc-icon-blue">🔢</div>
+<span class="sc-title">Intelligent Room Numbering</span>
+<span class="sc-badge badge-auto">Automation</span>
+</div>
+<p class="sc-desc">Automatically numbers rooms across multiple floors using spatial sorting algorithms. Handles split levels, custom start values, and discipline-specific prefix conventions — replacing a tedious manual process that previously required floor-by-floor verification.</p>
+<div class="sc-footer">
+<div class="tags"><span class="tag">Room Mgmt</span><span class="tag">Parametric</span><span class="tag">Multi-Floor</span></div>
+<div class="sc-metric"><span>2 hrs</span> → <span class="val">5 min</span></div>
+</div>
+</div>
+
+<div class="script-card reveal">
+<div class="sc-header">
+<div class="sc-icon sc-icon-purple">📄</div>
+<span class="sc-title">Batch Sheet Creator</span>
+<span class="sc-badge badge-docs">Documentation</span>
+</div>
+<p class="sc-desc">Generates entire sheet sets from CSV templates with proper title blocks, view placement, and numbering sequences. Eliminates the repetitive process of manually creating and configuring hundreds of sheets per project phase.</p>
+<div class="sc-footer">
+<div class="tags"><span class="tag">Sheet Mgmt</span><span class="tag">Batch Processing</span><span class="tag">Templates</span></div>
+<div class="sc-metric"><span>4 hrs</span> → <span class="val">15 min</span></div>
+</div>
+</div>
+
+<div class="script-card reveal">
+<div class="sc-header">
+<div class="sc-icon sc-icon-green">✓</div>
+<span class="sc-title">Parameter Validator</span>
+<span class="sc-badge badge-qc">Quality Control</span>
+</div>
+<p class="sc-desc">Scans the entire model against configurable rule sets — checking for missing parameters, invalid values, naming violations, and data inconsistencies. Generates a detailed report with element IDs for quick navigation and fixes.</p>
+<div class="sc-footer">
+<div class="tags"><span class="tag">QA/QC</span><span class="tag">Data Validation</span><span class="tag">Reporting</span></div>
+<div class="sc-metric"><span>2 hrs</span> → <span class="val">10 min</span></div>
+</div>
+</div>
+
+<div class="script-card reveal">
+<div class="sc-header">
+<div class="sc-icon sc-icon-amber">🔄</div>
+<span class="sc-title">Family Instance Replacer</span>
+<span class="sc-badge badge-model">Modeling</span>
+</div>
+<p class="sc-desc">Bulk-replaces family instances across the model while preserving hosting, parameter values, and spatial positioning. Handles complex scenarios like wall-hosted families, face-based placement, and linked model references.</p>
+<div class="sc-footer">
+<div class="tags"><span class="tag">Family Mgmt</span><span class="tag">Design Changes</span><span class="tag">Bulk Ops</span></div>
+<div class="sc-metric"><span>3 hrs</span> → <span class="val">10 min</span></div>
+</div>
+</div>
+
+<div class="script-card reveal">
+<div class="sc-header">
+<div class="sc-icon sc-icon-rose">◇</div>
+<span class="sc-title">Adaptive Grid Generator</span>
+<span class="sc-badge badge-design">Design</span>
+</div>
+<p class="sc-desc">Creates parametric grid systems from site boundaries with adaptive spacing, rotation, and offset controls. Supports irregular geometries and generates both structural grids and reference planes for early-stage design exploration.</p>
+<div class="sc-footer">
+<div class="tags"><span class="tag">Generative</span><span class="tag">Conceptual</span><span class="tag">Site Planning</span></div>
+<div class="sc-metric"><span>Manual</span> → <span class="val">Parametric</span></div>
+</div>
+</div>
+
+<h3 class="reveal">Tech Stack</h3>
+<div class="tech-pills reveal">
+<span class="pill">Dynamo 2.13+</span>
+<span class="pill">Python</span>
+<span class="pill">Revit API</span>
+<span class="pill">Custom Packages</span>
+</div>
+
+<div class="code-wrap reveal">
+<div class="code-titlebar">
+<span class="dot dot-r"></span><span class="dot dot-y"></span><span class="dot dot-g"></span>
+<span class="code-filename">room_numbering.py</span>
+</div>
+<div class="code-body">
+<div class="line-nums"><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span>10</span><span>11</span><span>12</span><span>13</span><span>14</span><span>15</span><span>16</span><span>17</span></div>
+<div class="code-content"><code><span class="cm"># Intelligent Room Numbering Script</span>
+<span class="cm"># Sorts rooms spatially by level, then X/Y coords</span>
+<span class="ck">import</span> clr
+clr.AddReference(<span class="cst">'RevitAPI'</span>)
+<span class="ck">from</span> Autodesk.Revit.DB <span class="ck">import</span> *
+
+<span class="ck">def</span> <span class="cn">number_rooms</span>(<span class="cv">rooms</span>, <span class="cv">prefix</span>, <span class="cv">start</span>=<span class="cst">100</span>):
+    <span class="cm">"""Number rooms by spatial position per level."""</span>
+    <span class="cv">sorted_rooms</span> = <span class="cn">sort_by_position</span>(<span class="cv">rooms</span>)
+    <span class="ck">for</span> <span class="cv">i</span>, <span class="cv">room</span> <span class="ck">in</span> <span class="cn">enumerate</span>(<span class="cv">sorted_rooms</span>):
+        <span class="cv">num</span> = <span class="cst">f"{prefix}{start + i}"</span>
+        <span class="cv">room</span>.LookupParameter(<span class="cst">"Number"</span>).Set(<span class="cv">num</span>)
+    <span class="ck">return</span> <span class="cv">sorted_rooms</span>
+
+<span class="cm"># Execute with transaction wrapper</span>
+<span class="cv">result</span> = <span class="cn">number_rooms</span>(IN[<span class="cst">0</span>], IN[<span class="cst">1</span>], IN[<span class="cst">2</span>])
+OUT = <span class="cv">result</span></code></div>
+</div>
+</div>
+</section>
+
+<div class="divider"></div>
+
+<!-- Results -->
+<section id="results" class="section">
+<h2 class="reveal">Results &amp; Impact</h2>
+<p class="reveal">The script library transformed how teams interact with Revit — turning hours of manual work into minutes of automated processing, with consistent results every time.</p>
+
+<div class="callout callout-blue reveal">
+<h4>📊 Measurable Outcomes</h4>
+<ul>
+<li>Room numbering reduced from 2 hours to 5 minutes per floor</li>
+<li>Sheet creation process 75% faster with batch automation</li>
+<li>QC validation checks reduced from 2 hours to 10 minutes</li>
+<li>Adopted by 30+ team members across multiple disciplines</li>
+<li>Deployed on 8+ active construction projects</li>
+</ul>
+</div>
+
+<div class="stats-grid reveal">
+<div class="stats-box">
+<div class="stats-num" data-count="3000" data-suffix="+">0+</div>
+<div class="stats-lbl">Rooms Numbered</div>
+</div>
+<div class="stats-box">
+<div class="stats-num" data-count="1500" data-suffix="+">0+</div>
+<div class="stats-lbl">Sheets Created</div>
+</div>
+<div class="stats-box">
+<div class="stats-num" data-count="200" data-suffix="+">0+</div>
+<div class="stats-lbl">QC Checks Run</div>
+</div>
+<div class="stats-box">
+<div class="stats-num" data-count="800" data-suffix="h">0h</div>
+<div class="stats-lbl">Hours Saved</div>
+</div>
+</div>
+
+<div class="testimonial reveal">
+<p>"These scripts changed how our entire team works with Revit. The room numbering alone saves us a full day every time we update floor plans. Non-technical coordinators can now run automation that used to require a programmer."</p>
+<cite>
+<div class="t-avatar">AM</div>
+<div>
+<div class="t-name">Ahmed Mostafa</div>
+<div class="t-role">BIM Manager</div>
+</div>
+</cite>
+</div>
+</section>
+
+<div class="divider"></div>
+
+<!-- Technical -->
+<section id="technical" class="section">
+<h2 class="reveal">Technical Deep Dive</h2>
+
+<h3 class="reveal">Design Principles</h3>
+<div class="principles reveal">
+<div class="principle">
+<div class="p-icon">👤</div>
+<h5>User-Friendly</h5>
+<p>Every script uses custom input nodes with dropdowns, defaults, and tooltips — no coding knowledge required to run.</p>
+</div>
+<div class="principle">
+<div class="p-icon">🛡️</div>
+<h5>Error Handling</h5>
+<p>Comprehensive try-catch patterns with meaningful error messages. Scripts never crash Revit — they report and continue.</p>
+</div>
+<div class="principle">
+<div class="p-icon">📚</div>
+<h5>Well-Documented</h5>
+<p>In-graph annotations, README files, and video walkthroughs for every script. Built for handoff to any team member.</p>
+</div>
+<div class="principle">
+<div class="p-icon">⚡</div>
+<h5>Performant</h5>
+<p>Optimized for large models with 10,000+ elements. Batch transaction patterns minimize Revit API overhead.</p>
+</div>
+</div>
+
+<h3 class="reveal">Key Challenges Solved</h3>
+<div class="accordion">
+<div class="acc-item reveal">
+<div class="acc-header" onclick="this.parentElement.classList.toggle('open')" aria-label="Toggle challenge details">
+<span>Making Scripts User-Friendly for Non-Technical Teams</span>
+<span class="acc-chevron">▾</span>
+</div>
+<div class="acc-body">
+<div class="acc-body-inner">Custom UI nodes replace raw Dynamo inputs with intuitive dropdowns and sliders. In-graph documentation blocks explain each step visually. Input validation catches errors before execution, showing clear messages instead of cryptic Dynamo warnings. The result: coordinators run complex automation without understanding the code behind it.</div>
+</div>
+</div>
+<div class="acc-item reveal">
+<div class="acc-header" onclick="this.parentElement.classList.toggle('open')" aria-label="Toggle challenge details">
+<span>Handling Complex Geometry &amp; Edge Cases</span>
+<span class="acc-chevron">▾</span>
+</div>
+<div class="acc-body">
+<div class="acc-body-inner">Spatial sorting algorithms handle split-level floors, non-rectangular rooms, and rooms spanning multiple areas. The scripts use bounding box analysis with fallback centroid calculations for irregular geometries. Edge cases like unplaced rooms, redundant rooms, and rooms in linked models are detected and reported rather than causing failures.</div>
+</div>
+</div>
+</div>
+
+<h3 class="reveal">Dynamo Node Flow</h3>
+<div class="node-graph reveal">
+<div class="node">Select Rooms</div>
+<div class="node-arrow">→</div>
+<div class="node">Sort by Level</div>
+<div class="node-arrow">→</div>
+<div class="node">Python: Number</div>
+<div class="node-arrow">→</div>
+<div class="node">Set Parameter</div>
+</div>
+</section>
+
+<!-- CTA -->
+<div class="section" style="padding-top:0;">
+<div class="cta reveal">
+<h3>Interested in Similar Automation?</h3>
+<p>I build custom Dynamo scripts and Revit API tools tailored to your team's workflow. Let's discuss what manual processes you'd like to eliminate.</p>
+<div class="cta-btns">
+<a href="bim-automation-tool.html" class="btn btn-primary" aria-label="View BIM Automation Tool">View BIM Automation Tool →</a>
+<a href="../index.html#contact" class="btn btn-ghost" aria-label="Get in touch">Get in Touch →</a>
+</div>
+</div>
+</div>
+
+<footer>
+<a href="../index.html" aria-label="Back to portfolio">← Back to Portfolio</a>
+<p>&copy; 2025 Hossam Sabry · BIM Automation Engineer</p>
+</footer>
+
+<script>
+// Progress bar
+window.addEventListener('scroll',()=>{
+  const h=document.documentElement.scrollHeight-window.innerHeight;
+  document.getElementById('progressBar').style.width=(window.scrollY/h)*100+'%';
+});
+
+// Reveal
+const revealObs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');revealObs.unobserve(e.target);}});
+},{threshold:0.1,rootMargin:'0px 0px -40px 0px'});
+document.querySelectorAll('.reveal').forEach(el=>revealObs.observe(el));
+
+// Active nav
+const navLinks=document.querySelectorAll('.nav-links a');
+const sections=document.querySelectorAll('section[id]');
+const navObs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      const id=e.target.getAttribute('id');
+      navLinks.forEach(l=>l.classList.toggle('active',l.getAttribute('href')==='#'+id));
+    }
+  });
+},{threshold:0.2,rootMargin:'-60px 0px -40% 0px'});
+sections.forEach(s=>navObs.observe(s));
+
+// Smooth scroll
+document.querySelectorAll('.nav-links a[href^="#"]').forEach(a=>{
+  a.addEventListener('click',e=>{
+    e.preventDefault();
+    const t=document.querySelector(a.getAttribute('href'));
+    if(t) window.scrollTo({top:t.offsetTop-70,behavior:'smooth'});
+  });
+});
+
+// Counters
+function animateCounter(el){
+  const target=parseInt(el.dataset.count)||0;
+  const prefix=el.dataset.prefix||'';
+  const suffix=el.dataset.suffix||'';
+  const duration=1200;
+  const start=performance.now();
+  function tick(now){
+    const progress=Math.min((now-start)/duration,1);
+    const eased=1-Math.pow(1-progress,3);
+    el.textContent=prefix+Math.round(eased*target)+suffix;
+    if(progress<1) requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+}
+const counterObs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){animateCounter(e.target);counterObs.unobserve(e.target);}
+  });
+},{threshold:0.5});
+document.querySelectorAll('.stat-num[data-count],.stats-num[data-count]').forEach(el=>counterObs.observe(el));
+</script>
 </body>
 </html>

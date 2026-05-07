@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sheet Set Manager - Case Study | Hossam Sabry</title>
+<meta name="description" content="Case study: Web-based BIM document control platform for managing Revit drawing sheets, tracking revisions, and organizing print sets — cutting transmittal prep by 70%.">
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-MWW9X0CJQF"></script>
+<script>
+window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
+gtag('js',new Date());
+gtag('config','G-MWW9X0CJQF',{page_title:'Sheet Set Manager - Case Study',page_path:'/case-studies/sheet-manager.html'});
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+:root{
+--bg:#080809;--bg-raised:#0F0F11;--bg-card:#161619;--bg-inset:#1C1C20;
+--text-1:#F2F2F2;--text-2:#A1A1AA;--text-3:#52525B;
+--accent:#5B8DF3;--accent-2:#9B5CF6;--accent-dim:rgba(91,141,243,0.12);--accent-border:rgba(91,141,243,0.25);
+--border:rgba(255,255,255,0.09);--border-s:rgba(255,255,255,0.16);
+--grad:linear-gradient(135deg,#5B8DF3,#9B5CF6);
+--red:#ef4444;--green:#22c55e;--amber:#fbbf24;
+--font:'Geist','Inter',system-ui,sans-serif;--mono:'Geist Mono',monospace;
+--r-sm:6px;--r-md:10px;--r-lg:14px;--r-xl:20px;
+}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--text-1);font-family:var(--font);font-size:.9375rem;line-height:1.7;overflow-x:hidden;-webkit-font-smoothing:antialiased;}
+::selection{background:var(--accent-dim);color:var(--accent);}
+::-webkit-scrollbar{width:5px;}::-webkit-scrollbar-track{background:var(--bg);}::-webkit-scrollbar-thumb{background:var(--border);border-radius:99px;}
+a{color:var(--accent);text-decoration:none;transition:color .2s;}a:hover{color:#7BA5FF;}
+
+.progress-bar{position:fixed;top:0;left:0;height:2px;background:var(--grad);z-index:200;width:0;transition:width .1s linear;}
+
+nav{position:fixed;top:0;left:0;right:0;height:60px;z-index:100;display:flex;align-items:center;background:rgba(8,8,9,.85);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 32px;}
+.nav-inner{max-width:1100px;margin:0 auto;width:100%;display:flex;align-items:center;justify-content:space-between;}
+.nav-brand{font-size:.9375rem;font-weight:600;color:var(--text-1);display:flex;align-items:center;gap:8px;}
+.nav-brand span{color:var(--text-3);}
+.nav-links{display:flex;gap:24px;list-style:none;}
+.nav-links a{font-size:.875rem;color:var(--text-3);font-weight:400;position:relative;transition:color .2s;}
+.nav-links a:hover,.nav-links a.active{color:var(--text-1);}
+.nav-links a.active::after{content:'';position:absolute;bottom:-4px;left:0;right:0;height:1px;background:var(--accent);border-radius:99px;}
+
+.hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:120px 24px 80px;position:relative;overflow:hidden;}
+.hero-orb{position:absolute;border-radius:50%;filter:blur(120px);pointer-events:none;opacity:.5;}
+.hero-orb-1{width:600px;height:600px;background:radial-gradient(circle,rgba(91,141,243,.12),transparent);top:-10%;left:-5%;}
+.hero-orb-2{width:500px;height:500px;background:radial-gradient(circle,rgba(155,92,246,.1),transparent);bottom:-10%;right:-5%;}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;padding:6px 16px;background:var(--bg-card);border:1px solid var(--border);border-radius:99px;font-size:.8125rem;font-weight:500;color:var(--accent);margin-bottom:24px;position:relative;z-index:1;}
+.pulse-dot{width:6px;height:6px;border-radius:50%;background:var(--accent);animation:pulse 2s ease-in-out infinite;}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.4;transform:scale(.7);}}
+.hero h1{font-size:clamp(2.5rem,5.5vw,4rem);font-weight:700;line-height:1.1;letter-spacing:-.03em;margin-bottom:20px;color:var(--text-1);position:relative;z-index:1;}
+.hero h1 .grad{background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.hero-sub{font-size:1.0625rem;color:var(--text-2);max-width:560px;margin:0 auto 40px;line-height:1.7;position:relative;z-index:1;}
+.hero-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;max-width:620px;width:100%;position:relative;z-index:1;}
+.stat-card{background:rgba(22,22,25,.7);backdrop-filter:blur(16px);border:1px solid var(--border);border-radius:var(--r-lg);padding:24px;transition:transform .2s,box-shadow .2s;}
+.stat-card:hover{transform:translateY(-4px);box-shadow:0 8px 32px rgba(91,141,243,.1);}
+.stat-num{font-size:2rem;font-weight:700;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;letter-spacing:-.03em;}
+.stat-label{font-size:.8125rem;color:var(--text-3);font-family:var(--mono);margin-top:4px;}
+.scroll-ind{margin-top:48px;display:flex;flex-direction:column;align-items:center;gap:8px;color:var(--text-3);font-size:.75rem;font-family:var(--mono);animation:bob 2s ease-in-out infinite;position:relative;z-index:1;}
+.scroll-ind .arr{width:16px;height:16px;border-right:1.5px solid var(--text-3);border-bottom:1.5px solid var(--text-3);transform:rotate(45deg);}
+@keyframes bob{0%,100%{transform:translateY(0);}50%{transform:translateY(6px);}}
+
+.section{max-width:900px;margin:0 auto;padding:96px 24px;position:relative;z-index:1;}
+.section h2{font-size:2rem;font-weight:700;letter-spacing:-.025em;margin-bottom:16px;}
+.section h3{font-size:1.375rem;font-weight:600;letter-spacing:-.02em;margin:48px 0 16px;color:var(--text-1);}
+.section>p{color:var(--text-2);font-size:1rem;line-height:1.75;margin-bottom:16px;}
+.divider{height:1px;background:var(--border);max-width:200px;margin:0 auto;}
+
+.callout{background:rgba(22,22,25,.6);backdrop-filter:blur(12px);border:1px solid var(--border);border-radius:var(--r-lg);padding:24px 28px;margin:24px 0;}
+.callout-red{border-left:3px solid var(--red);}
+.callout-blue{border-left:3px solid var(--accent);}
+.callout-green{border-left:3px solid var(--green);}
+.callout-purple{border-left:3px solid var(--accent-2);}
+.callout h4{font-size:1.0625rem;font-weight:600;margin-bottom:12px;display:flex;align-items:center;gap:8px;}
+.callout ul{list-style:none;padding:0;}
+.callout li{padding-left:20px;position:relative;margin-bottom:8px;color:var(--text-2);font-size:.9375rem;}
+.callout li::before{content:"→";position:absolute;left:0;color:var(--accent);font-weight:600;}
+
+.features-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:24px 0;}
+.feature-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--r-lg);padding:24px;transition:transform .2s,border-color .2s;}
+.feature-card:hover{transform:translateY(-4px);border-color:var(--accent-border);}
+.feature-icon{width:40px;height:40px;border-radius:var(--r-md);background:var(--accent-dim);border:1px solid var(--accent-border);display:flex;align-items:center;justify-content:center;font-size:1.125rem;margin-bottom:12px;}
+.feature-card h5{font-size:.9375rem;font-weight:600;margin-bottom:6px;color:var(--text-1);}
+.feature-card p{font-size:.8125rem;color:var(--text-2);margin:0;line-height:1.6;}
+
+.tech-pills{display:flex;flex-wrap:wrap;gap:8px;margin:24px 0;}
+.pill{display:inline-flex;align-items:center;gap:6px;padding:5px 12px;background:var(--bg-card);border:1px solid var(--border);border-radius:99px;font-size:.8125rem;color:var(--text-1);font-weight:500;font-family:var(--mono);}
+
+.counter-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:32px 0;}
+.counter-box{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--r-lg);padding:24px;text-align:center;}
+.counter-num{font-size:1.75rem;font-weight:700;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-variant-numeric:tabular-nums;}
+.counter-label{font-size:.75rem;color:var(--text-3);font-family:var(--mono);margin-top:4px;}
+
+.arch-flow{display:flex;align-items:center;justify-content:center;gap:0;flex-wrap:wrap;margin:24px 0;padding:32px 16px;background:var(--bg-card);border:1px solid var(--border);border-radius:var(--r-lg);}
+.arch-node{padding:12px 20px;background:var(--bg-raised);border:1px solid var(--accent-border);border-radius:var(--r-md);font-size:.8125rem;font-weight:600;color:var(--accent);font-family:var(--mono);}
+.arch-arrow{color:var(--text-3);font-size:1.25rem;padding:0 8px;}
+
+.future-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:24px 0;}
+.future-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--r-lg);padding:20px;transition:transform .2s,border-color .2s;text-align:center;}
+.future-card:hover{transform:translateY(-4px);border-color:var(--accent-border);}
+.future-card .f-icon{font-size:1.5rem;margin-bottom:8px;}
+.future-card h5{font-size:.875rem;font-weight:600;margin-bottom:4px;color:var(--text-1);}
+.future-card p{font-size:.75rem;color:var(--text-2);margin:0;line-height:1.5;}
+
+.cta{background:rgba(22,22,25,.7);backdrop-filter:blur(16px);border:1px solid var(--border);border-radius:var(--r-xl);padding:48px;text-align:center;margin:48px auto;max-width:700px;}
+.cta h3{font-size:1.5rem;font-weight:700;margin-bottom:12px;letter-spacing:-.02em;}
+.cta p{color:var(--text-2);margin-bottom:24px;}
+.cta-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:11px 22px;border-radius:var(--r-md);font-size:.875rem;font-weight:500;border:none;cursor:pointer;font-family:var(--font);transition:all .2s;text-decoration:none;line-height:1;}
+.btn-primary{background:var(--accent);color:#fff;}
+.btn-primary:hover{background:#7BA5FF;color:#fff;box-shadow:0 0 0 4px rgba(91,141,243,.15);}
+.btn-ghost{background:transparent;border:1px solid var(--border);color:var(--text-1);}
+.btn-ghost:hover{border-color:var(--border-s);background:var(--bg-card);}
+
+footer{padding:32px 24px;border-top:1px solid var(--border);text-align:center;}
+footer a{color:var(--text-2);font-size:.875rem;}
+footer p{font-size:.8125rem;color:var(--text-3);font-family:var(--mono);margin-top:8px;}
+
+.reveal{opacity:0;transform:translateY(20px);transition:opacity .5s cubic-bezier(.16,1,.3,1),transform .5s cubic-bezier(.16,1,.3,1);}
+.reveal.visible{opacity:1;transform:none;}
+
+@media(max-width:960px){.hero-stats{grid-template-columns:repeat(3,1fr);}.features-grid{grid-template-columns:repeat(2,1fr);}.counter-grid{grid-template-columns:repeat(2,1fr);}.future-grid{grid-template-columns:repeat(2,1fr);}.nav-links{display:none;}}
+@media(max-width:640px){.hero-stats{grid-template-columns:1fr;}.features-grid{grid-template-columns:1fr;}.counter-grid{grid-template-columns:1fr 1fr;}.future-grid{grid-template-columns:1fr 1fr;}.section{padding:64px 16px;}.arch-flow{flex-direction:column;}.arch-arrow{transform:rotate(90deg);}.cta{padding:32px 20px;margin:32px 16px;}}
+</style>
+</head><body>
+<div class="progress-bar" id="progressBar"></div>
+
+<nav>
+<div class="nav-inner">
+<a href="../index.html" class="nav-brand" aria-label="Back to portfolio"><span>←</span> Hossam Sabry</a>
+<div class="nav-links">
+<a href="#overview">Overview</a>
+<a href="#solution">Solution</a>
+<a href="#results">Results</a>
+<a href="#technical">Technical</a>
+</div>
+</div>
+</nav>
+
+<section class="hero">
+<div class="hero-orb hero-orb-1"></div>
+<div class="hero-orb hero-orb-2"></div>
+<div class="hero-badge reveal"><span class="pulse-dot"></span>Case Study</div>
+<h1 class="reveal"><span class="grad">Sheet Set</span> Manager</h1>
+<p class="hero-sub reveal">Web-based BIM document control platform for managing Revit drawing sheets, tracking revisions, and organizing print sets — eliminating spreadsheet chaos in construction documentation.</p>
+<div class="hero-stats reveal">
+<div class="stat-card">
+<div class="stat-num" data-count="70" data-prefix="~" data-suffix="%">~70%</div>
+<div class="stat-label">Faster Transmittals</div>
+</div>
+<div class="stat-card">
+<div class="stat-num" data-count="30" data-suffix="+">30+</div>
+<div class="stat-label">Sheets Managed</div>
+</div>
+<div class="stat-card">
+<div class="stat-num" data-count="5" data-suffix="">5</div>
+<div class="stat-label">Disciplines Tracked</div>
+</div>
+</div>
+<div class="scroll-ind">Scroll to explore<div class="arr"></div></div>
+</section>
+
+<div class="divider"></div>
+
+<!-- OVERVIEW -->
+<section class="section" id="overview">
+<h2 class="reveal">The Problem</h2>
+<p class="reveal">In multi-discipline BIM projects, document control is often the bottleneck that nobody talks about. Drawing sheets are tracked in fragmented Excel files, revision histories get lost in email threads, and print sets are assembled manually before every submission — a process that regularly takes 2–3 hours per transmittal.</p>
+
+<div class="callout callout-red reveal">
+<h4>⚠️ Core Challenges</h4>
+<ul>
+<li>Sheet indices maintained in disconnected Excel files across 4–5 discipline leads</li>
+<li>No single source of truth for current revision status — "Which revision is A-102 on?"</li>
+<li>Print set assembly required manual cross-referencing against approval status</li>
+<li>Superseded sheets accidentally included in transmittals — causing RFI storms</li>
+</ul>
+</div>
+
+<h3 class="reveal">Project Context</h3>
+<p class="reveal">This tool was built for the same Al Noor Tower Phase 2 project that drives the Clash Detection Dashboard. The coordination team needed a centralized, real-time view of all drawing sheets across Architectural, Structural, MEP, Civil, and General disciplines — with revision tracking and print set organization built in.</p>
+</section>
+
+<div class="divider"></div>
+
+<!-- SOLUTION -->
+<section class="section" id="solution">
+<h2 class="reveal">The Solution</h2>
+<p class="reveal">A browser-based sheet management platform that ingests Revit sheet export data (CSV/JSON), provides real-time filtering by discipline, revision, and approval status, and enables one-click print set generation — all without requiring any software installation.</p>
+
+<div class="features-grid reveal">
+<div class="feature-card">
+<div class="feature-icon">📋</div>
+<h5>Sheet Index</h5>
+<p>Searchable, filterable table of all project sheets with discipline badges, revision tracking, and status indicators.</p>
+</div>
+<div class="feature-card">
+<div class="feature-icon">📐</div>
+<h5>Revision Tracking</h5>
+<p>Visual revision timeline showing which sheets changed in each issue, with approval counts per revision.</p>
+</div>
+<div class="feature-card">
+<div class="feature-icon">🖨️</div>
+<h5>Print Set Builder</h5>
+<p>Drag sheets into print queues, filter by approval status, and generate formatted print indices for transmittals.</p>
+</div>
+<div class="feature-card">
+<div class="feature-icon">🏗️</div>
+<h5>Multi-Discipline</h5>
+<p>Color-coded discipline badges (Arch, Struct, MEP, Civil) for instant visual identification across 30+ sheets.</p>
+</div>
+<div class="feature-card">
+<div class="feature-icon">📥</div>
+<h5>Import / Export</h5>
+<p>CSV and JSON import from Revit schedule exports. One-click export to CSV, Excel (.xlsx), or formatted PDF.</p>
+</div>
+<div class="feature-card">
+<div class="feature-icon">⚡</div>
+<h5>Zero Install</h5>
+<p>Runs entirely in the browser with localStorage persistence. No servers, no databases, no IT department approval needed.</p>
+</div>
+</div>
+
+<h3 class="reveal">Architecture</h3>
+<div class="arch-flow reveal">
+<div class="arch-node">Revit Schedule Export</div>
+<div class="arch-arrow">→</div>
+<div class="arch-node">CSV / JSON</div>
+<div class="arch-arrow">→</div>
+<div class="arch-node">Sheet Parser</div>
+<div class="arch-arrow">→</div>
+<div class="arch-node">Filter Engine</div>
+<div class="arch-arrow">→</div>
+<div class="arch-node">Print Set Builder</div>
+</div>
+
+<div class="callout callout-blue reveal">
+<h4>💡 Key Design Decision</h4>
+<ul>
+<li>Built as a standalone web app — no backend required, runs from a USB drive if needed</li>
+<li>Uses the same project data schema as the Clash Dashboard for cross-tool consistency</li>
+<li>Print Set Builder uses approval status as a gate — only approved sheets can be queued</li>
+</ul>
+</div>
+</section>
+
+<div class="divider"></div>
+
+<!-- RESULTS -->
+<section class="section" id="results">
+<h2 class="reveal">Measurable Impact</h2>
+<div class="counter-grid reveal">
+<div class="counter-box">
+<div class="counter-num" data-count="70" data-prefix="~" data-suffix="%">~70%</div>
+<div class="counter-label">Transmittal Time Saved</div>
+</div>
+<div class="counter-box">
+<div class="counter-num" data-count="0" data-suffix="">0</div>
+<div class="counter-label">Superseded Sheet Errors</div>
+</div>
+<div class="counter-box">
+<div class="counter-num" data-count="5" data-suffix="">5</div>
+<div class="counter-label">Disciplines Unified</div>
+</div>
+<div class="counter-box">
+<div class="counter-num" data-count="30" data-suffix="+">30+</div>
+<div class="counter-label">Sheets Tracked</div>
+</div>
+</div>
+
+<div class="callout callout-green reveal">
+<h4>✅ Before vs. After</h4>
+<ul>
+<li>Transmittal prep: 2–3 hours → 15 minutes (print set auto-generated)</li>
+<li>Revision status queries: email chain → instant filter lookup</li>
+<li>Superseded sheet inclusion: 2–3 per transmittal → zero (status-gated print queue)</li>
+<li>Cross-discipline visibility: per-team silos → unified sheet index</li>
+</ul>
+</div>
+</section>
+
+<div class="divider"></div>
+
+<!-- TECHNICAL -->
+<section class="section" id="technical">
+<h2 class="reveal">Technical Deep Dive</h2>
+
+<h3 class="reveal">Technology Stack</h3>
+<div class="tech-pills reveal">
+<span class="pill">JavaScript (ES6+)</span>
+<span class="pill">HTML5 / CSS3</span>
+<span class="pill">SheetJS (XLSX)</span>
+<span class="pill">localStorage API</span>
+<span class="pill">Geist Typeface</span>
+<span class="pill">CSV Parser</span>
+</div>
+
+<div class="callout callout-purple reveal">
+<h4>🏗️ Engineering Highlights</h4>
+<ul>
+<li>Custom CSV parser handles quoted fields, multi-line values, and Unicode BIM data</li>
+<li>Discipline classification uses fuzzy matching — "MEP-Mechanical" maps to MEP automatically</li>
+<li>Print queue state is ephemeral by design — prevents stale print sets from persisting</li>
+<li>Revision timeline auto-groups sheets by revision code with approval count aggregation</li>
+</ul>
+</div>
+
+<h3 class="reveal">Future Enhancements</h3>
+<div class="future-grid reveal">
+<div class="future-card">
+<div class="f-icon">🔄</div>
+<h5>Revit Live Sync</h5>
+<p>Direct API integration with Revit schedule data</p>
+</div>
+<div class="future-card">
+<div class="f-icon">📊</div>
+<h5>Issue Analytics</h5>
+<p>Charts showing revision frequency per discipline</p>
+</div>
+<div class="future-card">
+<div class="f-icon">📧</div>
+<h5>Email Transmittals</h5>
+<p>Auto-generate transmittal letters with sheet lists</p>
+</div>
+<div class="future-card">
+<div class="f-icon">🔐</div>
+<h5>Approval Workflow</h5>
+<p>Multi-stage approval with digital signatures</p>
+</div>
+</div>
+</section>
+
+<!-- CTA -->
+<div class="section" style="padding-top:0;">
+<div class="cta reveal">
+<h3>Want to See It in Action?</h3>
+<p>I'd be happy to demo the sheet manager and discuss how document control automation can streamline your BIM workflows.</p>
+<div class="cta-btns">
+<a href="../sheet-manager/index.html" class="btn btn-primary">Try Live Tool →</a>
+<a href="../index.html#contact" class="btn btn-ghost">Get in Touch →</a>
+</div>
+</div>
+</div>
+
+<footer>
+<a href="../index.html" aria-label="Back to portfolio">← Back to Portfolio</a>
+<p>&copy; 2025 Hossam Sabry · BIM Automation Engineer</p>
+</footer>
+
+<script>
+window.addEventListener('scroll',()=>{const h=document.documentElement.scrollHeight-window.innerHeight;document.getElementById('progressBar').style.width=(window.scrollY/h)*100+'%';});
+const revealObs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');revealObs.unobserve(e.target);}});},{threshold:0.1,rootMargin:'0px 0px -40px 0px'});
+document.querySelectorAll('.reveal').forEach(el=>revealObs.observe(el));
+const navLinks=document.querySelectorAll('.nav-links a');
+const sections=document.querySelectorAll('section[id]');
+const navObs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){const id=e.target.getAttribute('id');navLinks.forEach(l=>l.classList.toggle('active',l.getAttribute('href')==='#'+id));}});},{threshold:0.2,rootMargin:'-60px 0px -40% 0px'});
+sections.forEach(s=>navObs.observe(s));
+document.querySelectorAll('.nav-links a[href^="#"]').forEach(a=>{a.addEventListener('click',e=>{e.preventDefault();const t=document.querySelector(a.getAttribute('href'));if(t) window.scrollTo({top:t.offsetTop-70,behavior:'smooth'});});});
+function animateCounter(el){const target=parseInt(el.dataset.count)||0;const prefix=el.dataset.prefix||'';const suffix=el.dataset.suffix||'';const duration=1200;const start=performance.now();function tick(now){const progress=Math.min((now-start)/duration,1);const eased=1-Math.pow(1-progress,3);el.textContent=prefix+Math.round(eased*target)+suffix;if(progress<1) requestAnimationFrame(tick);}requestAnimationFrame(tick);}
+const counterObs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){animateCounter(e.target);counterObs.unobserve(e.target);}});},{threshold:0.5});
+document.querySelectorAll('.stat-num[data-count],.counter-num[data-count]').forEach(el=>counterObs.observe(el));
+</script>
+</body>
+</html>

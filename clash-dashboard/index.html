@@ -1,1012 +1,1140 @@
 <!doctype html>
 <html lang="en">
+
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title translate="no">Clash Detection Dashboard - Next Level</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title translate="no">Clash Detection Dashboard - Next Level</title>
 
-<!-- Favicon -->
-<link rel="icon" type="image/svg+xml" href="../favicon.svg">
-<link rel="alternate icon" type="image/x-icon" href="../favicon.ico">
-<link rel="apple-touch-icon" sizes="180x180" href="../favicon.svg">
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="alternate icon" type="image/x-icon" href="../favicon.ico">
+  <link rel="apple-touch-icon" sizes="180x180" href="../favicon.svg">
 
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-MWW9X0CJQF"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-MWW9X0CJQF"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
 
-  gtag('config', 'G-MWW9X0CJQF', {
-    'page_title': 'Clash Detection Dashboard - Next Level',
-    'page_path': '/clash-dashboard/index.html',
-  });
-</script>
+    gtag('config', 'G-MWW9X0CJQF', {
+      'page_title': 'Clash Detection Dashboard - Next Level',
+      'page_path': '/clash-dashboard/index.html',
+    });
+  </script>
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Montserrat:wght@600;700&display=swap" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
-<style>
-  :root { 
-    --bg: #000000; 
-    --bg-secondary: #0a0a0a; 
-    --card: #111111; 
-    --primary: #3b82f6; 
-    --secondary: #60a5fa; 
-    --accent: #1e40af; 
-    --text-primary: #e5e7eb; 
-    --text-secondary: #9ca3af; 
-    --border: rgba(59, 130, 246, 0.1); 
-    --gradient-1: linear-gradient(135deg, #1e3a8a, #2563eb, #3b82f6);
-    --gradient-2: linear-gradient(135deg, #2563eb, #3b82f6, #60a5fa);
-    color-scheme: dark; 
-  }
-  
-  * { box-sizing: border-box; }
-  
-  body { 
-    margin: 0; 
-    font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto; 
-    background: var(--bg); 
-    color: var(--text-primary); 
-    overflow-x: hidden;
-    position: relative;
-  }
-  
-  /* Animated Background */
-  .bg-gradient {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: -1;
-    background: 
-      radial-gradient(at 20% 30%, rgba(30, 58, 138, 0.15) 0px, transparent 50%),
-      radial-gradient(at 80% 20%, rgba(37, 99, 235, 0.12) 0px, transparent 50%),
-      radial-gradient(at 40% 70%, rgba(59, 130, 246, 0.1) 0px, transparent 50%);
-    animation: bgMove 20s ease-in-out infinite;
-  }
-  
-  @keyframes bgMove {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.8; }
-  }
-  
-  header { 
-    padding: 24px 32px; 
-    display: flex; 
-    align-items: center; 
-    justify-content: space-between;
-    gap: 16px; 
-    border-bottom: 1px solid var(--border);
-    background: rgba(17, 17, 17, 0.8);
-    backdrop-filter: blur(10px);
-    position: sticky;
-    top: 0;
-    z-index: 100;
-  }
-  
-  .header-left {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-  }
-  
-  .header-icon {
-    width: 40px;
-    height: 40px;
-    background: var(--gradient-1);
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 20px;
-    animation: iconFloat 3s ease-in-out infinite;
-  }
-  
-  @keyframes iconFloat {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-5px); }
-  }
-  
-  header h1 { 
-    margin: 0; 
-    font-family: Montserrat, sans-serif; 
-    background: var(--gradient-2);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    font-size: 24px; 
-    font-weight: 700;
-  }
-  
-  .header-subtitle {
-    color: var(--text-secondary);
-    font-size: 13px;
-    font-weight: 500;
-  }
-  
-  .header-actions {
-    display: flex;
-    gap: 12px;
-    align-items: center;
-  }
-  
-  .container { 
-    max-width: 1400px; 
-    margin: 32px auto; 
-    padding: 0 24px; 
-  }
-  
-  /* Glassmorphic Cards */
-  .card { 
-    background: rgba(17, 17, 17, 0.8); 
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    padding: 24px; 
-    border-radius: 16px; 
-    margin-bottom: 24px; 
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5),
-                inset 0 1px 0 rgba(59, 130, 246, 0.1);
-    border: 1px solid var(--border);
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  }
-  
-  .card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 12px 48px rgba(59, 130, 246, 0.2),
-                inset 0 1px 0 rgba(59, 130, 246, 0.2);
-  }
-  
-  /* Upload Zone */
-  .upload-zone {
-    border: 2px dashed var(--border);
-    border-radius: 12px;
-    padding: 40px;
-    text-align: center;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    background: rgba(59, 130, 246, 0.02);
-  }
-  
-  .upload-zone:hover,
-  .upload-zone.drag-over {
-    border-color: var(--primary);
-    background: rgba(59, 130, 246, 0.08);
-    transform: scale(1.02);
-  }
-  
-  .upload-icon {
-    font-size: 48px;
-    margin-bottom: 16px;
-    opacity: 0.6;
-  }
-  
-  .upload-text {
-    font-size: 16px;
-    font-weight: 600;
-    color: var(--text-primary);
-    margin-bottom: 8px;
-  }
-  
-  .upload-hint {
-    font-size: 13px;
-    color: var(--text-secondary);
-  }
-  
-  #fileInput {
-    display: none;
-  }
-  
-  /* Buttons */
-  .btn { 
-    background: var(--gradient-1); 
-    border: none; 
-    color: #fff; 
-    padding: 12px 20px; 
-    border-radius: 10px; 
-    cursor: pointer; 
-    font-weight: 600;
-    font-size: 14px;
-    transition: all 0.3s ease;
-    position: relative;
-    overflow: hidden;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-  }
-  
-  .btn::before {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 0;
-    height: 0;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.2);
-    transform: translate(-50%, -50%);
-    transition: width 0.6s, height 0.6s;
-  }
-  
-  .btn:hover::before {
-    width: 300px;
-    height: 300px;
-  }
-  
-  .btn:hover { 
-    transform: translateY(-2px);
-    box-shadow: 0 8px 24px rgba(59, 130, 246, 0.4);
-  }
-  
-  .btn:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-    transform: none;
-  }
-  
-  .btn:disabled:hover {
-    box-shadow: none;
-  }
-  
-  .btn.secondary { 
-    background: transparent; 
-    border: 1px solid var(--border); 
-    color: var(--text-primary); 
-  }
-  
-  .btn.secondary:hover {
-    background: rgba(59, 130, 246, 0.1);
-    border-color: var(--primary);
-  }
-  
-  .btn.secondary:disabled {
-    opacity: 0.4;
-    border-color: var(--border);
-  }
-  
-  .btn-icon {
-    font-size: 16px;
-  }
-  
-  /* Stats Grid */
-  .stats-grid { 
-    display: grid; 
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
-    gap: 16px; 
-    margin-bottom: 24px; 
-  }
-  
-  .stat-card {
-    background: rgba(17, 17, 17, 0.6);
-    padding: 20px;
-    border-radius: 12px;
-    border: 1px solid var(--border);
-    transition: all 0.3s ease;
-    position: relative;
-    overflow: hidden;
-  }
-  
-  .stat-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 3px;
-    background: var(--gradient-2);
-    transform: scaleX(0);
-    transition: transform 0.3s ease;
-  }
-  
-  .stat-card:hover::before {
-    transform: scaleX(1);
-  }
-  
-  .stat-card:hover {
-    transform: translateY(-4px);
-    border-color: var(--primary);
-    box-shadow: 0 8px 24px rgba(59, 130, 246, 0.2);
-  }
-  
-  .stat-label {
-    color: var(--text-secondary);
-    font-size: 13px;
-    font-weight: 500;
-    margin-bottom: 8px;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-  }
-  
-  .stat-value { 
-    font-size: 32px; 
-    font-weight: 800; 
-    color: #fff;
-    background: var(--gradient-2);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-  
-  .stat-change {
-    font-size: 12px;
-    margin-top: 8px;
-    display: flex;
-    align-items: center;
-    gap: 4px;
-  }
-  
-  .stat-change.positive { color: #60a5fa; }
-  .stat-change.negative { color: #3b82f6; }
-  
-  /* Filter Section */
-  .filter-section {
-    margin-bottom: 24px;
-  }
-  
-  .filter-row { 
-    display: flex; 
-    gap: 12px; 
-    flex-wrap: wrap; 
-    margin-bottom: 16px;
-    padding: 12px;
-    border-radius: 10px;
-    background: rgba(59, 130, 246, 0.05);
-    border: 1px solid var(--border);
-  }
-  
-  #bulkActions {
-    background: rgba(59, 130, 246, 0.1);
-    border: 1px solid rgba(59, 130, 246, 0.3);
-    animation: slideDown 0.2s ease;
-  }
-  
-  @keyframes slideDown {
-    from { opacity: 0; transform: translateY(-10px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-  
-  .input, select { 
-    background: rgba(17, 17, 17, 0.6); 
-    border: 1px solid var(--border); 
-    color: var(--text-primary); 
-    padding: 10px 14px; 
-    border-radius: 10px;
-    font-size: 14px;
-    transition: all 0.3s ease;
-    flex: 1;
-    min-width: 200px;
-  }
-  
-  .input:focus, select:focus {
-    outline: none;
-    border-color: var(--primary);
-    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
-  }
-  
-  .input::placeholder {
-    color: var(--text-secondary);
-  }
-  
-  /* Table */
-  .table-container {
-    overflow: auto;
-    max-height: 500px;
-    border-radius: 12px;
-    border: 1px solid var(--border);
-  }
-  
-  table { 
-    width: 100%; 
-    border-collapse: collapse; 
-    font-size: 13px; 
-  }
-  
-  thead {
-    position: sticky;
-    top: 0;
-    background: rgba(17, 17, 17, 0.95);
-    backdrop-filter: blur(10px);
-    z-index: 10;
-  }
-  
-  th, td { 
-    text-align: left; 
-    padding: 14px 12px; 
-    border-bottom: 1px solid var(--border); 
-  }
-  
-  th { 
-    font-weight: 600; 
-    color: var(--text-secondary); 
-    font-size: 12px;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-  }
-  
-  tbody tr {
-    transition: all 0.2s ease;
-    cursor: pointer;
-  }
-  
-  tbody tr:hover {
-    background: rgba(59, 130, 246, 0.08);
-  }
-  
-  tbody tr.selected {
-    background: rgba(59, 130, 246, 0.25);
-    border-left: 4px solid var(--primary);
-    box-shadow: inset 0 0 0 1px var(--primary);
-  }
-  
-  /* Priority Badges */
-  .priority-badge {
-    padding: 4px 10px;
-    border-radius: 6px;
-    font-size: 11px;
-    font-weight: 600;
-    text-transform: uppercase;
-    display: inline-block;
-  }
-  
-  .priority-high {
-    background: rgba(239, 68, 68, 0.2);
-    color: #ef4444;
-    border: 1px solid rgba(239, 68, 68, 0.3);
-  }
-  
-  .priority-medium {
-    background: rgba(251, 191, 36, 0.2);
-    color: #fbbf24;
-    border: 1px solid rgba(251, 191, 36, 0.3);
-  }
-  
-  .priority-low {
-    background: rgba(96, 165, 250, 0.2);
-    color: #60a5fa;
-    border: 1px solid rgba(96, 165, 250, 0.3);
-  }
-  
-  /* Status Badges */
-  .status-badge {
-    padding: 4px 10px;
-    border-radius: 6px;
-    font-size: 11px;
-    font-weight: 600;
-    text-transform: uppercase;
-    display: inline-block;
-  }
-  
-  .status-open {
-    background: rgba(239, 68, 68, 0.2);
-    color: #ef4444;
-    border: 1px solid rgba(239, 68, 68, 0.3);
-  }
-  
-  .status-assigned {
-    background: rgba(251, 191, 36, 0.2);
-    color: #fbbf24;
-    border: 1px solid rgba(251, 191, 36, 0.3);
-  }
-  
-  .status-resolved {
-    background: rgba(34, 197, 94, 0.2);
-    color: #22c55e;
-    border: 1px solid rgba(34, 197, 94, 0.3);
-  }
-  
-  /* Details Panel */
-  .details-panel {
-    display: grid;
-    grid-template-columns: 2fr 1fr;
-    gap: 24px;
-  }
-  
-  .details-main {
-    display: grid;
-    gap: 16px;
-  }
-  
-  .detail-item {
-    display: flex;
-    gap: 12px;
-  }
-  
-  .detail-label {
-    font-weight: 600;
-    color: var(--text-secondary);
-    min-width: 120px;
-  }
-  
-  .detail-value {
-    color: var(--text-primary);
-  }
-  
-  .details-actions {
-    background: rgba(17, 17, 17, 0.4);
-    padding: 20px;
-    border-radius: 12px;
-    border: 1px solid var(--border);
-  }
-  
-  .action-title {
-    font-size: 14px;
-    font-weight: 600;
-    color: var(--text-primary);
-    margin-bottom: 16px;
-  }
-  
-  .form-group {
-    margin-bottom: 16px;
-  }
-  
-  .form-label {
-    display: block;
-    font-size: 12px;
-    font-weight: 500;
-    color: var(--text-secondary);
-    margin-bottom: 8px;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-  }
-  
-  /* Charts */
-  .charts-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-    gap: 24px;
-    margin-bottom: 24px;
-  }
-  
-  .chart-card {
-    background: rgba(17, 17, 17, 0.6);
-    padding: 24px;
-    border-radius: 12px;
-    border: 1px solid var(--border);
-  }
-  
-  .chart-title {
-    font-size: 16px;
-    font-weight: 600;
-    color: var(--text-primary);
-    margin-bottom: 20px;
-  }
-  
-  .chart-container {
-    position: relative;
-    height: 300px;
-  }
-  
-  /* Timeline */
-  .timeline {
-    position: relative;
-    padding-left: 30px;
-  }
-  
-  .timeline::before {
-    content: '';
-    position: absolute;
-    left: 10px;
-    top: 0;
-    bottom: 0;
-    width: 2px;
-    background: var(--gradient-1);
-  }
-  
-  .timeline-item {
-    position: relative;
-    padding-bottom: 24px;
-  }
-  
-  .timeline-dot {
-    position: absolute;
-    left: -24px;
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    background: var(--primary);
-    border: 3px solid var(--bg);
-    box-shadow: 0 0 0 2px var(--primary);
-  }
-  
-  .timeline-content {
-    background: rgba(17, 17, 17, 0.4);
-    padding: 16px;
-    border-radius: 10px;
-    border: 1px solid var(--border);
-  }
-  
-  .timeline-date {
-    font-size: 12px;
-    color: var(--text-secondary);
-    margin-bottom: 8px;
-  }
-  
-  .timeline-title {
-    font-weight: 600;
-    color: var(--text-primary);
-    margin-bottom: 4px;
-  }
-  
-  .timeline-desc {
-    font-size: 13px;
-    color: var(--text-secondary);
-  }
-  
-  /* Tabs */
-  .tabs {
-    display: flex;
-    gap: 8px;
-    margin-bottom: 24px;
-    border-bottom: 1px solid var(--border);
-  }
-  
-  .tab {
-    padding: 12px 24px;
-    background: transparent;
-    border: none;
-    color: var(--text-secondary);
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    border-bottom: 2px solid transparent;
-  }
-  
-  .tab:hover {
-    color: var(--text-primary);
-  }
-  
-  .tab.active {
-    color: var(--primary);
-    border-bottom-color: var(--primary);
-  }
-  
-  .tab-content {
-    display: none;
-  }
-  
-  .tab-content.active {
-    display: block;
-    animation: fadeIn 0.3s ease;
-  }
-  
-  @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-  
-  /* Loading */
-  .loading {
-    display: inline-block;
-    width: 20px;
-    height: 20px;
-    border: 3px solid rgba(255, 255, 255, 0.3);
-    border-top-color: white;
-    border-radius: 50%;
-    animation: spin 0.8s linear infinite;
-  }
-  
-  @keyframes spin {
-    to { transform: rotate(360deg); }
-  }
-  
-  /* Toast */
-  .toast {
-    position: fixed;
-    bottom: 24px;
-    right: 24px;
-    background: rgba(17, 17, 17, 0.95);
-    backdrop-filter: blur(10px);
-    padding: 16px 24px;
-    border-radius: 10px;
-    border: 1px solid var(--border);
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
-    z-index: 1000;
-    transform: translateX(400px);
-    transition: transform 0.3s ease;
-  }
-  
-  .toast.show {
-    transform: translateX(0);
-  }
-  
-  .toast.success {
-    border-left: 4px solid #22c55e;
-  }
-  
-  .toast.error {
-    border-left: 4px solid #ef4444;
-  }
-  
-  footer { 
-    color: var(--text-secondary); 
-    text-align: center; 
-    margin: 60px 0 40px 0;
-    font-size: 13px;
-  }
-  
-  /* Responsive */
-  @media (max-width: 768px) {
-    header { 
-      flex-direction: column; 
-      align-items: flex-start; 
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&family=Geist+Mono:wght@400;500&display=swap"
+    rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+  <style>
+    :root {
+      --bg: #080809;
+      --bg-raised: #0F0F11;
+      --bg-card: #161619;
+      --bg-inset: #1C1C20;
+      --accent: #5B8DF3;
+      --accent-2: #9B5CF6;
+      --accent-dim: rgba(91, 141, 243, 0.12);
+      --accent-border: rgba(91, 141, 243, 0.25);
+      --danger: #EF4444;
+      --warning: #FBBF24;
+      --success: #22C55E;
+      --info: #60A5FA;
+      --text-1: #F2F2F2;
+      --text-2: #A1A1AA;
+      --text-3: #52525B;
+      --border: rgba(255, 255, 255, 0.09);
+      --border-s: rgba(255, 255, 255, 0.16);
+      --grad: linear-gradient(135deg, #5B8DF3, #9B5CF6);
+      --font: 'Geist', 'Inter', system-ui, sans-serif;
+      --mono: 'Geist Mono', monospace;
+      color-scheme: dark;
     }
-    
-    .details-panel {
-      grid-template-columns: 1fr;
+
+    * {
+      box-sizing: border-box;
     }
-    
-    .charts-grid {
-      grid-template-columns: 1fr;
+
+    body {
+      margin: 0;
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--text-1);
+      overflow-x: hidden;
+      font-size: 14px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
     }
-    
+
+    ::selection {
+      background: var(--accent-dim);
+      color: var(--accent);
+    }
+
+    ::-webkit-scrollbar {
+      width: 5px;
+      height: 5px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: var(--bg);
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--border);
+      border-radius: 99px;
+    }
+
+    .bg-gradient {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      background: radial-gradient(at 20% 30%, rgba(91, 141, 243, 0.06) 0, transparent 50%), radial-gradient(at 80% 20%, rgba(155, 92, 246, 0.04) 0, transparent 50%);
+    }
+
+    /* Header */
+    header {
+      padding: 16px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      border-bottom: 1px solid var(--border);
+      background: var(--bg-raised);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .header-icon {
+      width: 36px;
+      height: 36px;
+      background: var(--grad);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+    }
+
+    header h1 {
+      margin: 0;
+      font-family: var(--font);
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--text-1);
+      letter-spacing: -0.02em;
+      -webkit-text-fill-color: var(--text-1);
+      background: none;
+    }
+
+    .header-subtitle {
+      color: var(--text-3);
+      font-size: 12px;
+      font-weight: 500;
+      font-family: var(--mono);
+    }
+
+    .header-actions {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: 24px auto;
+      padding: 0 24px;
+    }
+
+    /* Cards */
+    .card {
+      background: var(--bg-card);
+      backdrop-filter: blur(10px);
+      padding: 24px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+      border: 1px solid var(--border);
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .card:hover {
+      border-color: var(--border-s);
+    }
+
+    /* Upload */
+    .upload-zone {
+      border: 2px dashed rgba(91, 141, 243, 0.3);
+      border-radius: 12px;
+      padding: 40px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      background: rgba(91, 141, 243, 0.03);
+    }
+
+    .upload-zone:hover,
+    .upload-zone.drag-over {
+      border-color: var(--accent);
+      background: rgba(91, 141, 243, 0.08);
+    }
+
+    .upload-icon {
+      font-size: 40px;
+      margin-bottom: 12px;
+      opacity: 0.5;
+    }
+
+    .upload-text {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text-1);
+      margin-bottom: 6px;
+    }
+
+    .upload-hint {
+      font-size: 12px;
+      color: var(--text-3);
+      font-family: var(--mono);
+    }
+
+    #fileInput {
+      display: none;
+    }
+
+    /* Buttons */
+    .btn {
+      background: var(--accent);
+      border: none;
+      color: #fff;
+      padding: 9px 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 13px;
+      font-family: var(--font);
+      transition: all 0.15s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(255, 255, 255, 0);
+      transition: background 0.15s;
+    }
+
+    .btn:hover::before {
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 16px rgba(91, 141, 243, 0.3);
+    }
+
+    .btn:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .btn:disabled:hover {
+      box-shadow: none;
+      transform: none;
+    }
+
+    .btn.secondary {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text-2);
+    }
+
+    .btn.secondary:hover {
+      border-color: var(--accent-border);
+      background: var(--accent-dim);
+      color: var(--text-1);
+    }
+
+    .btn.secondary:disabled {
+      opacity: 0.3;
+      border-color: var(--border);
+    }
+
+    .btn.secondary:disabled:hover {
+      background: transparent;
+    }
+
+    .btn-icon {
+      font-size: 14px;
+    }
+
+    /* Stats */
     .stats-grid {
-      grid-template-columns: repeat(2, 1fr);
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin-bottom: 20px;
     }
-  }
-</style>
+
+    .stat-card {
+      background: rgba(22, 22, 25, 0.8);
+      padding: 20px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      transition: all 0.2s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .stat-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: var(--grad);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.3s ease;
+    }
+
+    .stat-card:hover::before {
+      transform: scaleX(1);
+    }
+
+    .stat-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--accent-border);
+      box-shadow: 0 8px 24px rgba(91, 141, 243, 0.08);
+    }
+
+    .stat-label {
+      color: var(--text-3);
+      font-size: 11px;
+      font-weight: 600;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      font-family: var(--mono);
+    }
+
+    .stat-value {
+      font-size: 32px;
+      font-weight: 800;
+      background: var(--grad);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      letter-spacing: -0.03em;
+    }
+
+    .stat-change {
+      font-size: 11px;
+      margin-top: 8px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      color: var(--text-3);
+      font-family: var(--mono);
+    }
+
+    .stat-change.positive {
+      color: var(--accent);
+    }
+
+    .stat-change.negative {
+      color: var(--danger);
+    }
+
+    /* Filters */
+    .filter-section {
+      margin-bottom: 20px;
+    }
+
+    .filter-row {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 12px;
+      padding: 12px;
+      border-radius: 8px;
+      background: rgba(91, 141, 243, 0.03);
+      border: 1px solid var(--border);
+    }
+
+    #bulkActions {
+      background: rgba(91, 141, 243, 0.06);
+      border: 1px solid var(--accent-border);
+      animation: slideDown 0.2s ease;
+    }
+
+    @keyframes slideDown {
+      from {
+        opacity: 0;
+        transform: translateY(-8px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .input,
+    select {
+      background: var(--bg-raised);
+      border: 1px solid var(--border);
+      color: var(--text-1);
+      padding: 9px 12px;
+      border-radius: 6px;
+      font-size: 13px;
+      font-family: var(--font);
+      transition: all 0.15s ease;
+      flex: 1;
+      min-width: 160px;
+    }
+
+    .input:focus,
+    select:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(91, 141, 243, 0.15);
+    }
+
+    .input::placeholder {
+      color: var(--text-3);
+    }
+
+    /* Table */
+    .table-container {
+      overflow: auto;
+      max-height: 500px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+
+    thead {
+      position: sticky;
+      top: 0;
+      background: var(--bg-raised);
+      backdrop-filter: blur(10px);
+      z-index: 10;
+    }
+
+    th,
+    td {
+      text-align: left;
+      padding: 12px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    th {
+      font-weight: 600;
+      color: var(--text-3);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      font-family: var(--mono);
+    }
+
+    tbody tr {
+      transition: background 0.15s ease;
+      cursor: pointer;
+    }
+
+    tbody tr:hover {
+      background: rgba(91, 141, 243, 0.06);
+    }
+
+    tbody tr.selected {
+      background: rgba(91, 141, 243, 0.15);
+      border-left: 3px solid var(--accent);
+    }
+
+    /* Badges */
+    .priority-badge,
+    .status-badge {
+      padding: 3px 10px;
+      border-radius: 999px;
+      font-size: 10px;
+      font-weight: 600;
+      text-transform: uppercase;
+      display: inline-block;
+      letter-spacing: 0.3px;
+      font-family: var(--mono);
+    }
+
+    .priority-high {
+      background: rgba(239, 68, 68, 0.15);
+      color: #EF4444;
+      border: 1px solid rgba(239, 68, 68, 0.25);
+    }
+
+    .priority-medium {
+      background: rgba(251, 191, 36, 0.15);
+      color: #FBBF24;
+      border: 1px solid rgba(251, 191, 36, 0.25);
+    }
+
+    .priority-low {
+      background: rgba(96, 165, 250, 0.15);
+      color: #60A5FA;
+      border: 1px solid rgba(96, 165, 250, 0.25);
+    }
+
+    .status-open {
+      background: rgba(239, 68, 68, 0.15);
+      color: #EF4444;
+      border: 1px solid rgba(239, 68, 68, 0.25);
+    }
+
+    .status-assigned {
+      background: rgba(251, 191, 36, 0.15);
+      color: #FBBF24;
+      border: 1px solid rgba(251, 191, 36, 0.25);
+    }
+
+    .status-resolved {
+      background: rgba(34, 197, 94, 0.15);
+      color: #22C55E;
+      border: 1px solid rgba(34, 197, 94, 0.25);
+    }
+
+    /* Details */
+    .details-panel {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 20px;
+    }
+
+    .details-main {
+      display: grid;
+      gap: 12px;
+    }
+
+    .detail-item {
+      display: flex;
+      gap: 12px;
+    }
+
+    .detail-label {
+      font-weight: 600;
+      color: var(--text-3);
+      min-width: 120px;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      font-family: var(--mono);
+      padding-top: 2px;
+    }
+
+    .detail-value {
+      color: var(--text-1);
+    }
+
+    .details-actions {
+      background: var(--bg-card);
+      padding: 20px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+    }
+
+    .action-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-1);
+      margin-bottom: 16px;
+    }
+
+    .form-group {
+      margin-bottom: 16px;
+    }
+
+    .form-label {
+      display: block;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-3);
+      margin-bottom: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      font-family: var(--mono);
+    }
+
+    /* Charts */
+    .charts-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+
+    .chart-card {
+      background: var(--bg-card);
+      padding: 24px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+    }
+
+    .chart-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-2);
+      margin-bottom: 16px;
+    }
+
+    .chart-container {
+      position: relative;
+      height: 280px;
+    }
+
+    /* Timeline */
+    .timeline {
+      position: relative;
+      padding-left: 30px;
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 10px;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: var(--grad);
+    }
+
+    .timeline-item {
+      position: relative;
+      padding-bottom: 20px;
+    }
+
+    .timeline-dot {
+      position: absolute;
+      left: -24px;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: var(--accent);
+      border: 2px solid var(--bg);
+      box-shadow: 0 0 0 2px var(--accent);
+    }
+
+    .timeline-content {
+      background: var(--bg-card);
+      padding: 16px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+    }
+
+    .timeline-date {
+      font-size: 11px;
+      color: var(--text-3);
+      margin-bottom: 6px;
+      font-family: var(--mono);
+    }
+
+    .timeline-title {
+      font-weight: 600;
+      color: var(--text-1);
+      margin-bottom: 4px;
+      font-size: 14px;
+    }
+
+    .timeline-desc {
+      font-size: 12px;
+      color: var(--text-2);
+    }
+
+    /* Tabs */
+    .tabs {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 20px;
+      padding: 4px;
+      background: var(--bg-raised);
+      border-radius: 10px;
+      border: 1px solid var(--border);
+    }
+
+    .tab {
+      padding: 10px 20px;
+      background: transparent;
+      border: 1px solid transparent;
+      border-radius: 8px;
+      color: var(--text-3);
+      font-weight: 600;
+      font-size: 13px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-family: var(--font);
+    }
+
+    .tab:hover {
+      color: var(--text-2);
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    .tab.active {
+      color: var(--accent);
+      background: var(--accent-dim);
+      border-color: var(--accent-border);
+    }
+
+    .tab-content {
+      display: none;
+    }
+
+    .tab-content.active {
+      display: block;
+      animation: fadeUp 0.3s ease;
+    }
+
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(8px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Loading */
+    .loading {
+      display: inline-block;
+      width: 18px;
+      height: 18px;
+      border: 2px solid rgba(255, 255, 255, 0.2);
+      border-top-color: var(--accent);
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    /* Toast */
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: rgba(22, 22, 25, 0.95);
+      backdrop-filter: blur(20px);
+      padding: 14px 20px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+      z-index: 1000;
+      transform: translateX(400px);
+      transition: transform 0.3s ease;
+      font-size: 13px;
+    }
+
+    .toast.show {
+      transform: translateX(0);
+    }
+
+    .toast.success {
+      border-left: 4px solid var(--success);
+    }
+
+    .toast.error {
+      border-left: 4px solid var(--danger);
+    }
+
+    footer {
+      color: var(--text-3);
+      text-align: center;
+      margin: 48px 0 32px;
+      font-size: 12px;
+      font-family: var(--mono);
+    }
+
+    /* Responsive */
+    @media(max-width:1024px) {
+      .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media(max-width:768px) {
+      header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .header-actions {
+        width: 100%;
+      }
+
+      .details-panel {
+        grid-template-columns: 1fr;
+      }
+
+      .charts-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .tabs {
+        flex-wrap: wrap;
+      }
+    }
+
+    /* Entry animation */
+    @keyframes cardIn {
+      from {
+        opacity: 0;
+        transform: translateY(12px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .stat-card {
+      animation: cardIn 0.4s ease both;
+    }
+
+    .stat-card:nth-child(1) {
+      animation-delay: 0s;
+    }
+
+    .stat-card:nth-child(2) {
+      animation-delay: 0.06s;
+    }
+
+    .stat-card:nth-child(3) {
+      animation-delay: 0.12s;
+    }
+
+    .stat-card:nth-child(4) {
+      animation-delay: 0.18s;
+    }
+  </style>
 </head>
+
 <body>
-<div class="bg-gradient"></div>
+  <div class="bg-gradient"></div>
 
-<header>
-  <div class="header-left">
-    <div class="header-icon">⚡</div>
-    <div>
-      <h1>Clash Detection Dashboard</h1>
-      <div class="header-subtitle">Advanced BIM Coordination Platform</div>
-    </div>
-  </div>
-  <div class="header-actions">
-    <button id="undoBtn" class="btn secondary" title="Undo (Ctrl+Z)">
-      <span class="btn-icon">↶</span>
-      <span>Undo</span>
-    </button>
-    <button id="redoBtn" class="btn secondary" title="Redo (Ctrl+Shift+Z)">
-      <span class="btn-icon">↷</span>
-      <span>Redo</span>
-    </button>
-    <button id="loadSampleBtn" class="btn secondary">
-      <span class="btn-icon">📦</span>
-      <span>Load Sample</span>
-    </button>
-    <button id="downloadJson" class="btn secondary">
-      <span class="btn-icon">📄</span>
-      <span>Export JSON</span>
-    </button>
-    <button id="downloadExcel" class="btn secondary">
-      <span class="btn-icon">📊</span>
-      <span>Export Excel</span>
-    </button>
-    <button id="downloadCsv" class="btn">
-      <span class="btn-icon">📥</span>
-      <span>Download CSV</span>
-    </button>
-    <button id="printReport" class="btn secondary">
-      <span class="btn-icon">🖨️</span>
-      <span>Print PDF</span>
-    </button>
-  </div>
-</header>
-
-<div class="container">
-
-  <!-- Upload Section -->
-  <div class="card">
-    <input id="fileInput" type="file" accept=".csv,.json" />
-    <div class="upload-zone" id="uploadZone">
-      <div class="upload-icon">📁</div>
-      <div class="upload-text">Drag & Drop your clash data file here</div>
-      <div class="upload-hint">or click to browse • Supports CSV & JSON formats</div>
-    </div>
-  </div>
-
-  <!-- Stats Dashboard -->
-  <div class="stats-grid" id="summary">
-    <div class="stat-card">
-      <div class="stat-label">Total Clashes</div>
-      <div class="stat-value" id="totalClashes">0</div>
-      <div class="stat-change positive" id="totalChange">📈 +0 from last week</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-label">Open</div>
-      <div class="stat-value" id="openClashes">0</div>
-      <div class="stat-change negative" id="openChange">⚠️ Needs attention</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-label">Assigned</div>
-      <div class="stat-value" id="assignedClashes">0</div>
-      <div class="stat-change" id="assignedChange">👥 In progress</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-label">Resolved</div>
-      <div class="stat-value" id="resolvedClashes">0</div>
-      <div class="stat-change positive" id="resolvedChange">✅ Completed</div>
-    </div>
-  </div>
-
-  <!-- KPI Metrics -->
-  <div class="stats-grid" id="kpiMetrics">
-    <div class="stat-card">
-      <div class="stat-label">Resolution Rate</div>
-      <div class="stat-value" id="kpiResolution">0%</div>
-      <div class="stat-change positive">Target: 100%</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-label">High Priority</div>
-      <div class="stat-value" id="kpiHighPriority">0</div>
-      <div class="stat-change negative">Urgent</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-label">Avg Resolution Time</div>
-      <div class="stat-value" id="kpiAvgTime">N/A</div>
-      <div class="stat-change">Days to resolve</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-label">Unassigned</div>
-      <div class="stat-value" id="kpiUnassigned">0</div>
-      <div class="stat-change negative">Pending assignment</div>
-    </div>
-  </div>
-
-  <!-- Tabs Navigation -->
-  <div class="tabs">
-    <button class="tab active" data-tab="overview">📊 Overview</button>
-    <button class="tab" data-tab="table">📋 Clash Table</button>
-    <button class="tab" data-tab="analytics">📈 Analytics</button>
-    <button class="tab" data-tab="timeline">⏱️ Timeline</button>
-  </div>
-
-  <!-- Tab: Overview -->
-  <div class="tab-content active" id="overview">
-    <div class="charts-grid">
-      <div class="chart-card">
-        <div class="chart-title">Clash Distribution by Priority</div>
-        <div class="chart-container">
-          <canvas id="priorityChart"></canvas>
-        </div>
-      </div>
-      <div class="chart-card">
-        <div class="chart-title">Status Progress</div>
-        <div class="chart-container">
-          <canvas id="statusChart"></canvas>
-        </div>
+  <header>
+    <div class="header-left">
+      <div class="header-icon">⚡</div>
+      <div>
+        <h1>Clash Detection Dashboard</h1>
+        <div class="header-subtitle">Advanced BIM Coordination Platform</div>
       </div>
     </div>
-  </div>
+    <div class="header-actions">
+      <button id="undoBtn" class="btn secondary" title="Undo (Ctrl+Z)">
+        <span class="btn-icon">↶</span>
+        <span>Undo</span>
+      </button>
+      <button id="redoBtn" class="btn secondary" title="Redo (Ctrl+Shift+Z)">
+        <span class="btn-icon">↷</span>
+        <span>Redo</span>
+      </button>
+      <button id="loadSampleBtn" class="btn secondary">
+        <span class="btn-icon">📦</span>
+        <span>Load Sample</span>
+      </button>
+      <button id="downloadJson" class="btn secondary">
+        <span class="btn-icon">📄</span>
+        <span>Export JSON</span>
+      </button>
+      <button id="downloadExcel" class="btn secondary">
+        <span class="btn-icon">📊</span>
+        <span>Export Excel</span>
+      </button>
+      <button id="downloadCsv" class="btn">
+        <span class="btn-icon">📥</span>
+        <span>Download CSV</span>
+      </button>
+      <button id="printReport" class="btn secondary">
+        <span class="btn-icon">🖨️</span>
+        <span>Print PDF</span>
+      </button>
+    </div>
+  </header>
 
-  <!-- Tab: Clash Table -->
-  <div class="tab-content" id="table">
+  <div class="container">
+
+    <!-- Upload Section -->
     <div class="card">
-      <div class="filter-section">
-        <div class="filter-row">
-          <input id="search" class="input" placeholder="🔍 Search by ClashID, Model, Notes..." />
-          <select id="statusFilter" class="input">
-            <option value="">All Status</option>
-            <option>Open</option><option>Assigned</option><option>Resolved</option>
-          </select>
-          <select id="priorityFilter" class="input">
-            <option value="">All Priority</option>
-            <option>High</option><option>Medium</option><option>Low</option>
-          </select>
-          <select id="modelFilter" class="input"><option value="">All Models</option></select>
-          <select id="categoryFilter" class="input"><option value="">All Categories</option></select>
-          <select id="assigneeFilter" class="input"><option value="">All Assignees</option></select>
-          <button id="clearFilters" class="btn secondary">Clear Filters</button>
-        </div>
-        <div class="filter-row" id="bulkActions" style="display:none;">
-          <button class="btn secondary" onclick="bulkUpdateStatus('Assigned')">📌 Mark Assigned</button>
-          <button class="btn secondary" onclick="bulkUpdateStatus('Resolved')">✅ Mark Resolved</button>
-          <button class="btn secondary" onclick="bulkDelete()">🗑️ Delete Selected</button>
-        </div>
-      </div>
-
-      <div class="table-container">
-        <table id="clashTable">
-          <thead>
-            <tr>
-              <th>ClashID</th><th>Model A</th><th>Model B</th><th>Category</th><th>Priority</th><th>Location</th><th>Status</th><th>Assigned To</th>
-            </tr>
-          </thead>
-          <tbody></tbody>
-        </table>
+      <input id="fileInput" type="file" accept=".csv,.json" />
+      <div class="upload-zone" id="uploadZone">
+        <div class="upload-icon">📁</div>
+        <div class="upload-text">Drag & Drop your clash data file here</div>
+        <div class="upload-hint">or click to browse • Supports CSV & JSON formats</div>
       </div>
     </div>
-  </div>
 
-  <!-- Tab: Analytics -->
-  <div class="tab-content" id="analytics">
-    <div class="charts-grid">
-      <div class="chart-card">
-        <div class="chart-title">Clashes by Model</div>
-        <div class="chart-container">
-          <canvas id="modelChart"></canvas>
-        </div>
+    <!-- Stats Dashboard -->
+    <div class="stats-grid" id="summary">
+      <div class="stat-card">
+        <div class="stat-label">Total Clashes</div>
+        <div class="stat-value" id="totalClashes">0</div>
+        <div class="stat-change positive" id="totalChange">📈 +0 from last week</div>
       </div>
-      <div class="chart-card">
-        <div class="chart-title">Resolution Trend</div>
-        <div class="chart-container">
-          <canvas id="trendChart"></canvas>
-        </div>
+      <div class="stat-card">
+        <div class="stat-label">Open</div>
+        <div class="stat-value" id="openClashes">0</div>
+        <div class="stat-change negative" id="openChange">⚠️ Needs attention</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Assigned</div>
+        <div class="stat-value" id="assignedClashes">0</div>
+        <div class="stat-change" id="assignedChange">👥 In progress</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Resolved</div>
+        <div class="stat-value" id="resolvedClashes">0</div>
+        <div class="stat-change positive" id="resolvedChange">✅ Completed</div>
       </div>
     </div>
-  </div>
 
-  <!-- Tab: Timeline -->
-  <div class="tab-content" id="timeline">
-    <div class="card">
-      <div class="timeline" id="timelineContainer">
-        <div class="timeline-item">
-          <div class="timeline-dot"></div>
-          <div class="timeline-content">
-            <div class="timeline-date">No data loaded</div>
-            <div class="timeline-title">Upload clash data to view timeline</div>
-            <div class="timeline-desc">Timeline will show clash creation and resolution history</div>
+    <!-- KPI Metrics -->
+    <div class="stats-grid" id="kpiMetrics">
+      <div class="stat-card">
+        <div class="stat-label">Resolution Rate</div>
+        <div class="stat-value" id="kpiResolution">0%</div>
+        <div class="stat-change positive">Target: 100%</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">High Priority</div>
+        <div class="stat-value" id="kpiHighPriority">0</div>
+        <div class="stat-change negative">Urgent</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Avg Resolution Time</div>
+        <div class="stat-value" id="kpiAvgTime">N/A</div>
+        <div class="stat-change">Days to resolve</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Unassigned</div>
+        <div class="stat-value" id="kpiUnassigned">0</div>
+        <div class="stat-change negative">Pending assignment</div>
+      </div>
+    </div>
+
+    <!-- Tabs Navigation -->
+    <div class="tabs">
+      <button class="tab active" data-tab="overview">📊 Overview</button>
+      <button class="tab" data-tab="table">📋 Clash Table</button>
+      <button class="tab" data-tab="analytics">📈 Analytics</button>
+      <button class="tab" data-tab="timeline">⏱️ Timeline</button>
+    </div>
+
+    <!-- Tab: Overview -->
+    <div class="tab-content active" id="overview">
+      <div class="charts-grid">
+        <div class="chart-card">
+          <div class="chart-title">Clash Distribution by Priority</div>
+          <div class="chart-container">
+            <canvas id="priorityChart"></canvas>
+          </div>
+        </div>
+        <div class="chart-card">
+          <div class="chart-title">Status Progress</div>
+          <div class="chart-container">
+            <canvas id="statusChart"></canvas>
           </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <!-- Details Panel -->
-  <div class="card" id="detailsCard" style="display:none;">
-    <h3 style="margin-top:0;color:var(--text-primary);">Clash Details</h3>
-    <div id="detailsArea" class="details-panel">
-      <div class="details-main">
-        <div class="detail-item">
-          <div class="detail-label">Clash ID:</div>
-          <div class="detail-value" id="detailClashId">-</div>
+    <!-- Tab: Clash Table -->
+    <div class="tab-content" id="table">
+      <div class="card">
+        <div class="filter-section">
+          <div class="filter-row">
+            <input id="search" class="input" placeholder="🔍 Search by ClashID, Model, Notes..." />
+            <select id="statusFilter" class="input">
+              <option value="">All Status</option>
+              <option>Open</option>
+              <option>Assigned</option>
+              <option>Resolved</option>
+            </select>
+            <select id="priorityFilter" class="input">
+              <option value="">All Priority</option>
+              <option>High</option>
+              <option>Medium</option>
+              <option>Low</option>
+            </select>
+            <select id="modelFilter" class="input">
+              <option value="">All Models</option>
+            </select>
+            <select id="categoryFilter" class="input">
+              <option value="">All Categories</option>
+            </select>
+            <select id="assigneeFilter" class="input">
+              <option value="">All Assignees</option>
+            </select>
+            <button id="clearFilters" class="btn secondary">Clear Filters</button>
+          </div>
+          <div class="filter-row" id="bulkActions" style="display:none;">
+            <button class="btn secondary" onclick="bulkUpdateStatus('Assigned')">📌 Mark Assigned</button>
+            <button class="btn secondary" onclick="bulkUpdateStatus('Resolved')">✅ Mark Resolved</button>
+            <button class="btn secondary" onclick="bulkDelete()">🗑️ Delete Selected</button>
+          </div>
         </div>
-        <div class="detail-item">
-          <div class="detail-label">Models:</div>
-          <div class="detail-value" id="detailModels">-</div>
+
+        <div class="table-container">
+          <table id="clashTable">
+            <thead>
+              <tr>
+                <th>ClashID</th>
+                <th>Model A</th>
+                <th>Model B</th>
+                <th>Category</th>
+                <th>Priority</th>
+                <th>Location</th>
+                <th>Status</th>
+                <th>Assigned To</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
         </div>
-        <div class="detail-item">
-          <div class="detail-label">Category:</div>
-          <div class="detail-value" id="detailCategory">-</div>
-        </div>
-        <div class="detail-item">
-          <div class="detail-label">Priority:</div>
-          <div class="detail-value" id="detailPriority">-</div>
-        </div>
-        <div class="detail-item">
-          <div class="detail-label">Location:</div>
-          <div class="detail-value" id="detailLocation">-</div>
-        </div>
-        <div class="detail-item">
-          <div class="detail-label">Coordinates:</div>
-          <div class="detail-value" id="detailCoords">-</div>
-        </div>
-        <div class="detail-item">
-          <div class="detail-label">Status:</div>
-          <div class="detail-value" id="detailStatus">-</div>
-        </div>
-        <div class="detail-item">
-          <div class="detail-label">Notes:</div>
-          <div class="detail-value" id="detailNotes">-</div>
-        </div>
-      </div>
-      <div class="details-actions">
-        <div class="action-title">Quick Update</div>
-        <div class="form-group">
-          <label class="form-label">Assign To</label>
-          <input id="assignName" class="input" placeholder="Enter name" />
-        </div>
-        <div class="form-group">
-          <label class="form-label">Status</label>
-          <select id="statusSelect" class="input">
-            <option>Open</option><option>Assigned</option><option>Resolved</option>
-          </select>
-        </div>
-        <button class="btn" id="saveUpdate" style="width:100%;">Save Changes</button>
       </div>
     </div>
+
+    <!-- Tab: Analytics -->
+    <div class="tab-content" id="analytics">
+      <div class="charts-grid">
+        <div class="chart-card">
+          <div class="chart-title">Clashes by Model</div>
+          <div class="chart-container">
+            <canvas id="modelChart"></canvas>
+          </div>
+        </div>
+        <div class="chart-card">
+          <div class="chart-title">Resolution Trend</div>
+          <div class="chart-container">
+            <canvas id="trendChart"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tab: Timeline -->
+    <div class="tab-content" id="timeline">
+      <div class="card">
+        <div class="timeline" id="timelineContainer">
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+              <div class="timeline-date">No data loaded</div>
+              <div class="timeline-title">Upload clash data to view timeline</div>
+              <div class="timeline-desc">Timeline will show clash creation and resolution history</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Details Panel -->
+    <div class="card" id="detailsCard" style="display:none;">
+      <h3 style="margin-top:0;color:var(--text-primary);">Clash Details</h3>
+      <div id="detailsArea" class="details-panel">
+        <div class="details-main">
+          <div class="detail-item">
+            <div class="detail-label">Clash ID:</div>
+            <div class="detail-value" id="detailClashId">-</div>
+          </div>
+          <div class="detail-item">
+            <div class="detail-label">Models:</div>
+            <div class="detail-value" id="detailModels">-</div>
+          </div>
+          <div class="detail-item">
+            <div class="detail-label">Category:</div>
+            <div class="detail-value" id="detailCategory">-</div>
+          </div>
+          <div class="detail-item">
+            <div class="detail-label">Priority:</div>
+            <div class="detail-value" id="detailPriority">-</div>
+          </div>
+          <div class="detail-item">
+            <div class="detail-label">Location:</div>
+            <div class="detail-value" id="detailLocation">-</div>
+          </div>
+          <div class="detail-item">
+            <div class="detail-label">Coordinates:</div>
+            <div class="detail-value" id="detailCoords">-</div>
+          </div>
+          <div class="detail-item">
+            <div class="detail-label">Status:</div>
+            <div class="detail-value" id="detailStatus">-</div>
+          </div>
+          <div class="detail-item">
+            <div class="detail-label">Notes:</div>
+            <div class="detail-value" id="detailNotes">-</div>
+          </div>
+        </div>
+        <div class="details-actions">
+          <div class="action-title">Quick Update</div>
+          <div class="form-group">
+            <label class="form-label">Assign To</label>
+            <input id="assignName" class="input" placeholder="Enter name" />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Status</label>
+            <select id="statusSelect" class="input">
+              <option>Open</option>
+              <option>Assigned</option>
+              <option>Resolved</option>
+            </select>
+          </div>
+          <button class="btn" id="saveUpdate" style="width:100%;">Save Changes</button>
+        </div>
+      </div>
+    </div>
+
+    <footer>© 2025 Clash Detection Dashboard · Advanced BIM Coordination Platform</footer>
   </div>
 
-  <footer>© 2025 Clash Detection Dashboard · Advanced BIM Coordination Platform</footer>
-</div>
-
-<script src="dashboard.js"></script>
+  <script src="dashboard.js"></script>
 </body>
+
 </html>

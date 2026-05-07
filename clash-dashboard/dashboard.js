@@ -559,80 +559,88 @@ function calculateAvgResolutionTime() {
 }
 
 // ========== CHARTS ==========
+const chartFont = {family:"'Geist','Inter',system-ui,sans-serif"};
+const chartGrid = {color:'rgba(255,255,255,0.05)',drawBorder:false};
+const chartTick = {color:'#52525B',font:{...chartFont,size:11}};
+const chartTooltip = {backgroundColor:'rgba(15,15,17,0.95)',titleFont:{...chartFont,size:13,weight:'600'},bodyFont:{...chartFont,size:12},borderColor:'rgba(255,255,255,0.09)',borderWidth:1,padding:12,cornerRadius:8,displayColors:true,boxPadding:4,usePointStyle:true};
+const chartLegend = {position:'bottom',labels:{color:'#A1A1AA',font:{...chartFont,size:11,weight:'500'},padding:16,usePointStyle:true,pointStyleWidth:8}};
+
 function updateCharts() {
   if (clashes.length === 0) return;
-  
-  // Priority Chart
+
   const priorityCounts = {
     High: clashes.filter(c => (c.Priority||'').toLowerCase() === 'high').length,
     Medium: clashes.filter(c => (c.Priority||'').toLowerCase() === 'medium').length,
     Low: clashes.filter(c => (c.Priority||'').toLowerCase() === 'low').length
   };
-  
+
   if (charts.priority) charts.priority.destroy();
-  charts.priority = new Chart(document.getElementById('priorityChart'), {
+  const pCtx = document.getElementById('priorityChart').getContext('2d');
+  charts.priority = new Chart(pCtx, {
     type: 'doughnut',
     data: {
       labels: ['High', 'Medium', 'Low'],
       datasets: [{
         data: [priorityCounts.High, priorityCounts.Medium, priorityCounts.Low],
-        backgroundColor: ['#ef4444', '#fbbf24', '#60a5fa'],
-        borderWidth: 2,
-        borderColor: '#111111'
+        backgroundColor: ['rgba(239,68,68,0.85)','rgba(251,191,36,0.85)','rgba(91,141,243,0.85)'],
+        hoverBackgroundColor: ['#EF4444','#FBBF24','#5B8DF3'],
+        borderWidth: 3,
+        borderColor: '#161619',
+        hoverBorderColor: '#0F0F11',
+        spacing: 2
       }]
     },
     options: {
       responsive: true,
       maintainAspectRatio: false,
+      cutout: '68%',
       plugins: {
-        legend: { 
-          position: 'bottom',
-          labels: { color: '#e5e7eb', font: { size: 12 } }
-        }
-      }
+        legend: chartLegend,
+        tooltip: {...chartTooltip, callbacks:{label:ctx=>{const t=ctx.dataset.data.reduce((a,b)=>a+b,0);const pct=t>0?Math.round(ctx.raw/t*100):0;return ` ${ctx.label}: ${ctx.raw} (${pct}%)`}}}
+      },
+      animation:{animateRotate:true,duration:800,easing:'easeOutQuart'}
     }
   });
-  
-  // Status Chart
+
   const statusCounts = {
     Open: clashes.filter(c => (c.Status||'Open').toLowerCase() === 'open').length,
     Assigned: clashes.filter(c => (c.Status||'').toLowerCase() === 'assigned').length,
     Resolved: clashes.filter(c => (c.Status||'').toLowerCase() === 'resolved').length
   };
-  
+
   if (charts.status) charts.status.destroy();
-  charts.status = new Chart(document.getElementById('statusChart'), {
+  const sCtx = document.getElementById('statusChart').getContext('2d');
+  const gradOpen = sCtx.createLinearGradient(0,0,0,280); gradOpen.addColorStop(0,'rgba(239,68,68,0.8)'); gradOpen.addColorStop(1,'rgba(239,68,68,0.3)');
+  const gradAssign = sCtx.createLinearGradient(0,0,0,280); gradAssign.addColorStop(0,'rgba(251,191,36,0.8)'); gradAssign.addColorStop(1,'rgba(251,191,36,0.3)');
+  const gradResolved = sCtx.createLinearGradient(0,0,0,280); gradResolved.addColorStop(0,'rgba(34,197,94,0.8)'); gradResolved.addColorStop(1,'rgba(34,197,94,0.3)');
+  charts.status = new Chart(sCtx, {
     type: 'bar',
     data: {
       labels: ['Open', 'Assigned', 'Resolved'],
       datasets: [{
-        label: 'Clash Count',
+        label: 'Clashes',
         data: [statusCounts.Open, statusCounts.Assigned, statusCounts.Resolved],
-        backgroundColor: ['#ef4444', '#fbbf24', '#22c55e'],
+        backgroundColor: [gradOpen, gradAssign, gradResolved],
+        hoverBackgroundColor: ['#EF4444','#FBBF24','#22C55E'],
         borderWidth: 0,
-        borderRadius: 8
+        borderRadius: 6,
+        borderSkipped: false,
+        barPercentage: 0.55,
+        categoryPercentage: 0.7
       }]
     },
     options: {
       responsive: true,
       maintainAspectRatio: false,
-      plugins: {
-        legend: { display: false }
-      },
+      plugins: {legend:{display:false}, tooltip:chartTooltip},
       scales: {
-        y: {
-          beginAtZero: true,
-          ticks: { color: '#9ca3af' },
-          grid: { color: 'rgba(59, 130, 246, 0.1)' }
-        },
-        x: {
-          ticks: { color: '#e5e7eb' },
-          grid: { display: false }
-        }
-      }
+        y: {beginAtZero:true, ticks:chartTick, grid:chartGrid, border:{display:false}},
+        x: {ticks:{...chartTick,color:'#A1A1AA'}, grid:{display:false}, border:{display:false}}
+      },
+      animation:{duration:700,easing:'easeOutQuart'}
     }
   });
-  
+
   // Model Chart
   const modelCounts = {};
   clashes.forEach(c => {
@@ -641,92 +649,61 @@ function updateCharts() {
     modelCounts[modelA] = (modelCounts[modelA] || 0) + 1;
     modelCounts[modelB] = (modelCounts[modelB] || 0) + 1;
   });
-  
-  const topModels = Object.entries(modelCounts)
-    .sort((a, b) => b[1] - a[1])
-    .slice(0, 6);
-  
+  const topModels = Object.entries(modelCounts).sort((a,b)=>b[1]-a[1]).slice(0,6);
+
   if (charts.model) charts.model.destroy();
-  charts.model = new Chart(document.getElementById('modelChart'), {
+  const mCtx = document.getElementById('modelChart').getContext('2d');
+  const gradModel = mCtx.createLinearGradient(0,0,400,0); gradModel.addColorStop(0,'rgba(91,141,243,0.7)'); gradModel.addColorStop(1,'rgba(155,92,246,0.7)');
+  charts.model = new Chart(mCtx, {
     type: 'bar',
     data: {
-      labels: topModels.map(m => m[0]),
+      labels: topModels.map(m=>m[0]),
       datasets: [{
         label: 'Clash Involvement',
-        data: topModels.map(m => m[1]),
-        backgroundColor: '#3b82f6',
+        data: topModels.map(m=>m[1]),
+        backgroundColor: gradModel,
+        hoverBackgroundColor: '#5B8DF3',
         borderWidth: 0,
-        borderRadius: 8
+        borderRadius: 6,
+        barPercentage: 0.6
       }]
     },
     options: {
       responsive: true,
       maintainAspectRatio: false,
       indexAxis: 'y',
-      plugins: {
-        legend: { display: false }
-      },
+      plugins: {legend:{display:false}, tooltip:chartTooltip},
       scales: {
-        x: {
-          beginAtZero: true,
-          ticks: { color: '#9ca3af' },
-          grid: { color: 'rgba(59, 130, 246, 0.1)' }
-        },
-        y: {
-          ticks: { color: '#e5e7eb' },
-          grid: { display: false }
-        }
+        x: {beginAtZero:true, ticks:chartTick, grid:chartGrid, border:{display:false}},
+        y: {ticks:{...chartTick,color:'#A1A1AA',font:{...chartFont,size:11}}, grid:{display:false}, border:{display:false}}
       }
     }
   });
-  
-  // Trend Chart - Dynamic based on actual data
+
+  // Trend Chart
   const trendData = generateTrendData(statusCounts);
-  
   if (charts.trend) charts.trend.destroy();
-  charts.trend = new Chart(document.getElementById('trendChart'), {
+  const tCtx = document.getElementById('trendChart').getContext('2d');
+  const gradTrendOpen = tCtx.createLinearGradient(0,0,0,280); gradTrendOpen.addColorStop(0,'rgba(239,68,68,0.2)'); gradTrendOpen.addColorStop(1,'rgba(239,68,68,0)');
+  const gradTrendRes = tCtx.createLinearGradient(0,0,0,280); gradTrendRes.addColorStop(0,'rgba(34,197,94,0.2)'); gradTrendRes.addColorStop(1,'rgba(34,197,94,0)');
+  charts.trend = new Chart(tCtx, {
     type: 'line',
     data: {
-      labels: trendData.map(d => d.week),
+      labels: trendData.map(d=>d.week),
       datasets: [
-        {
-          label: 'Open',
-          data: trendData.map(d => d.open),
-          borderColor: '#ef4444',
-          backgroundColor: 'rgba(239, 68, 68, 0.1)',
-          tension: 0.4,
-          fill: true
-        },
-        {
-          label: 'Resolved',
-          data: trendData.map(d => d.resolved),
-          borderColor: '#22c55e',
-          backgroundColor: 'rgba(34, 197, 94, 0.1)',
-          tension: 0.4,
-          fill: true
-        }
+        {label:'Open',data:trendData.map(d=>d.open),borderColor:'#EF4444',backgroundColor:gradTrendOpen,tension:0.4,fill:true,pointRadius:4,pointBackgroundColor:'#EF4444',pointBorderColor:'#161619',pointBorderWidth:2,pointHoverRadius:6,borderWidth:2.5},
+        {label:'Resolved',data:trendData.map(d=>d.resolved),borderColor:'#22C55E',backgroundColor:gradTrendRes,tension:0.4,fill:true,pointRadius:4,pointBackgroundColor:'#22C55E',pointBorderColor:'#161619',pointBorderWidth:2,pointHoverRadius:6,borderWidth:2.5}
       ]
     },
     options: {
       responsive: true,
       maintainAspectRatio: false,
-      plugins: {
-        legend: { 
-          position: 'bottom',
-          labels: { color: '#e5e7eb', font: { size: 12 } }
-        }
-      },
+      plugins: {legend:chartLegend, tooltip:chartTooltip},
       scales: {
-        y: {
-          beginAtZero: true,
-          ticks: { color: '#9ca3af' },
-          grid: { color: 'rgba(59, 130, 246, 0.1)' }
-        },
-        x: {
-          ticks: { color: '#e5e7eb' },
-          grid: { display: false }
-        }
-      }
+        y: {beginAtZero:true, ticks:chartTick, grid:chartGrid, border:{display:false}},
+        x: {ticks:{...chartTick,color:'#A1A1AA'}, grid:{display:false}, border:{display:false}}
+      },
+      interaction:{mode:'index',intersect:false}
     }
   });
 }
@@ -915,21 +892,38 @@ document.getElementById('printReport').addEventListener('click', () => {
 
 // ========== SAMPLE DATA ==========
 const sampleCsv = `ClashID,ModelA,ModelB,Category,Priority,Location,X,Y,Z,Status,AssignedTo,Notes,CreatedAt
-C-0001,Structure.rvt,MEP.rvt,Structure-MEP,High,Level 02,12.3,45.6,3.5,Open,,Beam interference with duct,2025-01-15T08:00:00Z
-C-0002,Architectural.rvt,MEP.rvt,Arch-MEP,Medium,Level 01,5.1,22.0,0.8,Assigned,Ahmed,Door swing conflicts with pipe,2025-01-16T12:30:00Z
-C-0003,Structure.rvt,Architectural.rvt,Structure-Arch,Low,Level 03,18.7,33.2,7.2,Resolved,Sarah,Column position adjusted,2025-01-17T09:15:00Z
-C-0004,MEP.rvt,MEP.rvt,MEP-MEP,High,Level 02,14.5,48.9,3.8,Open,,Pipe clash with electrical conduit,2025-01-18T14:20:00Z
-C-0005,Structure.rvt,MEP.rvt,Structure-MEP,Medium,Level 04,22.1,55.3,10.5,Assigned,John,Beam depth needs verification,2025-01-19T10:45:00Z`;
+C-0001,Structure.rvt,MEP-Mechanical.rvt,Structure-MEP,High,Level 02 — Zone A,12.3,45.6,3.5,Open,,W24x68 beam clashes with 600mm supply duct at gridline C-4,2025-01-15T08:00:00Z
+C-0002,Architectural.rvt,MEP-Plumbing.rvt,Arch-MEP,Medium,Level 01 — Lobby,5.1,22.0,0.8,Assigned,Ahmed Hassan,100mm waste pipe penetrates through rated corridor wall,2025-01-16T12:30:00Z
+C-0003,Structure.rvt,Architectural.rvt,Structure-Arch,Low,Level 03 — Office Wing,18.7,33.2,7.2,Resolved,Sarah Nabil,Column C-7 offset 50mm from architectural grid — adjusted,2025-01-17T09:15:00Z
+C-0004,MEP-Electrical.rvt,MEP-Mechanical.rvt,MEP-MEP,High,Level 02 — Mechanical Room,14.5,48.9,3.8,Open,,Main cable tray 300mm conflicts with chilled water riser,2025-01-18T14:20:00Z
+C-0005,Structure.rvt,MEP-Mechanical.rvt,Structure-MEP,Medium,Level 04 — West Tower,22.1,55.3,10.5,Assigned,John Mansour,Transfer beam depth blocks AHU duct routing,2025-01-19T10:45:00Z
+C-0006,MEP-Plumbing.rvt,MEP-Electrical.rvt,MEP-MEP,High,Level B1 — Parking,8.4,12.1,-3.2,Open,,Storm drain crosses electrical bus duct at junction J-12,2025-01-20T07:30:00Z
+C-0007,Architectural.rvt,Structure.rvt,Arch-Structure,Medium,Level 05 — Core,30.0,40.5,14.0,Assigned,Fatima Eldin,Shear wall thickness reduced — curtain wall bracket conflict,2025-01-21T11:00:00Z
+C-0008,MEP-Mechanical.rvt,MEP-FireProtection.rvt,MEP-MEP,High,Level 02 — Corridor,16.8,38.2,3.3,Assigned,Omar Khalil,Supply diffuser location overlaps with sprinkler head SH-204,2025-01-22T09:00:00Z
+C-0009,Structure.rvt,MEP-Plumbing.rvt,Structure-MEP,Low,Level 03 — Restrooms,25.3,18.7,7.5,Resolved,Ahmed Hassan,Slab penetration for soil stack approved by structural,2025-01-22T14:00:00Z
+C-0010,Architectural.rvt,MEP-Mechanical.rvt,Arch-MEP,Medium,Level 01 — Main Entrance,3.2,8.9,0.5,Open,,Exposed ceiling zone — duct routing visible below 2700mm,2025-01-23T08:30:00Z
+C-0011,MEP-Electrical.rvt,Structure.rvt,Structure-MEP,High,Level 06 — Roof,35.0,62.0,18.5,Open,,Lightning protection downconductor clashes with parapet steel,2025-01-24T10:15:00Z
+C-0012,MEP-FireProtection.rvt,Structure.rvt,Structure-MEP,Medium,Level 02 — Zone B,19.5,52.4,3.8,Assigned,Sarah Nabil,Sprinkler branch line passes through W18x35 web,2025-01-24T13:45:00Z
+C-0013,Architectural.rvt,MEP-Plumbing.rvt,Arch-MEP,Low,Level 01 — Kitchen,7.8,28.3,1.2,Resolved,Omar Khalil,Grease trap location shifted 400mm per architect approval,2025-01-25T09:00:00Z
+C-0014,MEP-Mechanical.rvt,MEP-Plumbing.rvt,MEP-MEP,High,Level 03 — Shaft,20.0,30.0,7.0,Open,,FCU condensate drain crosses hot water supply in shaft S-3,2025-01-26T07:45:00Z
+C-0015,Structure.rvt,Architectural.rvt,Arch-Structure,Medium,Level 04 — Balcony,28.5,60.8,11.2,Assigned,Fatima Eldin,Slab edge profile differs from architectural soffit detail,2025-01-26T15:30:00Z
+C-0016,MEP-Electrical.rvt,Architectural.rvt,Arch-MEP,Low,Level 01 — Reception,4.0,15.5,0.9,Resolved,John Mansour,DB panel location moved to avoid feature wall,2025-01-27T10:00:00Z
+C-0017,MEP-Mechanical.rvt,Structure.rvt,Structure-MEP,High,Level B1 — Plant Room,10.2,5.3,-3.0,Assigned,Ahmed Hassan,Chiller pipe 200mm dia hard-clashes with foundation beam,2025-01-28T08:15:00Z
+C-0018,MEP-FireProtection.rvt,Architectural.rvt,Arch-MEP,Medium,Level 05 — Open Plan,32.0,45.0,14.5,Open,,Sprinkler heads conflict with suspended ceiling grid layout,2025-01-28T14:00:00Z
+C-0019,Structure.rvt,MEP-Electrical.rvt,Structure-MEP,Low,Level 02 — Zone C,17.0,58.0,3.6,Resolved,Sarah Nabil,Conduit rerouted around post-tension tendon profile,2025-01-29T09:30:00Z
+C-0020,MEP-Mechanical.rvt,Architectural.rvt,Arch-MEP,High,Level 03 — Conference,22.8,35.1,7.8,Open,,Return air grille position conflicts with AV screen recess,2025-01-30T11:00:00Z`;
 
 // Load sample data on demand
 function loadSampleData() {
   clashes = parseCSV(sampleCsv);
+  pushHistory();
+  saveToLocalStorage();
   initModelFilter();
   renderTable();
   updateSummary();
   updateCharts();
   updateTimeline();
-  showToast('✅ Sample data loaded!', 'success');
+  showToast('✅ 20 sample clashes loaded — Al Noor Tower Phase 2', 'success');
 }
 
 // Add load sample data button listener
@@ -991,6 +985,12 @@ function generateTrendData(statusCounts) {
 
 // Initialize dashboard on page load
 window.addEventListener('load', () => {
+  // Clear stale sample data from previous version
+  const dataVersion = localStorage.getItem('clash-dashboard-version');
+  if(dataVersion !== '2') {
+    localStorage.removeItem(STORAGE_KEY);
+    localStorage.setItem('clash-dashboard-version', '2');
+  }
   const savedData = loadFromLocalStorage();
   if(savedData && savedData.length > 0) {
     clashes = savedData;
