@@ -286,7 +286,7 @@
     </div>
 
     <!-- Card 4: Sheet Set Manager — FULL WIDTH -->
-    <div class="card bento-full reveal" onclick="window.location='case-studies/sheet-manager.html'" role="link" tabindex="0" aria-label="Sheet Set Manager Case Study">
+    <div class="card reveal" onclick="window.location='case-studies/sheet-manager.html'" role="link" tabindex="0" aria-label="Sheet Set Manager Case Study">
       <div class="card-inner">
         <div class="card-top">
           <span class="card-label">JavaScript &middot; SheetJS &middot; BIM</span>
@@ -321,6 +321,43 @@
         </div>
         <div style="display:flex;gap:16px;margin-top:12px;align-items:center">
           <a href="sheet-manager/index.html" class="btn-link" onclick="event.stopPropagation()">Try Live Tool
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 5: Model Health Dashboard -->
+    <div class="card card-sm reveal" onclick="window.location='case-studies/model-health.html'" role="link" tabindex="0" aria-label="Model Health Dashboard Case Study">
+      <div class="card-inner">
+        <div class="card-top">
+          <span class="card-label">JavaScript &middot; Chart.js &middot; QA/QC</span>
+          <div class="card-arrow">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+          </div>
+        </div>
+        <h3 class="card-title">Model Health Dashboard</h3>
+        <p class="card-desc">QA/QC analytics platform that audits Revit models for compliance, scores health across 8 categories with radar charts, and surfaces 24 actionable issue types &mdash; replacing 5-day manual audits with 30-minute automated checks.</p>
+        <div class="card-stats">
+          <div class="stat-box">
+            <div class="stat-num" data-count="80" data-suffix="%">~80%</div>
+            <div class="stat-label">audit time saved</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-num" data-count="8" data-suffix="">8</div>
+            <div class="stat-label">QA categories</div>
+          </div>
+        </div>
+        <div class="card-img-wrap" style="margin-top:16px;">
+          <img src="assets/images/model-health-hero.png" alt="Model Health Dashboard" width="800" height="450" loading="lazy">
+        </div>
+        <div style="margin-top:auto;padding-top:16px">
+          <div class="tags" style="margin-bottom:12px">
+            <span class="tag">JavaScript</span>
+            <span class="tag">Chart.js</span>
+            <span class="tag">QA/QC</span>
+          </div>
+          <a href="model-health/index.html" class="btn-link" onclick="event.stopPropagation()">Try Live Tool
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
           </a>
         </div>
@@ -535,12 +572,53 @@
 </main>
 
 <footer class="footer">
+<style>
+.footer{padding:32px 0;border-top:1px solid var(--border-1);}
+.footer-inner{display:flex;align-items:center;justify-content:space-between;}
+.footer-copy{font-size:.8125rem;color:var(--text-3);font-family:var(--font-mono);}
+.footer-links{display:flex;gap:8px;align-items:center;list-style:none;}
+.footer-links a{font-size:.8125rem;color:var(--text-2);transition:color .2s;text-decoration:none;padding:6px 12px;border-radius:6px;}
+.footer-links a:hover{color:var(--text-1);background:rgba(255,255,255,.04);}
+.footer-dropdown{position:relative;}
+.footer-dropdown>a{cursor:pointer;display:inline-flex;align-items:center;gap:5px;}
+.footer-dropdown>a::after{content:'';border:solid var(--text-3);border-width:0 1.5px 1.5px 0;display:inline-block;padding:2px;transform:rotate(45deg);margin-top:-2px;transition:transform .2s;}
+.footer-dropdown:hover>a::after,.footer-dropdown.open>a::after{transform:rotate(-135deg);}
+.footer-menu{position:absolute;bottom:calc(100% + 8px);left:50%;transform:translateX(-50%);min-width:240px;background:#161619;border:1px solid rgba(255,255,255,.12);border-radius:10px;padding:6px;opacity:0;visibility:hidden;transition:opacity .2s,visibility .2s,transform .2s;transform:translateX(-50%) translateY(6px);z-index:200;box-shadow:0 12px 40px rgba(0,0,0,.5);}
+.footer-dropdown:hover .footer-menu,.footer-dropdown.open .footer-menu{opacity:1;visibility:visible;transform:translateX(-50%) translateY(0);}
+.footer-menu a{display:flex;align-items:center;gap:10px;padding:9px 14px;border-radius:7px;font-size:.8125rem;color:var(--text-2);text-decoration:none;transition:all .15s;white-space:nowrap;}
+.footer-menu a:hover{background:rgba(91,141,243,.08);color:var(--text-1);}
+.footer-menu a .fm-icon{font-size:.875rem;width:20px;text-align:center;flex-shrink:0;}
+.footer-menu-label{padding:6px 14px 4px;font-size:.6875rem;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--text-3);font-family:var(--font-mono);}
+.footer-menu-divider{height:1px;background:rgba(255,255,255,.08);margin:4px 8px;}
+</style>
 <div class="container footer-inner">
-  <p class="footer-copy">&copy; 2025 Hossam Sabry &middot; BIM Automation Engineer</p>
+  <p class="footer-copy">&copy; 2026 Hossam Sabry &middot; BIM Automation Engineer</p>
   <nav class="footer-links" aria-label="Footer navigation">
-    <a href="case-studies/bim-automation-tool.html">Case Studies</a>
-    <a href="clash-dashboard/index.html">Dashboard</a>
+
+    <div class="footer-dropdown">
+      <a>Case Studies</a>
+      <div class="footer-menu">
+        <div class="footer-menu-label">Case Studies</div>
+        <a href="case-studies/bim-automation-tool.html"><span class="fm-icon">⚡</span> BIM Automation Tool</a>
+        <a href="case-studies/clash-dashboard.html"><span class="fm-icon">📊</span> Clash Detection Dashboard</a>
+        <a href="case-studies/dynamo-scripts.html"><span class="fm-icon">🔗</span> Dynamo Script Library</a>
+        <a href="case-studies/sheet-manager.html"><span class="fm-icon">📋</span> Sheet Set Manager</a>
+        <a href="case-studies/model-health.html"><span class="fm-icon">🏥</span> Model Health Dashboard</a>
+      </div>
+    </div>
+
+    <div class="footer-dropdown">
+      <a>Live Tools</a>
+      <div class="footer-menu">
+        <div class="footer-menu-label">Interactive Demos</div>
+        <a href="clash-dashboard/index.html"><span class="fm-icon">📊</span> Clash Detection Dashboard</a>
+        <a href="sheet-manager/index.html"><span class="fm-icon">📋</span> Sheet Set Manager</a>
+        <a href="model-health/index.html"><span class="fm-icon">🏥</span> Model Health Dashboard</a>
+      </div>
+    </div>
+
     <a href="https://github.com/M2Dawn" target="_blank" rel="noopener">GitHub</a>
+
   </nav>
 </div>
 </footer>

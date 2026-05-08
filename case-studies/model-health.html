@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Model Health Dashboard - Case Study | Hossam Sabry</title>
+<meta name="description" content="Case study: BIM Model QA/QC analytics platform that audits Revit models for compliance, scores health across 8 categories, and surfaces actionable issues — reducing model audit time by 80%.">
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-MWW9X0CJQF"></script>
+<script>
+window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
+gtag('js',new Date());
+gtag('config','G-MWW9X0CJQF',{page_title:'Model Health Dashboard - Case Study',page_path:'/case-studies/model-health.html'});
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+:root{--bg:#080809;--bg-raised:#0F0F11;--bg-card:#161619;--bg-inset:#1C1C20;--text-1:#F2F2F2;--text-2:#A1A1AA;--text-3:#52525B;--accent:#5B8DF3;--accent-2:#9B5CF6;--accent-dim:rgba(91,141,243,0.12);--accent-border:rgba(91,141,243,0.25);--border:rgba(255,255,255,0.09);--border-s:rgba(255,255,255,0.16);--grad:linear-gradient(135deg,#5B8DF3,#9B5CF6);--red:#ef4444;--green:#22c55e;--amber:#fbbf24;--font:'Geist','Inter',system-ui,sans-serif;--mono:'Geist Mono',monospace;--r-sm:6px;--r-md:10px;--r-lg:14px;--r-xl:20px;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--text-1);font-family:var(--font);font-size:.9375rem;line-height:1.7;overflow-x:hidden;-webkit-font-smoothing:antialiased;}
+::selection{background:var(--accent-dim);color:var(--accent);}
+::-webkit-scrollbar{width:5px;}::-webkit-scrollbar-track{background:var(--bg);}::-webkit-scrollbar-thumb{background:var(--border);border-radius:99px;}
+a{color:var(--accent);text-decoration:none;transition:color .2s;}a:hover{color:#7BA5FF;}
+.progress-bar{position:fixed;top:0;left:0;height:2px;background:var(--grad);z-index:200;width:0;transition:width .1s linear;}
+nav{position:fixed;top:0;left:0;right:0;height:60px;z-index:100;display:flex;align-items:center;background:rgba(8,8,9,.85);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 32px;}
+.nav-inner{max-width:1100px;margin:0 auto;width:100%;display:flex;align-items:center;justify-content:space-between;}
+.nav-brand{font-size:.9375rem;font-weight:600;color:var(--text-1);display:flex;align-items:center;gap:8px;}.nav-brand span{color:var(--text-3);}
+.nav-links{display:flex;gap:24px;list-style:none;}
+.nav-links a{font-size:.875rem;color:var(--text-3);font-weight:400;position:relative;transition:color .2s;}
+.nav-links a:hover,.nav-links a.active{color:var(--text-1);}
+.hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:120px 24px 80px;position:relative;overflow:hidden;}
+.hero-orb{position:absolute;border-radius:50%;filter:blur(120px);pointer-events:none;opacity:.5;}
+.hero-orb-1{width:600px;height:600px;background:radial-gradient(circle,rgba(91,141,243,.12),transparent);top:-10%;left:-5%;}
+.hero-orb-2{width:500px;height:500px;background:radial-gradient(circle,rgba(155,92,246,.1),transparent);bottom:-10%;right:-5%;}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;padding:6px 16px;background:var(--bg-card);border:1px solid var(--border);border-radius:99px;font-size:.8125rem;font-weight:500;color:var(--accent);margin-bottom:24px;position:relative;z-index:1;}
+.pulse-dot{width:6px;height:6px;border-radius:50%;background:var(--accent);animation:pulse 2s ease-in-out infinite;}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.4;transform:scale(.7);}}
+.hero h1{font-size:clamp(2.5rem,5.5vw,4rem);font-weight:700;line-height:1.1;letter-spacing:-.03em;margin-bottom:20px;color:var(--text-1);position:relative;z-index:1;}
+.hero h1 .grad{background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.hero-sub{font-size:1.0625rem;color:var(--text-2);max-width:560px;margin:0 auto 40px;line-height:1.7;position:relative;z-index:1;}
+.hero-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;max-width:620px;width:100%;position:relative;z-index:1;}
+.stat-card{background:rgba(22,22,25,.7);backdrop-filter:blur(16px);border:1px solid var(--border);border-radius:var(--r-lg);padding:24px;transition:transform .2s,box-shadow .2s;}
+.stat-card:hover{transform:translateY(-4px);box-shadow:0 8px 32px rgba(91,141,243,.1);}
+.stat-num{font-size:2rem;font-weight:700;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;letter-spacing:-.03em;}
+.stat-label{font-size:.8125rem;color:var(--text-3);font-family:var(--mono);margin-top:4px;}
+.scroll-ind{margin-top:48px;display:flex;flex-direction:column;align-items:center;gap:8px;color:var(--text-3);font-size:.75rem;font-family:var(--mono);animation:bob 2s ease-in-out infinite;position:relative;z-index:1;}
+.scroll-ind .arr{width:16px;height:16px;border-right:1.5px solid var(--text-3);border-bottom:1.5px solid var(--text-3);transform:rotate(45deg);}
+@keyframes bob{0%,100%{transform:translateY(0);}50%{transform:translateY(6px);}}
+.section{max-width:900px;margin:0 auto;padding:96px 24px;position:relative;z-index:1;}
+.section h2{font-size:2rem;font-weight:700;letter-spacing:-.025em;margin-bottom:16px;}
+.section h3{font-size:1.375rem;font-weight:600;letter-spacing:-.02em;margin:48px 0 16px;color:var(--text-1);}
+.section>p{color:var(--text-2);font-size:1rem;line-height:1.75;margin-bottom:16px;}
+.divider{height:1px;background:var(--border);max-width:200px;margin:0 auto;}
+.callout{background:rgba(22,22,25,.6);backdrop-filter:blur(12px);border:1px solid var(--border);border-radius:var(--r-lg);padding:24px 28px;margin:24px 0;}
+.callout-red{border-left:3px solid var(--red);}.callout-blue{border-left:3px solid var(--accent);}.callout-green{border-left:3px solid var(--green);}.callout-purple{border-left:3px solid var(--accent-2);}
+.callout h4{font-size:1.0625rem;font-weight:600;margin-bottom:12px;display:flex;align-items:center;gap:8px;}
+.callout ul{list-style:none;padding:0;}
+.callout li{padding-left:20px;position:relative;margin-bottom:8px;color:var(--text-2);font-size:.9375rem;}
+.callout li::before{content:"→";position:absolute;left:0;color:var(--accent);font-weight:600;}
+.features-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:24px 0;}
+.feature-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--r-lg);padding:24px;transition:transform .2s,border-color .2s;}
+.feature-card:hover{transform:translateY(-4px);border-color:var(--accent-border);}
+.feature-icon{width:40px;height:40px;border-radius:var(--r-md);background:var(--accent-dim);border:1px solid var(--accent-border);display:flex;align-items:center;justify-content:center;font-size:1.125rem;margin-bottom:12px;}
+.feature-card h5{font-size:.9375rem;font-weight:600;margin-bottom:6px;color:var(--text-1);}
+.feature-card p{font-size:.8125rem;color:var(--text-2);margin:0;line-height:1.6;}
+.tech-pills{display:flex;flex-wrap:wrap;gap:8px;margin:24px 0;}
+.pill{display:inline-flex;align-items:center;gap:6px;padding:5px 12px;background:var(--bg-card);border:1px solid var(--border);border-radius:99px;font-size:.8125rem;color:var(--text-1);font-weight:500;font-family:var(--mono);}
+.counter-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:32px 0;}
+.counter-box{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--r-lg);padding:24px;text-align:center;}
+.counter-num{font-size:1.75rem;font-weight:700;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-variant-numeric:tabular-nums;}
+.counter-label{font-size:.75rem;color:var(--text-3);font-family:var(--mono);margin-top:4px;}
+.arch-flow{display:flex;align-items:center;justify-content:center;gap:0;flex-wrap:wrap;margin:24px 0;padding:32px 16px;background:var(--bg-card);border:1px solid var(--border);border-radius:var(--r-lg);}
+.arch-node{padding:12px 20px;background:var(--bg-raised);border:1px solid var(--accent-border);border-radius:var(--r-md);font-size:.8125rem;font-weight:600;color:var(--accent);font-family:var(--mono);}
+.arch-arrow{color:var(--text-3);font-size:1.25rem;padding:0 8px;}
+.future-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:24px 0;}
+.future-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--r-lg);padding:20px;transition:transform .2s,border-color .2s;text-align:center;}
+.future-card:hover{transform:translateY(-4px);border-color:var(--accent-border);}
+.future-card .f-icon{font-size:1.5rem;margin-bottom:8px;}
+.future-card h5{font-size:.875rem;font-weight:600;margin-bottom:4px;color:var(--text-1);}
+.future-card p{font-size:.75rem;color:var(--text-2);margin:0;line-height:1.5;}
+.cta{background:rgba(22,22,25,.7);backdrop-filter:blur(16px);border:1px solid var(--border);border-radius:var(--r-xl);padding:48px;text-align:center;margin:48px auto;max-width:700px;}
+.cta h3{font-size:1.5rem;font-weight:700;margin-bottom:12px;letter-spacing:-.02em;}
+.cta p{color:var(--text-2);margin-bottom:24px;}
+.cta-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:11px 22px;border-radius:var(--r-md);font-size:.875rem;font-weight:500;border:none;cursor:pointer;font-family:var(--font);transition:all .2s;text-decoration:none;line-height:1;}
+.btn-primary{background:var(--accent);color:#fff;}.btn-primary:hover{background:#7BA5FF;color:#fff;box-shadow:0 0 0 4px rgba(91,141,243,.15);}
+.btn-ghost{background:transparent;border:1px solid var(--border);color:var(--text-1);}.btn-ghost:hover{border-color:var(--border-s);background:var(--bg-card);}
+footer{padding:32px 24px;border-top:1px solid var(--border);text-align:center;}
+footer a{color:var(--text-2);font-size:.875rem;}
+footer p{font-size:.8125rem;color:var(--text-3);font-family:var(--mono);margin-top:8px;}
+.reveal{opacity:0;transform:translateY(20px);transition:opacity .5s cubic-bezier(.16,1,.3,1),transform .5s cubic-bezier(.16,1,.3,1);}
+.reveal.visible{opacity:1;transform:none;}
+@media(max-width:960px){.hero-stats{grid-template-columns:repeat(3,1fr);}.features-grid{grid-template-columns:repeat(2,1fr);}.counter-grid{grid-template-columns:repeat(2,1fr);}.future-grid{grid-template-columns:repeat(2,1fr);}.nav-links{display:none;}}
+@media(max-width:640px){.hero-stats{grid-template-columns:1fr;}.features-grid{grid-template-columns:1fr;}.counter-grid{grid-template-columns:1fr 1fr;}.future-grid{grid-template-columns:1fr 1fr;}.section{padding:64px 16px;}.arch-flow{flex-direction:column;}.arch-arrow{transform:rotate(90deg);}.cta{padding:32px 20px;margin:32px 16px;}}
+</style>
+</head><body>
+<div class="progress-bar" id="progressBar"></div>
+<nav><div class="nav-inner">
+<a href="../index.html" class="nav-brand" aria-label="Back to portfolio"><span>←</span> Hossam Sabry</a>
+<div class="nav-links"><a href="#overview">Overview</a><a href="#solution">Solution</a><a href="#results">Results</a><a href="#technical">Technical</a></div>
+</div></nav>
+
+<section class="hero">
+<div class="hero-orb hero-orb-1"></div><div class="hero-orb hero-orb-2"></div>
+<div class="hero-badge reveal"><span class="pulse-dot"></span>Case Study</div>
+<h1 class="reveal"><span class="grad">Model Health</span> Dashboard</h1>
+<p class="hero-sub reveal">BIM QA/QC analytics platform that audits Revit models for compliance, scores health across 8 categories, and surfaces actionable issues — replacing manual model checks that used to take days.</p>
+<div class="hero-stats reveal">
+<div class="stat-card"><div class="stat-num" data-count="80" data-prefix="~" data-suffix="%">~80%</div><div class="stat-label">Audit Time Saved</div></div>
+<div class="stat-card"><div class="stat-num" data-count="14832" data-suffix="">14832</div><div class="stat-label">Elements Audited</div></div>
+<div class="stat-card"><div class="stat-num" data-count="8" data-suffix="">8</div><div class="stat-label">QA Categories</div></div>
+</div>
+<div class="scroll-ind">Scroll to explore<div class="arr"></div></div>
+</section>
+<div class="divider"></div>
+
+<section class="section" id="overview">
+<h2 class="reveal">The Problem</h2>
+<p class="reveal">Model quality assurance on large BIM projects is one of the most time-consuming and error-prone tasks in the coordination cycle. Senior coordinators manually open models, visually inspect naming conventions, check parameter completeness, verify workset assignments, and cross-reference against the BIM Execution Plan — a process that typically takes 1–2 full days per discipline per audit cycle.</p>
+<div class="callout callout-red reveal">
+<h4>⚠️ Core Challenges</h4>
+<ul>
+<li>Manual audits take 1–2 days per discipline — 5+ days for a full multi-discipline check</li>
+<li>No quantifiable metrics — "the model is messy" is not actionable feedback</li>
+<li>Issues discovered late in the coordination cycle, after they've compounded</li>
+<li>Different auditors apply different standards — inconsistent quality gates</li>
+</ul>
+</div>
+<h3 class="reveal">Project Context</h3>
+<p class="reveal">Built for the Al Noor Tower Phase 2 project, where the BIM coordination team needed a way to quantify model quality, track improvement over time, and provide discipline leads with specific, actionable issue lists rather than vague "clean up your model" requests.</p>
+</section>
+<div class="divider"></div>
+
+<section class="section" id="solution">
+<h2 class="reveal">The Solution</h2>
+<p class="reveal">A browser-based model health analytics platform that ingests Revit model audit data, scores health across 8 standardized QA categories, and presents results through interactive radar charts, severity-coded issue tables, and exportable JSON reports.</p>
+<div class="features-grid reveal">
+<div class="feature-card"><div class="feature-icon">🏥</div><h5>Health Score</h5><p>Overall 0–100 score with letter grades (A/B/C), calculated as a weighted average across all QA categories.</p></div>
+<div class="feature-card"><div class="feature-icon">📊</div><h5>Radar Analysis</h5><p>Spider chart showing strengths and weaknesses across 8 categories — instantly identify which areas need attention.</p></div>
+<div class="feature-card"><div class="feature-icon">🔍</div><h5>Issue Tracker</h5><p>Filterable issues table with Critical/Warning/Info severity levels, element IDs, and discipline tagging.</p></div>
+<div class="feature-card"><div class="feature-icon">📁</div><h5>8 QA Categories</h5><p>Naming, Parameters, Placement, Rooms, Coordinates, Views, Families, and Detailing — the full BEP compliance stack.</p></div>
+<div class="feature-card"><div class="feature-icon">📈</div><h5>Discipline Breakdown</h5><p>Bar charts showing issue distribution by discipline — data-driven accountability for each trade.</p></div>
+<div class="feature-card"><div class="feature-icon">📋</div><h5>Export Reports</h5><p>One-click JSON export with full audit data, category scores, and issue details for project records.</p></div>
+</div>
+<h3 class="reveal">Architecture</h3>
+<div class="arch-flow reveal">
+<div class="arch-node">Revit Model Audit</div><div class="arch-arrow">→</div>
+<div class="arch-node">JSON Export</div><div class="arch-arrow">→</div>
+<div class="arch-node">Health Analyzer</div><div class="arch-arrow">→</div>
+<div class="arch-node">Chart.js Viz</div><div class="arch-arrow">→</div>
+<div class="arch-node">Report Export</div>
+</div>
+</section>
+<div class="divider"></div>
+
+<section class="section" id="results">
+<h2 class="reveal">Measurable Impact</h2>
+<div class="counter-grid reveal">
+<div class="counter-box"><div class="counter-num" data-count="80" data-prefix="~" data-suffix="%">~80%</div><div class="counter-label">Audit Time Saved</div></div>
+<div class="counter-box"><div class="counter-num" data-count="8" data-suffix="">8</div><div class="counter-label">QA Categories</div></div>
+<div class="counter-box"><div class="counter-num" data-count="24" data-suffix="">24</div><div class="counter-label">Issue Types Tracked</div></div>
+<div class="counter-box"><div class="counter-num" data-count="14832" data-suffix="">14832</div><div class="counter-label">Elements Audited</div></div>
+</div>
+<div class="callout callout-green reveal">
+<h4>✅ Before vs. After</h4>
+<ul>
+<li>Full model audit: 5+ days manual → 30 minutes with dashboard</li>
+<li>Issue reporting: "model is messy" → 24 specific, actionable items with severity</li>
+<li>Quality tracking: none → quantified 0–100 score per category per audit cycle</li>
+<li>Accountability: vague → discipline-level issue breakdown with element IDs</li>
+</ul>
+</div>
+</section>
+<div class="divider"></div>
+
+<section class="section" id="technical">
+<h2 class="reveal">Technical Deep Dive</h2>
+<h3 class="reveal">Technology Stack</h3>
+<div class="tech-pills reveal">
+<span class="pill">JavaScript (ES6+)</span><span class="pill">Chart.js 4</span><span class="pill">HTML5 / CSS3</span><span class="pill">JSON Schema</span><span class="pill">Geist Typeface</span>
+</div>
+<div class="callout callout-purple reveal">
+<h4>🏗️ Engineering Highlights</h4>
+<ul>
+<li>Health score uses weighted category averages — critical categories (Families, Parameters) carry 1.5x weight</li>
+<li>Radar chart provides instant visual "shape" of model quality — flat areas = weak spots</li>
+<li>Issue severity classification follows ISO 19650 non-conformance grading principles</li>
+<li>Export format designed to be machine-readable for CI/CD model validation pipelines</li>
+</ul>
+</div>
+<h3 class="reveal">Future Enhancements</h3>
+<div class="future-grid reveal">
+<div class="future-card"><div class="f-icon">📈</div><h5>Trend Tracking</h5><p>Compare health scores across audit cycles over time</p></div>
+<div class="future-card"><div class="f-icon">🔌</div><h5>Revit Plugin</h5><p>Direct model scan without manual export step</p></div>
+<div class="future-card"><div class="f-icon">🤖</div><h5>Auto-Fix Suggestions</h5><p>AI-powered remediation recommendations</p></div>
+<div class="future-card"><div class="f-icon">📊</div><h5>Multi-Model Compare</h5><p>Side-by-side health comparison across projects</p></div>
+</div>
+</section>
+
+<div class="section" style="padding-top:0;">
+<div class="cta reveal">
+<h3>Want to See It in Action?</h3>
+<p>I'd be happy to demo the model health dashboard and discuss how automated QA/QC can improve your BIM delivery quality.</p>
+<div class="cta-btns">
+<a href="../model-health/index.html" class="btn btn-primary">Try Live Tool →</a>
+<a href="../index.html#contact" class="btn btn-ghost">Get in Touch →</a>
+</div>
+</div>
+</div>
+
+<footer><a href="../index.html">← Back to Portfolio</a><p>&copy; 2025 Hossam Sabry · BIM Automation Engineer</p></footer>
+
+<script>
+window.addEventListener('scroll',()=>{const h=document.documentElement.scrollHeight-window.innerHeight;document.getElementById('progressBar').style.width=(window.scrollY/h)*100+'%';});
+const revealObs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');revealObs.unobserve(e.target);}});},{threshold:0.1,rootMargin:'0px 0px -40px 0px'});
+document.querySelectorAll('.reveal').forEach(el=>revealObs.observe(el));
+const navLinks=document.querySelectorAll('.nav-links a');const sections=document.querySelectorAll('section[id]');
+const navObs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){const id=e.target.getAttribute('id');navLinks.forEach(l=>l.classList.toggle('active',l.getAttribute('href')==='#'+id));}});},{threshold:0.2,rootMargin:'-60px 0px -40% 0px'});
+sections.forEach(s=>navObs.observe(s));
+document.querySelectorAll('.nav-links a[href^="#"]').forEach(a=>{a.addEventListener('click',e=>{e.preventDefault();const t=document.querySelector(a.getAttribute('href'));if(t) window.scrollTo({top:t.offsetTop-70,behavior:'smooth'});});});
+function animateCounter(el){const target=parseInt(el.dataset.count)||0;const prefix=el.dataset.prefix||'';const suffix=el.dataset.suffix||'';const duration=1200;const start=performance.now();function tick(now){const progress=Math.min((now-start)/duration,1);const eased=1-Math.pow(1-progress,3);el.textContent=prefix+Math.round(eased*target)+suffix;if(progress<1) requestAnimationFrame(tick);}requestAnimationFrame(tick);}
+const counterObs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){animateCounter(e.target);counterObs.unobserve(e.target);}});},{threshold:0.5});
+document.querySelectorAll('.stat-num[data-count],.counter-num[data-count]').forEach(el=>counterObs.observe(el));
+</script>
+</body></html>

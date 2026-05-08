@@ -396,35 +396,35 @@ document.getElementById('printSet').addEventListener('click', () => {
 
 // ========== SAMPLE DATA ==========
 const sampleCsv = `SheetNumber,SheetName,Discipline,Revision,Status,Scale,DrawnBy,Date,Notes
-A-001,Cover Sheet,Architectural,P03,Approved,NTS,Ahmed Hassan,2025-01-15,Project cover with vicinity map and sheet index
-A-100,Site Plan,Architectural,P03,Approved,1:500,Ahmed Hassan,2025-01-15,Overall site layout with access roads and parking
-A-101,Ground Floor Plan,Architectural,P03,Approved,1:100,Ahmed Hassan,2025-01-20,Lobby reception and retail areas
-A-102,First Floor Plan,Architectural,P02,In Review,1:100,Ahmed Hassan,2025-01-22,Open plan office layout — pending client feedback
-A-103,Second Floor Plan,Architectural,P02,In Review,1:100,Ahmed Hassan,2025-01-22,Meeting rooms and executive suite
-A-104,Third Floor Plan,Architectural,P01,Draft,1:100,Ahmed Hassan,2025-01-25,Residential units — layout under review
-A-201,Building Section A-A,Architectural,P03,Approved,1:50,Fatima Eldin,2025-01-18,Longitudinal section through main core
-A-202,Building Section B-B,Architectural,P02,In Review,1:50,Fatima Eldin,2025-01-22,Transverse section at grid C
-A-301,North Elevation,Architectural,P03,Approved,1:100,Fatima Eldin,2025-01-15,Main entrance facade with curtain wall details
-A-302,South Elevation,Architectural,P02,In Review,1:100,Fatima Eldin,2025-01-22,Rear elevation — cladding revised
-S-001,Foundation Plan,Structural,P03,Approved,1:100,Omar Khalil,2025-01-12,Mat foundation with pile layout
-S-002,Ground Floor Framing,Structural,P03,Approved,1:100,Omar Khalil,2025-01-14,Transfer beam level with column grid
-S-003,Typical Floor Framing,Structural,P02,In Review,1:100,Omar Khalil,2025-01-20,Post-tension slab layout for floors 1-3
-S-004,Roof Framing Plan,Structural,P01,Draft,1:100,Omar Khalil,2025-01-25,Steel roof structure over mechanical penthouse
-S-101,Foundation Details,Structural,P03,Approved,1:20,Sarah Nabil,2025-01-14,Pile cap and grade beam reinforcement
-S-102,Connection Details,Structural,P02,In Review,1:10,Sarah Nabil,2025-01-20,Steel-to-concrete moment connections
-M-001,Mechanical Floor Plan — GF,MEP,P02,In Review,1:100,John Mansour,2025-01-18,AHU locations and ductwork routing
-M-002,Mechanical Floor Plan — 1F,MEP,P01,Draft,1:100,John Mansour,2025-01-22,FCU layout and condensate drainage
-E-001,Electrical Floor Plan — GF,MEP,P02,Approved,1:100,Layla Abbas,2025-01-18,DB locations and cable tray routing
-E-002,Lighting Layout — GF,MEP,P02,In Review,1:100,Layla Abbas,2025-01-22,Luminaire schedule and circuiting
-P-001,Plumbing Floor Plan — GF,MEP,P02,Approved,1:100,John Mansour,2025-01-16,Hot/cold water riser diagram
-P-002,Fire Protection Plan — GF,MEP,P01,Draft,1:100,John Mansour,2025-01-25,Sprinkler layout — pending fire consultant review
-C-001,Site Grading Plan,Civil,P03,Approved,1:500,Omar Khalil,2025-01-10,Cut/fill volumes and drainage slope
-C-002,Storm Water Management,Civil,P02,In Review,1:200,Omar Khalil,2025-01-18,Retention pond sizing and outfall details
-G-001,General Notes,General,P03,Approved,NTS,Ahmed Hassan,2025-01-08,Project specifications and abbreviations
-A-105,Roof Plan,Architectural,P01,Draft,1:100,Ahmed Hassan,2025-01-25,Mechanical equipment zones and waterproofing
-A-401,Wall Sections,Architectural,P02,In Review,1:20,Fatima Eldin,2025-01-22,Curtain wall and masonry cavity details
-A-501,Door Schedule,Architectural,P03,Approved,NTS,Ahmed Hassan,2025-01-15,Fire rated doors highlighted
-A-502,Window Schedule,Architectural,P02,In Review,NTS,Ahmed Hassan,2025-01-22,Acoustic rated windows for north facade`;
+A-001,Cover Sheet,Architectural,P03,Approved,NTS,Ahmed Hassan,2026-01-15,Project cover with vicinity map and sheet index
+A-100,Site Plan,Architectural,P03,Approved,1:500,Ahmed Hassan,2026-01-15,Overall site layout with access roads and parking
+A-101,Ground Floor Plan,Architectural,P03,Approved,1:100,Ahmed Hassan,2026-01-20,Lobby reception and retail areas
+A-102,First Floor Plan,Architectural,P02,In Review,1:100,Ahmed Hassan,2026-01-22,Open plan office layout — pending client feedback
+A-103,Second Floor Plan,Architectural,P02,In Review,1:100,Ahmed Hassan,2026-01-22,Meeting rooms and executive suite
+A-104,Third Floor Plan,Architectural,P01,Draft,1:100,Ahmed Hassan,2026-01-25,Residential units — layout under review
+A-201,Building Section A-A,Architectural,P03,Approved,1:50,Fatima Eldin,2026-01-18,Longitudinal section through main core
+A-202,Building Section B-B,Architectural,P02,In Review,1:50,Fatima Eldin,2026-01-22,Transverse section at grid C
+A-301,North Elevation,Architectural,P03,Approved,1:100,Fatima Eldin,2026-01-15,Main entrance facade with curtain wall details
+A-302,South Elevation,Architectural,P02,In Review,1:100,Fatima Eldin,2026-01-22,Rear elevation — cladding revised
+S-001,Foundation Plan,Structural,P03,Approved,1:100,Omar Khalil,2026-01-12,Mat foundation with pile layout
+S-002,Ground Floor Framing,Structural,P03,Approved,1:100,Omar Khalil,2026-01-14,Transfer beam level with column grid
+S-003,Typical Floor Framing,Structural,P02,In Review,1:100,Omar Khalil,2026-01-20,Post-tension slab layout for floors 1-3
+S-004,Roof Framing Plan,Structural,P01,Draft,1:100,Omar Khalil,2026-01-25,Steel roof structure over mechanical penthouse
+S-101,Foundation Details,Structural,P03,Approved,1:20,Sarah Nabil,2026-01-14,Pile cap and grade beam reinforcement
+S-102,Connection Details,Structural,P02,In Review,1:10,Sarah Nabil,2026-01-20,Steel-to-concrete moment connections
+M-001,Mechanical Floor Plan — GF,MEP,P02,In Review,1:100,John Mansour,2026-01-18,AHU locations and ductwork routing
+M-002,Mechanical Floor Plan — 1F,MEP,P01,Draft,1:100,John Mansour,2026-01-22,FCU layout and condensate drainage
+E-001,Electrical Floor Plan — GF,MEP,P02,Approved,1:100,Layla Abbas,2026-01-18,DB locations and cable tray routing
+E-002,Lighting Layout — GF,MEP,P02,In Review,1:100,Layla Abbas,2026-01-22,Luminaire schedule and circuiting
+P-001,Plumbing Floor Plan — GF,MEP,P02,Approved,1:100,John Mansour,2026-01-16,Hot/cold water riser diagram
+P-002,Fire Protection Plan — GF,MEP,P01,Draft,1:100,John Mansour,2026-01-25,Sprinkler layout — pending fire consultant review
+C-001,Site Grading Plan,Civil,P03,Approved,1:500,Omar Khalil,2026-01-10,Cut/fill volumes and drainage slope
+C-002,Storm Water Management,Civil,P02,In Review,1:200,Omar Khalil,2026-01-18,Retention pond sizing and outfall details
+G-001,General Notes,General,P03,Approved,NTS,Ahmed Hassan,2026-01-08,Project specifications and abbreviations
+A-105,Roof Plan,Architectural,P01,Draft,1:100,Ahmed Hassan,2026-01-25,Mechanical equipment zones and waterproofing
+A-401,Wall Sections,Architectural,P02,In Review,1:20,Fatima Eldin,2026-01-22,Curtain wall and masonry cavity details
+A-501,Door Schedule,Architectural,P03,Approved,NTS,Ahmed Hassan,2026-01-15,Fire rated doors highlighted
+A-502,Window Schedule,Architectural,P02,In Review,NTS,Ahmed Hassan,2026-01-22,Acoustic rated windows for north facade`;
 
 function loadSampleData() {
   sheets = parseCSV(sampleCsv);
