@@ -171,7 +171,7 @@ footer p{font-size:.8125rem;color:var(--text-3);font-family:var(--mono);margin-t
 <p class="reveal">In multi-discipline BIM projects, document control is often the bottleneck that nobody talks about. Drawing sheets are tracked in fragmented Excel files, revision histories get lost in email threads, and print sets are assembled manually before every submission — a process that regularly takes 2–3 hours per transmittal.</p>
 
 <div class="callout callout-red reveal">
-<h4>⚠️ Core Challenges</h4>
+<h4>Core Challenges</h4>
 <ul>
 <li>Sheet indices maintained in disconnected Excel files across 4–5 discipline leads</li>
 <li>No single source of truth for current revision status — "Which revision is A-102 on?"</li>
@@ -193,32 +193,32 @@ footer p{font-size:.8125rem;color:var(--text-3);font-family:var(--mono);margin-t
 
 <div class="features-grid reveal">
 <div class="feature-card">
-<div class="feature-icon">📋</div>
+<div class="feature-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg></div>
 <h5>Sheet Index</h5>
 <p>Searchable, filterable table of all project sheets with discipline badges, revision tracking, and status indicators.</p>
 </div>
 <div class="feature-card">
-<div class="feature-icon">📐</div>
+<div class="feature-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg></div>
 <h5>Revision Tracking</h5>
 <p>Visual revision timeline showing which sheets changed in each issue, with approval counts per revision.</p>
 </div>
 <div class="feature-card">
-<div class="feature-icon">🖨️</div>
+<div class="feature-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg></div>
 <h5>Print Set Builder</h5>
 <p>Drag sheets into print queues, filter by approval status, and generate formatted print indices for transmittals.</p>
 </div>
 <div class="feature-card">
-<div class="feature-icon">🏗️</div>
+<div class="feature-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg></div>
 <h5>Multi-Discipline</h5>
 <p>Color-coded discipline badges (Arch, Struct, MEP, Civil) for instant visual identification across 30+ sheets.</p>
 </div>
 <div class="feature-card">
-<div class="feature-icon">📥</div>
+<div class="feature-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></div>
 <h5>Import / Export</h5>
 <p>CSV and JSON import from Revit schedule exports. One-click export to CSV, Excel (.xlsx), or formatted PDF.</p>
 </div>
 <div class="feature-card">
-<div class="feature-icon">⚡</div>
+<div class="feature-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="16 12 12 8 8 12"/><line x1="12" y1="16" x2="12" y2="8"/></svg></div>
 <h5>Zero Install</h5>
 <p>Runs entirely in the browser with localStorage persistence. No servers, no databases, no IT department approval needed.</p>
 </div>
@@ -238,7 +238,7 @@ footer p{font-size:.8125rem;color:var(--text-3);font-family:var(--mono);margin-t
 </div>
 
 <div class="callout callout-blue reveal">
-<h4>💡 Key Design Decision</h4>
+<h4>Key Design Decision</h4>
 <ul>
 <li>Built as a standalone web app — no backend required, runs from a USB drive if needed</li>
 <li>Uses the same project data schema as the Clash Dashboard for cross-tool consistency</li>
@@ -272,7 +272,7 @@ footer p{font-size:.8125rem;color:var(--text-3);font-family:var(--mono);margin-t
 </div>
 
 <div class="callout callout-green reveal">
-<h4>✅ Before vs. After</h4>
+<h4>Before vs. After</h4>
 <ul>
 <li>Transmittal prep: 2–3 hours → 15 minutes (print set auto-generated)</li>
 <li>Revision status queries: email chain → instant filter lookup</li>
@@ -299,7 +299,7 @@ footer p{font-size:.8125rem;color:var(--text-3);font-family:var(--mono);margin-t
 </div>
 
 <div class="callout callout-purple reveal">
-<h4>🏗️ Engineering Highlights</h4>
+<h4>Engineering Highlights</h4>
 <ul>
 <li>Custom CSV parser handles quoted fields, multi-line values, and Unicode BIM data</li>
 <li>Discipline classification uses fuzzy matching — "MEP-Mechanical" maps to MEP automatically</li>
@@ -311,22 +311,22 @@ footer p{font-size:.8125rem;color:var(--text-3);font-family:var(--mono);margin-t
 <h3 class="reveal">Future Enhancements</h3>
 <div class="future-grid reveal">
 <div class="future-card">
-<div class="f-icon">🔄</div>
+<div class="f-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22v-5"/><path d="M9 8V2"/><path d="M15 8V2"/><path d="M18 8v5a6 6 0 0 1-6 6 6 6 0 0 1-6-6V8z"/></svg></div>
 <h5>Revit Live Sync</h5>
 <p>Direct API integration with Revit schedule data</p>
 </div>
 <div class="future-card">
-<div class="f-icon">📊</div>
+<div class="f-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="20" x2="12" y2="10"/><line x1="18" y1="20" x2="18" y2="4"/><line x1="6" y1="20" x2="6" y2="16"/></svg></div>
 <h5>Issue Analytics</h5>
 <p>Charts showing revision frequency per discipline</p>
 </div>
 <div class="future-card">
-<div class="f-icon">📧</div>
+<div class="f-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22 6 12 13 2 6"/></svg></div>
 <h5>Email Transmittals</h5>
 <p>Auto-generate transmittal letters with sheet lists</p>
 </div>
 <div class="future-card">
-<div class="f-icon">🔐</div>
+<div class="f-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></div>
 <h5>Approval Workflow</h5>
 <p>Multi-stage approval with digital signatures</p>
 </div>

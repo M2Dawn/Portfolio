@@ -1,4 +1,4 @@
-// ========== BIM MODEL HEALTH DASHBOARD — JS ENGINE ==========
+﻿// ========== BIM MODEL HEALTH DASHBOARD — JS ENGINE ==========
 
 // ===== UTILITIES =====
 function showToast(msg, type = 'success') {
@@ -37,10 +37,10 @@ document.querySelectorAll('.tab').forEach(tab => {
 // ===== UPLOAD =====
 const uploadZone = document.getElementById('uploadZone');
 const fileInput = document.getElementById('fileInput');
-uploadZone.addEventListener('click', () => fileInput.click());
-uploadZone.addEventListener('dragover', e => { e.preventDefault(); uploadZone.classList.add('drag-over'); });
-uploadZone.addEventListener('dragleave', () => uploadZone.classList.remove('drag-over'));
-uploadZone.addEventListener('drop', e => {
+if(uploadZone) uploadZone.addEventListener('click', () => fileInput.click());
+if(uploadZone) uploadZone.addEventListener('dragover', e => { e.preventDefault(); uploadZone.classList.add('drag-over'); });
+if(uploadZone) uploadZone.addEventListener('dragleave', () => uploadZone.classList.remove('drag-over'));
+if(uploadZone) uploadZone.addEventListener('drop', e => {
   e.preventDefault(); uploadZone.classList.remove('drag-over');
   if (e.dataTransfer.files.length > 0) handleFile(e.dataTransfer.files[0]);
 });
@@ -51,8 +51,9 @@ async function handleFile(file) {
     const text = await file.text();
     auditData = JSON.parse(text);
     renderAll();
-    showToast('✅ Model audit data loaded!');
-  } catch (e) { showToast('❌ Invalid file format', 'error'); console.error(e); }
+    showDashboard();
+    showToast('Model audit data loaded!');
+  } catch (e) { showToast('Invalid file format', 'error'); console.error(e); }
 }
 
 // ===== ISSUE FILTERS =====
@@ -227,10 +228,21 @@ function renderCategoryCards() {
   const grid = document.getElementById('catGrid');
   grid.innerHTML = auditData.categories.map(c => {
     const color = c.score >= 85 ? 'var(--green)' : c.score >= 65 ? 'var(--amber)' : 'var(--red)';
-    const icons = { 'Naming Conventions': '🏷️', 'Parameter Completeness': '📋', 'Element Placement': '📐', 'Room & Space': '🚪', 'Shared Coordinates': '🗺️', 'View Organization': '👁️', 'Family Standards': '🧱', 'Detailing': '✏️' };
+    const iconMap = {
+      'Naming Conventions': '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7V4h16v3"/><path d="M9 20h6"/><path d="M12 4v16"/></svg>',
+      'Parameter Completeness': '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>',
+      'Element Placement': '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="10" r="3"/><path d="M12 21.7C17.3 17 20 13 20 10a8 8 0 1 0-16 0c0 3 2.7 7 8 11.7z"/></svg>',
+      'Room & Space': '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="12" y1="3" x2="12" y2="21"/></svg>',
+      'Shared Coordinates': '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>',
+      'View Organization': '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>',
+      'View Templates': '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>',
+      'Family Standards': '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>',
+      'Detail Level': '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>',
+      'Detailing': '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>'
+    };
     return `<div class="cat-card">
       <div class="cat-card-header">
-        <span class="cat-card-icon">${icons[c.name] || '📊'}</span>
+        <span class="cat-card-icon">${iconMap[c.name] || ''}</span>
         <span class="cat-card-score" style="color:${color}">${c.score}</span>
       </div>
       <div class="cat-card-name">${c.name}</div>
@@ -257,7 +269,7 @@ function renderIssuesTable(severity) {
 
 // ===== EXPORT =====
 document.getElementById('exportReport').addEventListener('click', () => {
-  if (!auditData) { showToast('⚠️ No data to export', 'error'); return; }
+  if (!auditData) { showToast('No data to export', 'error'); return; }
   const report = {
     generatedAt: new Date().toISOString(),
     project: auditData.projectName,
@@ -278,7 +290,7 @@ document.getElementById('exportReport').addEventListener('click', () => {
   a.href = URL.createObjectURL(blob);
   a.download = `model-health-report-${new Date().toISOString().split('T')[0]}.json`;
   document.body.appendChild(a); a.click(); a.remove();
-  showToast('✅ Report exported!');
+  showToast('Report exported!');
 });
 
 // ===== SAMPLE DATA =====
@@ -330,12 +342,23 @@ const sampleData = {
 function loadSample() {
   auditData = JSON.parse(JSON.stringify(sampleData));
   renderAll();
-  showToast('✅ Al Noor Tower Phase 2 — Model audit loaded (14,832 elements)', 'success');
+  showDashboard();
+  showToast('Al Noor Tower Phase 2 — Model audit loaded (14,832 elements)', 'success');
 }
 
 document.getElementById('loadSampleBtn').addEventListener('click', loadSample);
 
-// ===== INIT =====
-window.addEventListener('load', () => {
-  console.log('🏥 Model Health Dashboard — Professional Edition Ready!');
-});
+
+// Empty state CTA
+const emptyLoadBtn = document.getElementById('emptyLoadSample');
+if(emptyLoadBtn) emptyLoadBtn.addEventListener('click', loadSample);
+
+// Show/hide empty state vs dashboard content
+function showDashboard() {
+  const es = document.getElementById('emptyState');
+  const dc = document.getElementById('dashboardContent');
+  if(es) es.style.display = 'none';
+  if(dc) dc.classList.add('loaded');
+}
+
+console.log('Model Health Dashboard — Professional Edition Ready!');

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -120,7 +120,7 @@ footer p{font-size:.8125rem;color:var(--text-3);font-family:var(--mono);margin-t
 <h2 class="reveal">The Problem</h2>
 <p class="reveal">Model quality assurance on large BIM projects is one of the most time-consuming and error-prone tasks in the coordination cycle. Senior coordinators manually open models, visually inspect naming conventions, check parameter completeness, verify workset assignments, and cross-reference against the BIM Execution Plan — a process that typically takes 1–2 full days per discipline per audit cycle.</p>
 <div class="callout callout-red reveal">
-<h4>⚠️ Core Challenges</h4>
+<h4>Core Challenges</h4>
 <ul>
 <li>Manual audits take 1–2 days per discipline — 5+ days for a full multi-discipline check</li>
 <li>No quantifiable metrics — "the model is messy" is not actionable feedback</li>
@@ -137,12 +137,12 @@ footer p{font-size:.8125rem;color:var(--text-3);font-family:var(--mono);margin-t
 <h2 class="reveal">The Solution</h2>
 <p class="reveal">A browser-based model health analytics platform that ingests Revit model audit data, scores health across 8 standardized QA categories, and presents results through interactive radar charts, severity-coded issue tables, and exportable JSON reports.</p>
 <div class="features-grid reveal">
-<div class="feature-card"><div class="feature-icon">🏥</div><h5>Health Score</h5><p>Overall 0–100 score with letter grades (A/B/C), calculated as a weighted average across all QA categories.</p></div>
-<div class="feature-card"><div class="feature-icon">📊</div><h5>Radar Analysis</h5><p>Spider chart showing strengths and weaknesses across 8 categories — instantly identify which areas need attention.</p></div>
-<div class="feature-card"><div class="feature-icon">🔍</div><h5>Issue Tracker</h5><p>Filterable issues table with Critical/Warning/Info severity levels, element IDs, and discipline tagging.</p></div>
-<div class="feature-card"><div class="feature-icon">📁</div><h5>8 QA Categories</h5><p>Naming, Parameters, Placement, Rooms, Coordinates, Views, Families, and Detailing — the full BEP compliance stack.</p></div>
-<div class="feature-card"><div class="feature-icon">📈</div><h5>Discipline Breakdown</h5><p>Bar charts showing issue distribution by discipline — data-driven accountability for each trade.</p></div>
-<div class="feature-card"><div class="feature-icon">📋</div><h5>Export Reports</h5><p>One-click JSON export with full audit data, category scores, and issue details for project records.</p></div>
+<div class="feature-card"><div class="feature-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div><h5>Health Score</h5><p>Overall 0–100 score with letter grades (A/B/C), calculated as a weighted average across all QA categories.</p></div>
+<div class="feature-card"><div class="feature-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 2 7 2 17 12 22 22 17 22 7 12 2"/><line x1="12" y1="22" x2="12" y2="2"/><line x1="22" y1="7" x2="2" y2="17"/><line x1="2" y1="7" x2="22" y2="17"/></svg></div><h5>Radar Analysis</h5><p>Spider chart showing strengths and weaknesses across 8 categories — instantly identify which areas need attention.</p></div>
+<div class="feature-card"><div class="feature-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div><h5>Issue Tracker</h5><p>Filterable issues table with Critical/Warning/Info severity levels, element IDs, and discipline tagging.</p></div>
+<div class="feature-card"><div class="feature-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg></div><h5>8 QA Categories</h5><p>Naming, Parameters, Placement, Rooms, Coordinates, Views, Families, and Detailing — the full BEP compliance stack.</p></div>
+<div class="feature-card"><div class="feature-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="20" x2="12" y2="10"/><line x1="18" y1="20" x2="18" y2="4"/><line x1="6" y1="20" x2="6" y2="16"/></svg></div><h5>Discipline Breakdown</h5><p>Bar charts showing issue distribution by discipline — data-driven accountability for each trade.</p></div>
+<div class="feature-card"><div class="feature-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></div><h5>Export Reports</h5><p>One-click JSON export with full audit data, category scores, and issue details for project records.</p></div>
 </div>
 <h3 class="reveal">Architecture</h3>
 <div class="arch-flow reveal">
@@ -164,7 +164,7 @@ footer p{font-size:.8125rem;color:var(--text-3);font-family:var(--mono);margin-t
 <div class="counter-box"><div class="counter-num" data-count="14832" data-suffix="">14832</div><div class="counter-label">Elements Audited</div></div>
 </div>
 <div class="callout callout-green reveal">
-<h4>✅ Before vs. After</h4>
+<h4>Before vs. After</h4>
 <ul>
 <li>Full model audit: 5+ days manual → 30 minutes with dashboard</li>
 <li>Issue reporting: "model is messy" → 24 specific, actionable items with severity</li>
@@ -182,7 +182,7 @@ footer p{font-size:.8125rem;color:var(--text-3);font-family:var(--mono);margin-t
 <span class="pill">JavaScript (ES6+)</span><span class="pill">Chart.js 4</span><span class="pill">HTML5 / CSS3</span><span class="pill">JSON Schema</span><span class="pill">Geist Typeface</span>
 </div>
 <div class="callout callout-purple reveal">
-<h4>🏗️ Engineering Highlights</h4>
+<h4>Engineering Highlights</h4>
 <ul>
 <li>Health score uses weighted category averages — critical categories (Families, Parameters) carry 1.5x weight</li>
 <li>Radar chart provides instant visual "shape" of model quality — flat areas = weak spots</li>
@@ -192,10 +192,10 @@ footer p{font-size:.8125rem;color:var(--text-3);font-family:var(--mono);margin-t
 </div>
 <h3 class="reveal">Future Enhancements</h3>
 <div class="future-grid reveal">
-<div class="future-card"><div class="f-icon">📈</div><h5>Trend Tracking</h5><p>Compare health scores across audit cycles over time</p></div>
-<div class="future-card"><div class="f-icon">🔌</div><h5>Revit Plugin</h5><p>Direct model scan without manual export step</p></div>
-<div class="future-card"><div class="f-icon">🤖</div><h5>Auto-Fix Suggestions</h5><p>AI-powered remediation recommendations</p></div>
-<div class="future-card"><div class="f-icon">📊</div><h5>Multi-Model Compare</h5><p>Side-by-side health comparison across projects</p></div>
+<div class="future-card"><div class="f-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg></div><h5>Trend Tracking</h5><p>Compare health scores across audit cycles over time</p></div>
+<div class="future-card"><div class="f-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22v-5"/><path d="M9 8V2"/><path d="M15 8V2"/><path d="M18 8v5a6 6 0 0 1-6 6 6 6 0 0 1-6-6V8z"/></svg></div><h5>Revit Plugin</h5><p>Direct model scan without manual export step</p></div>
+<div class="future-card"><div class="f-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div><h5>Auto-Fix Suggestions</h5><p>AI-powered remediation recommendations</p></div>
+<div class="future-card"><div class="f-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></div><h5>Multi-Model Compare</h5><p>Side-by-side health comparison across projects</p></div>
 </div>
 </section>
 

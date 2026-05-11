@@ -147,18 +147,18 @@ const modelFilter = document.getElementById('modelFilter');
 const detailsCard = document.getElementById('detailsCard');
 
 // ========== DRAG & DROP UPLOAD ==========
-uploadZone.addEventListener('click', () => fileInput.click());
+if(uploadZone) uploadZone.addEventListener('click', () => fileInput.click());
 
-uploadZone.addEventListener('dragover', (e) => {
+if(uploadZone) uploadZone.addEventListener('dragover', (e) => {
   e.preventDefault();
   uploadZone.classList.add('drag-over');
 });
 
-uploadZone.addEventListener('dragleave', () => {
+if(uploadZone) uploadZone.addEventListener('dragleave', () => {
   uploadZone.classList.remove('drag-over');
 });
 
-uploadZone.addEventListener('drop', (e) => {
+if(uploadZone) uploadZone.addEventListener('drop', (e) => {
   e.preventDefault();
   uploadZone.classList.remove('drag-over');
   const files = e.dataTransfer.files;
@@ -178,7 +178,7 @@ async function handleFileUpload(file) {
   try {
     // Validate file size (max 10MB)
     if(file.size > 10 * 1024 * 1024) {
-      showToast('❌ File too large. Maximum 10MB allowed.', 'error');
+      showToast('File too large. Maximum 10MB allowed.', 'error');
       return;
     }
     
@@ -188,7 +188,7 @@ async function handleFileUpload(file) {
     if(file.name.toLowerCase().endsWith('.json')){
       newClashes = JSON.parse(text);
       if(!Array.isArray(newClashes)) {
-        showToast('❌ Invalid JSON format. Expected an array.', 'error');
+        showToast('Invalid JSON format. Expected an array.', 'error');
         return;
       }
     } else {
@@ -196,7 +196,7 @@ async function handleFileUpload(file) {
     }
     
     if(newClashes.length === 0) {
-      showToast('⚠️ No data found in file.', 'error');
+      showToast('No data found in file.', 'error');
       return;
     }
     
@@ -207,7 +207,7 @@ async function handleFileUpload(file) {
     );
     
     if(!hasRequiredFields) {
-      showToast('❌ Missing required field: ClashID', 'error');
+      showToast('Missing required field: ClashID', 'error');
       return;
     }
     
@@ -221,9 +221,10 @@ async function handleFileUpload(file) {
     updateCharts();
     updateTimeline();
     
-    showToast(`✅ Loaded ${clashes.length} clashes successfully!`, 'success');
+    showDashboard();
+    showToast(`Loaded ${clashes.length} clashes successfully!`, 'success');
   } catch (error) {
-    showToast('❌ Error loading file. Please check format.', 'error');
+    showToast('Error loading file. Please check format.', 'error');
     console.error(error);
   }
 }
@@ -401,7 +402,7 @@ function showDetails(c){
 function bulkUpdateStatus(newStatus) {
   const selected = document.querySelectorAll('#clashTable tbody tr.selected');
   if(selected.length === 0) {
-    showToast('⚠️ Select clashes to update', 'error');
+    showToast('Select clashes to update', 'error');
     return;
   }
   
@@ -420,13 +421,13 @@ function bulkUpdateStatus(newStatus) {
   renderTable();
   updateSummary();
   updateCharts();
-  showToast(`✅ Updated ${count} clash${count !== 1 ? 'es' : ''}!`, 'success');
+  showToast(`Updated ${count} clash${count !== 1 ? 'es' : ''}!`, 'success');
 }
 
 function bulkAssign(assignee) {
   const selected = document.querySelectorAll('#clashTable tbody tr.selected');
   if(selected.length === 0) {
-    showToast('⚠️ Select clashes to assign', 'error');
+    showToast('Select clashes to assign', 'error');
     return;
   }
   
@@ -444,13 +445,13 @@ function bulkAssign(assignee) {
   saveToLocalStorage();
   renderTable();
   updateSummary();
-  showToast(`✅ Assigned ${count} clash${count !== 1 ? 'es' : ''}!`, 'success');
+  showToast(`Assigned ${count} clash${count !== 1 ? 'es' : ''}!`, 'success');
 }
 
 function bulkDelete() {
   const selected = document.querySelectorAll('#clashTable tbody tr.selected');
   if(selected.length === 0) {
-    showToast('⚠️ Select clashes to delete', 'error');
+    showToast('Select clashes to delete', 'error');
     return;
   }
   
@@ -466,7 +467,7 @@ function bulkDelete() {
   renderTable();
   updateSummary();
   updateCharts();
-  showToast(`✅ Deleted ${clashIds.length} clash${clashIds.length !== 1 ? 'es' : ''}!`, 'success');
+  showToast(`Deleted ${clashIds.length} clash${clashIds.length !== 1 ? 'es' : ''}!`, 'success');
 }
 
 // Toggle row selection
@@ -507,7 +508,7 @@ document.getElementById('saveUpdate').addEventListener('click', () => {
   updateTimeline();
   showDetails(selectedClash);
   
-  showToast('✅ Clash updated successfully!', 'success');
+  showToast('Clash updated successfully!', 'success');
 });
 
 // ========== SUMMARY STATS ==========
@@ -764,7 +765,7 @@ function updateTimeline() {
 // JSON Export
 document.getElementById('downloadJson')?.addEventListener('click', () => {
   if (clashes.length === 0) {
-    showToast('⚠️ No data to export', 'error');
+    showToast('No data to export', 'error');
     return;
   }
   
@@ -779,13 +780,13 @@ document.getElementById('downloadJson')?.addEventListener('click', () => {
   a.remove();
   URL.revokeObjectURL(url);
   
-  showToast('✅ JSON exported successfully!', 'success');
+  showToast('JSON exported successfully!', 'success');
 });
 
 // CSV Export
-document.getElementById('downloadCsv').addEventListener('click', () => {
+document.getElementById('downloadCsv')?.addEventListener('click', () => {
   if (clashes.length === 0) {
-    showToast('⚠️ No data to export', 'error');
+    showToast('No data to export', 'error');
     return;
   }
   
@@ -807,13 +808,13 @@ document.getElementById('downloadCsv').addEventListener('click', () => {
   a.remove();
   URL.revokeObjectURL(url);
   
-  showToast('✅ CSV exported successfully!', 'success');
+  showToast('CSV exported successfully!', 'success');
 });
 
 // Excel Export
-document.getElementById('downloadExcel').addEventListener('click', () => {
+document.getElementById('downloadExcel')?.addEventListener('click', () => {
   if (clashes.length === 0) {
-    showToast('⚠️ No data to export', 'error');
+    showToast('No data to export', 'error');
     return;
   }
   
@@ -830,13 +831,13 @@ document.getElementById('downloadExcel').addEventListener('click', () => {
   XLSX.utils.book_append_sheet(wb, ws, 'Clashes');
   XLSX.writeFile(wb, `clash-report-${new Date().toISOString().split('T')[0]}.xlsx`);
   
-  showToast('✅ Excel exported successfully!', 'success');
+  showToast('Excel exported successfully!', 'success');
 });
 
 // Print PDF
-document.getElementById('printReport').addEventListener('click', () => {
+document.getElementById('printReport')?.addEventListener('click', () => {
   if (clashes.length === 0) {
-    showToast('⚠️ No data to print', 'error');
+    showToast('No data to print', 'error');
     return;
   }
   
@@ -923,7 +924,8 @@ function loadSampleData() {
   updateSummary();
   updateCharts();
   updateTimeline();
-  showToast('✅ 20 sample clashes loaded — Al Noor Tower Phase 2', 'success');
+  showDashboard();
+  showToast('20 sample clashes loaded — Al Noor Tower Phase 2', 'success');
 }
 
 // Add load sample data button listener
@@ -991,18 +993,20 @@ window.addEventListener('load', () => {
     localStorage.removeItem(STORAGE_KEY);
     localStorage.setItem('clash-dashboard-version', '2');
   }
-  const savedData = loadFromLocalStorage();
-  if(savedData && savedData.length > 0) {
-    clashes = savedData;
-    pushHistory();
-    initModelFilter();
-    renderTable();
-    updateSummary();
-    updateCharts();
-    updateTimeline();
-    showToast('📂 Previous data restored!', 'success');
-  }
+  // Dashboard starts empty — user clicks 'Load Sample' or uploads file
   updateHistoryButtons();
+
+  // Empty state CTA
+  const emptyLoadBtn = document.getElementById('emptyLoadSample');
+  if(emptyLoadBtn) emptyLoadBtn.addEventListener('click', loadSampleData);
 });
 
-console.log('✨ Clash Dashboard Enhanced - Professional Edition Ready!');
+// Show/hide empty state vs dashboard content
+function showDashboard() {
+  const es = document.getElementById('emptyState');
+  const dc = document.getElementById('dashboardContent');
+  if(es) es.style.display = 'none';
+  if(dc) dc.classList.add('loaded');
+}
+
+console.log('Clash Dashboard Enhanced - Professional Edition Ready!');

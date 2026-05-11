@@ -72,6 +72,8 @@ function loadFromLocalStorage() {
 // ========== DOM ==========
 const fileInput = document.getElementById('fileInput');
 const uploadZone = document.getElementById('uploadZone');
+const emptyState = document.getElementById('emptyState');
+const dashboardContent = document.getElementById('dashboardContent');
 const tbody = document.querySelector('#sheetTable tbody');
 const search = document.getElementById('search');
 const statusFilter = document.getElementById('statusFilter');
@@ -80,17 +82,19 @@ const revisionFilter = document.getElementById('revisionFilter');
 const detailsCard = document.getElementById('detailsCard');
 
 // ========== UPLOAD ==========
-uploadZone.addEventListener('click', () => fileInput.click());
-uploadZone.addEventListener('dragover', (e) => { e.preventDefault(); uploadZone.classList.add('drag-over'); });
-uploadZone.addEventListener('dragleave', () => { uploadZone.classList.remove('drag-over'); });
-uploadZone.addEventListener('drop', (e) => {
-  e.preventDefault();
-  uploadZone.classList.remove('drag-over');
-  if (e.dataTransfer.files.length > 0) {
-    fileInput.files = e.dataTransfer.files;
-    handleFileUpload(e.dataTransfer.files[0]);
-  }
-});
+if(uploadZone) {
+  uploadZone.addEventListener('click', () => fileInput.click());
+  uploadZone.addEventListener('dragover', (e) => { e.preventDefault(); uploadZone.classList.add('drag-over'); });
+  uploadZone.addEventListener('dragleave', () => { uploadZone.classList.remove('drag-over'); });
+  uploadZone.addEventListener('drop', (e) => {
+    e.preventDefault();
+    uploadZone.classList.remove('drag-over');
+    if (e.dataTransfer.files.length > 0) {
+      fileInput.files = e.dataTransfer.files;
+      handleFileUpload(e.dataTransfer.files[0]);
+    }
+  });
+}
 fileInput.addEventListener('change', (e) => {
   if (e.target.files.length > 0) handleFileUpload(e.target.files[0]);
 });
@@ -98,18 +102,18 @@ fileInput.addEventListener('change', (e) => {
 async function handleFileUpload(file) {
   try {
     if(file.size > 10 * 1024 * 1024) {
-      showToast('❌ File too large. Maximum 10MB.', 'error');
+      showToast('File too large. Maximum 10MB.', 'error');
       return;
     }
     const text = await file.text();
     let newSheets = [];
     if(file.name.toLowerCase().endsWith('.json')){
       newSheets = JSON.parse(text);
-      if(!Array.isArray(newSheets)) { showToast('❌ Invalid JSON format.', 'error'); return; }
+      if(!Array.isArray(newSheets)) { showToast('Invalid JSON format.', 'error'); return; }
     } else {
       newSheets = parseCSV(text);
     }
-    if(newSheets.length === 0) { showToast('⚠️ No data found.', 'error'); return; }
+    if(newSheets.length === 0) { showToast('No data found.', 'error'); return; }
     sheets = newSheets;
     saveToLocalStorage();
     initFilters();
@@ -117,9 +121,10 @@ async function handleFileUpload(file) {
     updateSummary();
     updatePrintSets();
     updateRevisions();
-    showToast(`✅ Loaded ${sheets.length} sheets successfully!`, 'success');
+    showDashboard();
+    showToast(`Loaded ${sheets.length} sheets successfully!`, 'success');
   } catch (error) {
-    showToast('❌ Error loading file.', 'error');
+    showToast('Error loading file.', 'error');
     console.error(error);
   }
 }
@@ -245,7 +250,7 @@ document.getElementById('saveUpdate').addEventListener('click', () => {
   updatePrintSets();
   updateRevisions();
   showDetails(selectedSheet);
-  showToast('✅ Sheet updated!', 'success');
+  showToast('Sheet updated!', 'success');
 });
 
 // ========== SUMMARY ==========
@@ -329,7 +334,7 @@ document.getElementById('generatePrintSet').addEventListener('click', () => {
   printWindow.document.close();
   printWindow.focus();
   setTimeout(() => printWindow.print(), 500);
-  showToast(`🖨️ Print set generated — ${printQueue.length} sheets`, 'success');
+  showToast(`Print set generated — ${printQueue.length} sheets`, 'success');
 });
 
 // ========== REVISIONS ==========
@@ -362,7 +367,7 @@ function updateRevisions(){
 
 // ========== EXPORTS ==========
 document.getElementById('downloadCsv').addEventListener('click', () => {
-  if(sheets.length === 0) { showToast('⚠️ No data to export', 'error'); return; }
+  if(sheets.length === 0) { showToast('No data to export', 'error'); return; }
   const rows = [['SheetNumber','SheetName','Discipline','Revision','Status','Scale','DrawnBy','Date','Notes']];
   sheets.forEach(s => rows.push([s.SheetNumber,s.SheetName,s.Discipline,s.Revision,s.Status,s.Scale,s.DrawnBy,s.Date,s.Notes||'']));
   const csv = rows.map(r => r.map(cell => `"${(''+cell).replace(/"/g,'""')}"`).join(',')).join('\n');
@@ -371,11 +376,11 @@ document.getElementById('downloadCsv').addEventListener('click', () => {
   const a = document.createElement('a');
   a.href = url; a.download = `sheet-index-${new Date().toISOString().split('T')[0]}.csv`;
   document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
-  showToast('✅ CSV exported!', 'success');
+  showToast('CSV exported!', 'success');
 });
 
 document.getElementById('downloadExcel').addEventListener('click', () => {
-  if(sheets.length === 0) { showToast('⚠️ No data to export', 'error'); return; }
+  if(sheets.length === 0) { showToast('No data to export', 'error'); return; }
   const ws_data = [
     ['SheetNumber','SheetName','Discipline','Revision','Status','Scale','DrawnBy','Date','Notes'],
     ...sheets.map(s => [s.SheetNumber,s.SheetName,s.Discipline,s.Revision,s.Status,s.Scale,s.DrawnBy,s.Date,s.Notes||''])
@@ -384,7 +389,7 @@ document.getElementById('downloadExcel').addEventListener('click', () => {
   const ws = XLSX.utils.aoa_to_sheet(ws_data);
   XLSX.utils.book_append_sheet(wb, ws, 'Sheet Index');
   XLSX.writeFile(wb, `sheet-index-${new Date().toISOString().split('T')[0]}.xlsx`);
-  showToast('✅ Excel exported!', 'success');
+  showToast('Excel exported!', 'success');
 });
 
 document.getElementById('printSet').addEventListener('click', () => {
@@ -434,7 +439,8 @@ function loadSampleData() {
   updateSummary();
   updatePrintSets();
   updateRevisions();
-  showToast('✅ 30 sample sheets loaded — Al Noor Tower Phase 2', 'success');
+  showDashboard();
+  showToast('30 sample sheets loaded — Al Noor Tower Phase 2', 'success');
 }
 
 document.getElementById('loadSampleBtn').addEventListener('click', loadSampleData);
@@ -446,16 +452,16 @@ window.addEventListener('load', () => {
     localStorage.removeItem(STORAGE_KEY);
     localStorage.setItem('sheet-manager-version', '1');
   }
-  const savedData = loadFromLocalStorage();
-  if(savedData && savedData.length > 0) {
-    sheets = savedData;
-    initFilters();
-    renderTable();
-    updateSummary();
-    updatePrintSets();
-    updateRevisions();
-    showToast('📂 Previous data restored!', 'success');
-  }
+  // Dashboard starts empty — user clicks 'Load Sample' or uploads file
+  // Empty state CTA
+  const emptyLoadBtn = document.getElementById('emptyLoadSample');
+  if(emptyLoadBtn) emptyLoadBtn.addEventListener('click', loadSampleData);
 });
 
-console.log('📋 Sheet Set Manager — Professional Edition Ready!');
+// Show/hide empty state vs dashboard content
+function showDashboard() {
+  if(emptyState) emptyState.style.display = 'none';
+  if(dashboardContent) dashboardContent.classList.add('loaded');
+}
+
+console.log('Sheet Set Manager — Professional Edition Ready!');

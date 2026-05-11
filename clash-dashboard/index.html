@@ -779,11 +779,23 @@
     }
 
     footer {
-      color: var(--text-3);
+      padding: 24px 32px;
+      border-top: 1px solid var(--border);
       text-align: center;
-      margin: 48px 0 32px;
-      font-size: 12px;
+      margin-top: 32px;
+    }
+    footer a {
+      color: var(--text-2);
+      font-size: .875rem;
+      text-decoration: none;
+      transition: color .2s;
+    }
+    footer a:hover { color: var(--accent); }
+    footer p {
+      font-size: .75rem;
+      color: var(--text-3);
       font-family: var(--mono);
+      margin-top: 6px;
     }
 
     /* Responsive */
@@ -852,6 +864,28 @@
     .stat-card:nth-child(4) {
       animation-delay: 0.18s;
     }
+
+    /* ===== EMPTY STATE ===== */
+    .empty-state{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:80px 32px 100px;animation:fadeUp .5s ease both;}
+    .empty-state-ring{width:120px;height:120px;border-radius:50%;border:2px solid var(--border);display:flex;align-items:center;justify-content:center;position:relative;margin-bottom:32px;}
+    .empty-state-ring::before{content:'';position:absolute;inset:-6px;border-radius:50%;border:1px dashed rgba(91,141,243,.25);animation:spinSlow 20s linear infinite;}
+    .empty-state-ring svg{color:var(--text-3);opacity:.7;}
+    @keyframes spinSlow{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+    .empty-state h2{font-size:1.5rem;font-weight:700;letter-spacing:-.02em;margin-bottom:8px;color:var(--text-1);}
+    .empty-state p{color:var(--text-3);font-size:.9375rem;max-width:440px;line-height:1.6;margin-bottom:32px;}
+    .empty-state-cta{display:inline-flex;align-items:center;gap:10px;padding:14px 28px;border-radius:10px;background:var(--accent);color:#fff;font-size:.9375rem;font-weight:600;border:none;cursor:pointer;font-family:var(--font-sans,var(--font));transition:all .2s;box-shadow:0 4px 24px rgba(91,141,243,.25);}
+    .empty-state-cta:hover{transform:translateY(-2px);box-shadow:0 8px 32px rgba(91,141,243,.35);background:#7BA5FF;}
+    .empty-state-cta svg{flex-shrink:0;}
+    .empty-state-steps{display:flex;gap:32px;margin-top:40px;}
+    .empty-state-step{display:flex;flex-direction:column;align-items:center;gap:8px;}
+    .empty-state-step .step-num{width:28px;height:28px;border-radius:50%;background:var(--bg-inset,var(--bg-card));border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:600;font-family:var(--font-mono,monospace);color:var(--text-3);}
+    .empty-state-step .step-label{font-size:.75rem;color:var(--text-3);font-family:var(--font-mono,monospace);}
+    .empty-state-divider{width:40px;height:1px;background:var(--border);margin-top:14px;}
+    .empty-state-or{color:var(--text-3);font-size:.8125rem;margin-top:16px;font-family:var(--font-mono,monospace);}
+    .empty-state-drop{display:inline-flex;align-items:center;gap:6px;color:var(--text-3);font-size:.8125rem;margin-top:6px;padding:8px 16px;border-radius:8px;border:1px dashed var(--border);cursor:pointer;transition:all .2s;}
+    .empty-state-drop:hover{border-color:var(--accent);color:var(--accent);background:rgba(91,141,243,.05);}
+    .dashboard-content{display:none;}
+    .dashboard-content.loaded{display:block;}
   </style>
 </head>
 
@@ -860,77 +894,88 @@
 
   <header>
     <div class="header-left">
-      <div class="header-icon">⚡</div>
+      <div class="header-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg></div>
       <div>
         <h1>Clash Detection Dashboard</h1>
         <div class="header-subtitle">Advanced BIM Coordination Platform</div>
       </div>
     </div>
     <div class="header-actions">
-      <button id="undoBtn" class="btn secondary" title="Undo (Ctrl+Z)">
-        <span class="btn-icon">↶</span>
-        <span>Undo</span>
-      </button>
-      <button id="redoBtn" class="btn secondary" title="Redo (Ctrl+Shift+Z)">
-        <span class="btn-icon">↷</span>
-        <span>Redo</span>
-      </button>
+      <a href="../index.html" class="btn secondary" style="text-decoration:none;">
+        <span class="btn-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg></span>
+        <span>Portfolio</span>
+      </a>
       <button id="loadSampleBtn" class="btn secondary">
-        <span class="btn-icon">📦</span>
+        <span class="btn-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="21 8 21 21 3 21 3 8"/><rect x="1" y="3" width="22" height="5"/><line x1="10" y1="12" x2="14" y2="12"/></svg></span>
         <span>Load Sample</span>
       </button>
       <button id="downloadJson" class="btn secondary">
-        <span class="btn-icon">📄</span>
+        <span class="btn-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></span>
         <span>Export JSON</span>
       </button>
-      <button id="downloadExcel" class="btn secondary">
-        <span class="btn-icon">📊</span>
-        <span>Export Excel</span>
-      </button>
-      <button id="downloadCsv" class="btn">
-        <span class="btn-icon">📥</span>
-        <span>Download CSV</span>
+      <button id="downloadCsv" class="btn secondary">
+        <span class="btn-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></span>
+        <span>Export CSV</span>
       </button>
       <button id="printReport" class="btn secondary">
-        <span class="btn-icon">🖨️</span>
-        <span>Print PDF</span>
+        <span class="btn-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg></span>
+        <span>Print Report</span>
       </button>
     </div>
   </header>
 
   <div class="container">
 
-    <!-- Upload Section -->
-    <div class="card">
-      <input id="fileInput" type="file" accept=".csv,.json" />
-      <div class="upload-zone" id="uploadZone">
-        <div class="upload-icon">📁</div>
-        <div class="upload-text">Drag & Drop your clash data file here</div>
-        <div class="upload-hint">or click to browse • Supports CSV & JSON formats</div>
+    <!-- Empty State -->
+    <div class="empty-state" id="emptyState">
+      <div class="empty-state-ring">
+        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+      </div>
+      <h2>No Clash Data Loaded</h2>
+      <p>Load sample data to explore the dashboard, or drop your own Navisworks clash export file to get started.</p>
+      <button class="empty-state-cta" id="emptyLoadSample">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="21 8 21 21 3 21 3 8"/><rect x="1" y="3" width="22" height="5"/><line x1="10" y1="12" x2="14" y2="12"/></svg>
+        Load Sample Data
+      </button>
+      <div class="empty-state-or">or</div>
+      <label class="empty-state-drop" for="fileInput">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+        Drop a CSV or JSON file
+      </label>
+      <input id="fileInput" type="file" accept=".csv,.json" style="display:none" />
+      <div class="empty-state-steps">
+        <div class="empty-state-step"><span class="step-num">1</span><span class="step-label">Load data</span></div>
+        <div class="empty-state-divider"></div>
+        <div class="empty-state-step"><span class="step-num">2</span><span class="step-label">Analyze</span></div>
+        <div class="empty-state-divider"></div>
+        <div class="empty-state-step"><span class="step-num">3</span><span class="step-label">Export report</span></div>
       </div>
     </div>
+
+    <!-- Dashboard Content (hidden until data loaded) -->
+    <div class="dashboard-content" id="dashboardContent">
 
     <!-- Stats Dashboard -->
     <div class="stats-grid" id="summary">
       <div class="stat-card">
         <div class="stat-label">Total Clashes</div>
         <div class="stat-value" id="totalClashes">0</div>
-        <div class="stat-change positive" id="totalChange">📈 +0 from last week</div>
+        <div class="stat-change positive" id="totalChange">+0 from last week</div>
       </div>
       <div class="stat-card">
         <div class="stat-label">Open</div>
         <div class="stat-value" id="openClashes">0</div>
-        <div class="stat-change negative" id="openChange">⚠️ Needs attention</div>
+        <div class="stat-change negative" id="openChange">Needs attention</div>
       </div>
       <div class="stat-card">
         <div class="stat-label">Assigned</div>
         <div class="stat-value" id="assignedClashes">0</div>
-        <div class="stat-change" id="assignedChange">👥 In progress</div>
+        <div class="stat-change" id="assignedChange">In progress</div>
       </div>
       <div class="stat-card">
         <div class="stat-label">Resolved</div>
         <div class="stat-value" id="resolvedClashes">0</div>
-        <div class="stat-change positive" id="resolvedChange">✅ Completed</div>
+        <div class="stat-change positive" id="resolvedChange">Completed</div>
       </div>
     </div>
 
@@ -960,10 +1005,10 @@
 
     <!-- Tabs Navigation -->
     <div class="tabs">
-      <button class="tab active" data-tab="overview">📊 Overview</button>
-      <button class="tab" data-tab="table">📋 Clash Table</button>
-      <button class="tab" data-tab="analytics">📈 Analytics</button>
-      <button class="tab" data-tab="timeline">⏱️ Timeline</button>
+      <button class="tab active" data-tab="overview">Overview</button>
+      <button class="tab" data-tab="table">Clash Table</button>
+      <button class="tab" data-tab="analytics">Analytics</button>
+      <button class="tab" data-tab="timeline"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> Timeline</button>
     </div>
 
     <!-- Tab: Overview -->
@@ -989,7 +1034,7 @@
       <div class="card">
         <div class="filter-section">
           <div class="filter-row">
-            <input id="search" class="input" placeholder="🔍 Search by ClashID, Model, Notes..." />
+            <input id="search" class="input" placeholder="Search by ClashID, Model, Notes..." />
             <select id="statusFilter" class="input">
               <option value="">All Status</option>
               <option>Open</option>
@@ -1014,9 +1059,9 @@
             <button id="clearFilters" class="btn secondary">Clear Filters</button>
           </div>
           <div class="filter-row" id="bulkActions" style="display:none;">
-            <button class="btn secondary" onclick="bulkUpdateStatus('Assigned')">📌 Mark Assigned</button>
-            <button class="btn secondary" onclick="bulkUpdateStatus('Resolved')">✅ Mark Resolved</button>
-            <button class="btn secondary" onclick="bulkDelete()">🗑️ Delete Selected</button>
+            <button class="btn secondary" onclick="bulkUpdateStatus('Assigned')">Mark Assigned</button>
+            <button class="btn secondary" onclick="bulkUpdateStatus('Resolved')">Mark Resolved</button>
+            <button class="btn secondary" onclick="bulkDelete()">Delete Selected</button>
           </div>
         </div>
 
@@ -1131,7 +1176,12 @@
       </div>
     </div>
 
-    <footer>© 2026 Clash Detection Dashboard · Advanced BIM Coordination Platform</footer>
+    </div><!-- /dashboard-content -->
+
+    <footer>
+      <a href="../index.html">← Back to Portfolio</a>
+      <p>© 2026 Clash Detection Dashboard · Advanced BIM Coordination Platform</p>
+    </footer>
   </div>
 
   <script src="dashboard.js"></script>

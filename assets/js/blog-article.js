@@ -1,10 +1,10 @@
-// Article content for "Getting Started with Revit API Development"
+﻿// Article content for "Getting Started with Revit API Development"
 const articleContent = `
   <p>
     The Revit API opens up endless possibilities for automating workflows, creating custom tools, and extending Revit's functionality. Whether you're a BIM manager looking to streamline processes or a developer wanting to build commercial plugins, this guide will walk you through the fundamentals of Revit API development.
   </p>
 
-  <h2>📋 Prerequisites</h2>
+  <h2>Prerequisites</h2>
   <p>Before diving into Revit API development, ensure you have the following:</p>
   <ul>
     <li><strong>Autodesk Revit</strong> installed (2020 or later recommended)</li>
@@ -15,11 +15,11 @@ const articleContent = `
   </ul>
 
   <div class="info-box">
-    <h4>💡 Pro Tip</h4>
+    <h4>Pro Tip</h4>
     <p>Install the Revit SDK (Software Development Kit) which includes sample code, documentation, and useful utilities. You can download it from the Autodesk Developer Network.</p>
   </div>
 
-  <h2>🏗️ Understanding the Revit API Architecture</h2>
+  <h2>Understanding the Revit API Architecture</h2>
   <p>
     The Revit API is built on a hierarchical structure that mirrors the organization of a Revit project. Understanding this hierarchy is crucial for effective development.
   </p>
@@ -69,7 +69,7 @@ const articleContent = `
     </table>
   </div>
 
-  <h2>🚀 Creating Your First Revit Plugin</h2>
+  <h2>Creating Your First Revit Plugin</h2>
   <p>
     Let's build a simple "Hello World" plugin that displays information about selected elements. This will introduce you to the fundamental concepts of Revit API development.
   </p>
@@ -90,7 +90,7 @@ const articleContent = `
   </ol>
 
   <div class="warning-box">
-    <h4>⚠️ Important</h4>
+    <h4>Important</h4>
     <p>Always set "Copy Local" to False for Revit API references. This prevents version conflicts and ensures your plugin uses the correct Revit API version.</p>
   </div>
 
@@ -199,7 +199,7 @@ namespace MyFirstRevitPlugin
   </div>
 
   <div class="info-box">
-    <h4>💡 ClientId GUID</h4>
+    <h4>ClientId GUID</h4>
     <p>Generate a unique GUID for your plugin using Visual Studio's Tools → Create GUID menu. This ensures your plugin doesn't conflict with others.</p>
   </div>
 
@@ -215,7 +215,7 @@ namespace MyFirstRevitPlugin
     <li>Select an element and run the command</li>
   </ol>
 
-  <h2>🔍 Working with Filtered Element Collectors</h2>
+  <h2>Working with Filtered Element Collectors</h2>
   <p>
     One of the most powerful features of the Revit API is the <code>FilteredElementCollector</code>. It allows you to efficiently query elements from the model.
   </p>
@@ -265,7 +265,7 @@ ICollection&lt;Element&gt; doorTypes = new FilteredElementCollector(doc)
           <td>FilteredElementCollector with filters</td>
           <td>10,000</td>
           <td>45</td>
-          <td>⚡ Excellent</td>
+          <td>Excellent</td>
         </tr>
         <tr>
           <td>FilteredElementCollector without filters</td>
@@ -277,13 +277,13 @@ ICollection&lt;Element&gt; doorTypes = new FilteredElementCollector(doc)
           <td>Iterating all elements manually</td>
           <td>10,000</td>
           <td>850</td>
-          <td>⚠️ Poor</td>
+          <td>Poor</td>
         </tr>
       </tbody>
     </table>
   </div>
 
-  <h2>💾 Understanding Transactions</h2>
+  <h2>Understanding Transactions</h2>
   <p>
     Any modification to the Revit model must occur within a <code>Transaction</code>. This ensures data integrity and enables undo/redo functionality.
   </p>
@@ -377,7 +377,7 @@ public class CreateWallCommand : IExternalCommand
 }</code></pre>
   </div>
 
-  <h2>📊 Working with Parameters</h2>
+  <h2>Working with Parameters</h2>
   <p>
     Parameters store element properties and are essential for BIM data management. Understanding how to read and write parameters is crucial for any Revit API developer.
   </p>
@@ -407,7 +407,7 @@ double areaInSquareMeters = UnitUtils.ConvertFromInternalUnits(
     UnitTypeId.SquareMeters);</code></pre>
   </div>
 
-  <h2>🎯 Best Practices and Tips</h2>
+  <h2>Best Practices and Tips</h2>
 
   <h3>1. Performance Optimization</h3>
   <ul>
@@ -458,7 +458,7 @@ double areaInSquareMeters = UnitUtils.ConvertFromInternalUnits(
     <li><strong>Test with different Revit versions</strong> - API behavior can vary between versions</li>
   </ul>
 
-  <h2>📚 Common API Operations Reference</h2>
+  <h2>Common API Operations Reference</h2>
   <div class="table-container">
     <table>
       <thead>
@@ -492,7 +492,7 @@ double areaInSquareMeters = UnitUtils.ConvertFromInternalUnits(
     </table>
   </div>
 
-  <h2>🎓 Next Steps</h2>
+  <h2>Next Steps</h2>
   <p>Now that you understand the basics of Revit API development, here are some next steps to continue your learning journey:</p>
   <ul>
     <li><strong>Explore the Revit SDK samples</strong> - Autodesk provides extensive sample code</li>
@@ -503,7 +503,7 @@ double areaInSquareMeters = UnitUtils.ConvertFromInternalUnits(
   </ul>
 
   <div class="info-box">
-    <h4>📖 Recommended Resources</h4>
+    <h4>Recommended Resources</h4>
     <ul>
       <li><strong>The Building Coder</strong> - Jeremy Tammik's blog (essential reading)</li>
       <li><strong>Autodesk Developer Network</strong> - Official documentation and SDK</li>
@@ -512,7 +512,7 @@ double areaInSquareMeters = UnitUtils.ConvertFromInternalUnits(
     </ul>
   </div>
 
-  <h2>💬 Conclusion</h2>
+  <h2>Conclusion</h2>
   <p>
     The Revit API is a powerful tool that can dramatically improve productivity and enable custom solutions for BIM workflows. While there's a learning curve, the investment pays off quickly as you automate repetitive tasks and build tools tailored to your specific needs.
   </p>

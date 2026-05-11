@@ -40,10 +40,9 @@ body{background:var(--bg);color:var(--text-1);font-family:var(--font);font-size:
 .header h1{font-size:1.25rem;font-weight:700;letter-spacing:-.02em;}
 .header .subtitle{font-size:.8125rem;color:var(--text-3);font-family:var(--mono);}
 .header-actions{display:flex;gap:10px;}
-.header-btn{display:inline-flex;align-items:center;gap:8px;padding:9px 18px;border-radius:var(--r-md);font-size:.8125rem;font-weight:500;border:1px solid var(--border);background:var(--bg-card);color:var(--text-1);cursor:pointer;font-family:var(--font);transition:all .2s;}
-.header-btn:hover{border-color:var(--accent-border);background:var(--bg-inset);}
-.header-btn.primary{background:var(--accent);border-color:var(--accent);color:#fff;}
-.header-btn.primary:hover{background:#7BA5FF;}
+.header-btn{display:inline-flex;align-items:center;gap:6px;padding:9px 16px;border-radius:6px;font-size:13px;font-weight:600;border:1px solid var(--border);background:transparent;color:var(--text-2);cursor:pointer;font-family:var(--font);transition:all .15s ease;text-decoration:none;}
+.header-btn:hover{border-color:rgba(91,141,243,.25);background:rgba(91,141,243,.08);color:var(--text-1);transform:translateY(-2px);}
+.header-btn svg{flex-shrink:0;}
 
 /* ===== LAYOUT ===== */
 .container{max-width:1480px;margin:0 auto;padding:24px 32px;}
@@ -137,13 +136,34 @@ tr:hover td{background:rgba(91,141,243,.03);}
 .toast.success{background:rgba(34,197,94,.12);color:var(--green);border-color:rgba(34,197,94,.25);}
 .toast.error{background:rgba(239,68,68,.12);color:var(--red);border-color:rgba(239,68,68,.25);}
 
-/* ===== UPLOAD ZONE ===== */
-.upload-zone{border:2px dashed var(--border);border-radius:var(--r-lg);padding:48px 32px;text-align:center;cursor:pointer;transition:all .3s;margin-bottom:20px;background:var(--bg-card);}
-.upload-zone:hover,.upload-zone.drag-over{border-color:var(--accent);background:var(--accent-dim);}
-.upload-zone .icon{font-size:2.5rem;margin-bottom:12px;opacity:.6;}
-.upload-zone h3{font-size:1rem;font-weight:600;margin-bottom:6px;}
-.upload-zone p{font-size:.8125rem;color:var(--text-3);}
-input[type="file"]{display:none;}
+/* ===== EMPTY STATE ===== */
+.empty-state{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:80px 32px 100px;animation:fadeIn .5s ease both;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+.empty-state-ring{width:120px;height:120px;border-radius:50%;border:2px solid var(--border);display:flex;align-items:center;justify-content:center;position:relative;margin-bottom:32px;}
+.empty-state-ring::before{content:'';position:absolute;inset:-6px;border-radius:50%;border:1px dashed rgba(91,141,243,.25);animation:spinSlow 20s linear infinite;}
+.empty-state-ring svg{color:var(--text-3);opacity:.7;}
+@keyframes spinSlow{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+.empty-state h2{font-size:1.5rem;font-weight:700;letter-spacing:-.02em;margin-bottom:8px;color:var(--text-1);}
+.empty-state p{color:var(--text-3);font-size:.9375rem;max-width:440px;line-height:1.6;margin-bottom:32px;}
+.empty-state-cta{display:inline-flex;align-items:center;gap:10px;padding:14px 28px;border-radius:10px;background:var(--accent);color:#fff;font-size:.9375rem;font-weight:600;border:none;cursor:pointer;font-family:var(--sans);transition:all .2s;box-shadow:0 4px 24px rgba(91,141,243,.25);}
+.empty-state-cta:hover{transform:translateY(-2px);box-shadow:0 8px 32px rgba(91,141,243,.35);background:#7BA5FF;}
+.empty-state-cta svg{flex-shrink:0;}
+.empty-state-steps{display:flex;gap:32px;margin-top:40px;}
+.empty-state-step{display:flex;flex-direction:column;align-items:center;gap:8px;}
+.empty-state-step .step-num{width:28px;height:28px;border-radius:50%;background:var(--bg-inset);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:600;font-family:var(--mono);color:var(--text-3);}
+.empty-state-step .step-label{font-size:.75rem;color:var(--text-3);font-family:var(--mono);}
+.empty-state-divider{width:40px;height:1px;background:var(--border);margin-top:14px;}
+.empty-state-or{color:var(--text-3);font-size:.8125rem;margin-top:16px;font-family:var(--mono);}
+.empty-state-drop{display:inline-flex;align-items:center;gap:6px;color:var(--text-3);font-size:.8125rem;margin-top:6px;padding:8px 16px;border-radius:8px;border:1px dashed var(--border);cursor:pointer;transition:all .2s;text-decoration:none;}
+.empty-state-drop:hover{border-color:var(--accent);color:var(--accent);background:rgba(91,141,243,.05);}
+.dashboard-content{display:none;}
+.dashboard-content.loaded{display:block;}
+/* Fix severity badge wrapping */
+.sev-badge{white-space:nowrap;display:inline-flex;align-items:center;gap:4px;}
+/* Category card icon styling */
+.cat-card-icon{display:flex;align-items:center;justify-content:center;}
+.cat-card-icon svg{color:var(--accent);opacity:.8;}
+
 
 /* ===== RESPONSIVE ===== */
 @media(max-width:1024px){.health-hero{grid-template-columns:1fr;}.charts-grid{grid-template-columns:1fr;}.cat-grid{grid-template-columns:repeat(2,1fr);}}
@@ -155,28 +175,57 @@ input[type="file"]{display:none;}
 <!-- HEADER -->
 <header class="header">
   <div class="header-left">
-    <div class="header-icon">🏥</div>
+    <div class="header-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div>
     <div>
       <h1>Model Health Dashboard</h1>
       <div class="subtitle">BIM QA/QC Analytics Platform</div>
     </div>
   </div>
   <div class="header-actions">
-    <button class="header-btn" id="loadSampleBtn">📂 Load Sample</button>
-    <button class="header-btn" id="exportReport">📊 Export Report</button>
-    <a href="../index.html" class="header-btn">← Portfolio</a>
+    <a href="../index.html" class="header-btn" style="text-decoration:none;">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+      Portfolio
+    </a>
+    <button class="header-btn" id="loadSampleBtn">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="21 8 21 21 3 21 3 8"/><rect x="1" y="3" width="22" height="5"/><line x1="10" y1="12" x2="14" y2="12"/></svg>
+      Load Sample
+    </button>
+    <button class="header-btn" id="exportReport">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+      Export Report
+    </button>
   </div>
 </header>
 
 <div class="container">
-
-  <!-- UPLOAD ZONE -->
-  <div class="upload-zone" id="uploadZone">
-    <div class="icon">📋</div>
-    <h3>Drag & Drop your model audit file here</h3>
-    <p>or click to browse · Supports JSON · Revit model export format</p>
-    <input type="file" id="fileInput" accept=".json,.csv">
+  <!-- Empty State -->
+  <div class="empty-state" id="emptyState">
+    <div class="empty-state-ring">
+      <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+    </div>
+    <h2>No Model Data Loaded</h2>
+    <p>Load sample data to explore the health dashboard, or upload your own Revit model audit export.</p>
+    <button class="empty-state-cta" id="emptyLoadSample">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="21 8 21 21 3 21 3 8"/><rect x="1" y="3" width="22" height="5"/><line x1="10" y1="12" x2="14" y2="12"/></svg>
+      Load Sample Data
+    </button>
+    <div class="empty-state-or">or</div>
+    <label class="empty-state-drop" for="fileInput">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+      Drop a JSON file
+    </label>
+    <input type="file" id="fileInput" accept=".json,.csv" style="display:none">
+    <div class="empty-state-steps">
+      <div class="empty-state-step"><span class="step-num">1</span><span class="step-label">Load data</span></div>
+      <div class="empty-state-divider"></div>
+      <div class="empty-state-step"><span class="step-num">2</span><span class="step-label">Audit</span></div>
+      <div class="empty-state-divider"></div>
+      <div class="empty-state-step"><span class="step-num">3</span><span class="step-label">Export report</span></div>
+    </div>
   </div>
+
+  <!-- Dashboard Content (hidden until data loaded) -->
+  <div class="dashboard-content" id="dashboardContent">
 
   <!-- HEALTH SCORE HERO -->
   <div class="health-hero">
@@ -194,14 +243,14 @@ input[type="file"]{display:none;}
     <div class="kpi-grid">
       <div class="kpi-card">
         <div>
-          <div class="kpi-header"><span class="kpi-label">Total Elements</span><span class="kpi-icon">🧱</span></div>
+          <div class="kpi-header"><span class="kpi-label">Total Elements</span><span class="kpi-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="12" y1="3" x2="12" y2="21"/></svg></span></div>
           <div class="kpi-value accent" id="totalElements">—</div>
           <div class="kpi-sub">Audited components</div>
         </div>
       </div>
       <div class="kpi-card">
         <div>
-          <div class="kpi-header"><span class="kpi-label">Issues Found</span><span class="kpi-icon">⚠️</span></div>
+          <div class="kpi-header"><span class="kpi-label">Issues Found</span><span class="kpi-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></span></div>
           <div class="kpi-value red" id="totalIssues">—</div>
           <div class="kpi-sub" id="criticalCount">0 critical</div>
         </div>
@@ -209,7 +258,7 @@ input[type="file"]{display:none;}
       </div>
       <div class="kpi-card">
         <div>
-          <div class="kpi-header"><span class="kpi-label">Compliance</span><span class="kpi-icon">✅</span></div>
+          <div class="kpi-header"><span class="kpi-label">Compliance</span><span class="kpi-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></span></div>
           <div class="kpi-value green" id="complianceRate">—</div>
           <div class="kpi-sub">Standards adherence</div>
         </div>
@@ -217,7 +266,7 @@ input[type="file"]{display:none;}
       </div>
       <div class="kpi-card">
         <div>
-          <div class="kpi-header"><span class="kpi-label">Warnings</span><span class="kpi-icon">🔔</span></div>
+          <div class="kpi-header"><span class="kpi-label">Warnings</span><span class="kpi-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg></span></div>
           <div class="kpi-value amber" id="warningCount">—</div>
           <div class="kpi-sub" id="infoCount">0 informational</div>
         </div>
@@ -228,30 +277,30 @@ input[type="file"]{display:none;}
 
   <!-- TABS -->
   <div class="tabs-bar">
-    <button class="tab active" data-tab="overview">📊 Overview</button>
-    <button class="tab" data-tab="categories">📁 Categories</button>
-    <button class="tab" data-tab="issues">🔍 Issues</button>
+    <button class="tab active" data-tab="overview"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right:5px;vertical-align:-1px"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>Overview</button>
+    <button class="tab" data-tab="categories"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right:5px;vertical-align:-1px"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>Categories</button>
+    <button class="tab" data-tab="issues"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right:5px;vertical-align:-1px"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>Issues</button>
   </div>
 
   <!-- TAB: OVERVIEW -->
   <div class="tab-content active" id="overview">
     <div class="charts-grid">
       <div class="chart-card">
-        <h3><span>📊</span> Health by Category</h3>
+        <h3><span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg></span> Health by Category</h3>
         <div class="chart-wrap"><canvas id="radarChart"></canvas></div>
       </div>
       <div class="chart-card">
-        <h3><span>📈</span> Issue Severity Distribution</h3>
+        <h3><span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></span> Issue Severity Distribution</h3>
         <div class="chart-wrap"><canvas id="severityChart"></canvas></div>
       </div>
     </div>
     <div class="charts-grid">
       <div class="chart-card">
-        <h3><span>🏗️</span> Issues by Discipline</h3>
+        <h3><span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M12 6V2"/><path d="M6 6V4"/><path d="M18 6V4"/></svg></span> Issues by Discipline</h3>
         <div class="chart-wrap"><canvas id="disciplineChart"></canvas></div>
       </div>
       <div class="chart-card">
-        <h3><span>📋</span> Category Scores</h3>
+        <h3><span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></span> Category Scores</h3>
         <div class="chart-wrap"><canvas id="categoryBar"></canvas></div>
       </div>
     </div>
@@ -266,7 +315,7 @@ input[type="file"]{display:none;}
   <div class="tab-content" id="issues">
     <div class="issues-card">
       <div class="issues-header">
-        <h3>🔍 All Issues <span class="issues-count" id="issuesCountBadge">0</span></h3>
+        <h3><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right:5px;vertical-align:-2px"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>All Issues <span class="issues-count" id="issuesCountBadge">0</span></h3>
         <div class="issues-filters">
           <button class="issue-filter active" data-severity="all">All</button>
           <button class="issue-filter" data-severity="Critical">Critical</button>
@@ -280,6 +329,8 @@ input[type="file"]{display:none;}
       </table>
     </div>
   </div>
+
+</div><!-- /dashboard-content -->
 
 </div>
 
