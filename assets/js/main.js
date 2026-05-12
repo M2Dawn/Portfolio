@@ -82,7 +82,10 @@ document.querySelectorAll('.card').forEach(card => {
 const codeOutput = document.getElementById('codeOutput');
 if (codeOutput) {
   const codeLines = [
-    { t: 'cm', v: '// BIM Automation Tool &mdash; Batch Export' },
+    { t: 'cm', v: '// BIM Automation Tool &mdash; Batch Sheet Export' },
+    { t: '', v: '' },
+    { t: 'cm', v: 'using Autodesk.Revit.DB;' },
+    { t: 'cm', v: 'using Autodesk.Revit.UI;' },
     { t: '', v: '' },
     { t: 'cm', v: '[Transaction(TransactionMode.Manual)]' },
     { t: 'ck', v: 'public class ', c: 'cn', cv: 'BatchExportCommand', c2: 'cv', v2: ' : IExternalCommand' },
@@ -94,16 +97,35 @@ if (codeOutput) {
     { t: 'cv', v: '    var ', c: 'cn', cv: 'doc', c2: 'cv', v2: ' = commandData' },
     { t: 'cv', v: '      .Application.ActiveUIDocument.Document;' },
     { t: '', v: '' },
-    { t: 'cv', v: '    var ', c: 'cn', cv: 'views', c2: 'cv', v2: ' = new FilteredElementCollector(doc)' },
+    { t: 'cm', v: '    // Collect all printable sheets' },
+    { t: 'cv', v: '    var ', c: 'cn', cv: 'sheets', c2: 'cv', v2: ' = new FilteredElementCollector(doc)' },
     { t: 'cv', v: '      .OfClass(typeof(', c: 'cs', cv: 'ViewSheet', c2: 'cv', v2: '))' },
     { t: 'cv', v: '      .Cast&lt;', c: 'cs', cv: 'ViewSheet', c2: 'cv', v2: '&gt;()' },
-    { t: 'cv', v: '      .Where(v =&gt; v.CanBePrinted)' },
+    { t: 'cv', v: '      .Where(s =&gt; s.CanBePrinted)' },
+    { t: 'cv', v: '      .OrderBy(s =&gt; s.SheetNumber)' },
     { t: 'cv', v: '      .ToList();' },
     { t: '', v: '' },
+    { t: 'ck', v: '    if ', c: 'cv', cv: '(sheets.Count == ', c2: 'cn', v2: '0) {' },
+    { t: 'cv', v: '      message = ', c: 'cs', cv: '"No printable sheets found."', c2: 'cv', v2: ';' },
+    { t: 'ck', v: '      return ', c: 'cs', cv: 'Result', c2: 'cv', v2: '.Failed;' },
+    { t: 'cv', v: '    }' },
+    { t: '', v: '' },
     { t: 'cm', v: '    // 6&ndash;8 hrs &rarr; under 2 hrs' },
-    { t: 'cv', v: '    ExportViews(doc, views);' },
+    { t: 'cv', v: '    ExportToPDF(doc, sheets);' },
     { t: '', v: '' },
     { t: 'ck', v: '    return ', c: 'cs', cv: 'Result', c2: 'cv', v2: '.Succeeded;' },
+    { t: 'cv', v: '  }' },
+    { t: '', v: '' },
+    { t: 'ck', v: '  private void ', c: 'cn', cv: 'ExportToPDF', c2: 'cv', v2: '(' },
+    { t: 'cs', v: '    Document', c: 'cv', cv: ' doc,' },
+    { t: 'cs', v: '    List&lt;ViewSheet&gt;', c: 'cv', cv: ' sheets)' },
+    { t: 'cv', v: '  {' },
+    { t: 'cv', v: '    var ', c: 'cn', cv: 'opts', c2: 'cv', v2: ' = new PDFExportOptions();' },
+    { t: 'cv', v: '    opts.FileName = GetExportPath(doc);' },
+    { t: 'cv', v: '    opts.Combine = ', c: 'ck', cv: 'true', c2: 'cv', v2: ';' },
+    { t: '', v: '' },
+    { t: 'cv', v: '    doc.Export(opts.FileName,' },
+    { t: 'cv', v: '      sheets, opts);' },
     { t: 'cv', v: '  }' },
     { t: 'cv', v: '}' },
   ];
@@ -125,7 +147,7 @@ if (codeOutput) {
 
   function typeLine() {
     if (lineIdx >= codeLines.length) {
-      setTimeout(function() { if (codeBody) codeBody.scrollTop = 0; }, 700);
+      if (codeBody) codeBody.scrollTop = codeBody.scrollHeight;
       return;
     }
     const el = document.createElement('div');
@@ -134,12 +156,11 @@ if (codeOutput) {
     codeOutput.appendChild(el);
     if (codeBody) codeBody.scrollTop = codeBody.scrollHeight;
     lineIdx++;
-    setTimeout(typeLine, lineIdx < 4 ? 130 : 65);
+    setTimeout(typeLine, lineIdx < 6 ? 110 : 55);
   }
 
   setTimeout(typeLine, 900);
 }
-
 
 // 9. Copy email
 window.copyEmail = function() {
@@ -215,7 +236,6 @@ function countUp(el, target, suffix, duration = 1600) {
   function update(now) {
     const elapsed = now - start;
     const progress = Math.min(elapsed / duration, 1);
-    // easeOutExpo
     const eased = progress === 1 ? 1 : 1 - Math.pow(2, -10 * progress);
     const val = startVal + (target - startVal) * eased;
     el.textContent = (isFloat ? val.toFixed(0) : Math.floor(val)) + suffix;
@@ -224,20 +244,24 @@ function countUp(el, target, suffix, duration = 1600) {
   requestAnimationFrame(update);
 }
 
-// Observe stat numbers
-const statObs = new IntersectionObserver(entries => {
-  entries.forEach(entry => {
-    if (!entry.isIntersecting) return;
-    const el = entry.target;
-    const raw = el.dataset.count;
-    if (!raw) return;
-    const suffix = el.dataset.suffix || '';
-    countUp(el, parseFloat(raw), suffix);
-    statObs.unobserve(el);
-  });
-}, { threshold: 0.5 });
-
-document.querySelectorAll('[data-count]').forEach(el => statObs.observe(el));
+// Count-up: hero metrics trigger after hero-enter animation; others trigger on scroll
+document.querySelectorAll('[data-count]').forEach(el => {
+  const inHero = !!el.closest('.hero');
+  if (inHero) {
+    setTimeout(() => {
+      countUp(el, parseFloat(el.dataset.count), el.dataset.suffix || '');
+    }, 1000);
+  } else {
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        countUp(entry.target, parseFloat(entry.target.dataset.count), entry.target.dataset.suffix || '');
+        obs.unobserve(entry.target);
+      });
+    }, { threshold: 0.1 });
+    obs.observe(el);
+  }
+});
 
 // B. Active nav link based on scroll position
 const sections = document.querySelectorAll('section[id]');
@@ -288,13 +312,11 @@ window.addEventListener('scroll', () => {
 // F. Smooth entrance for hero section label dot
 const heroDot = document.querySelector('.hero-label-dot');
 if (heroDot) {
-  heroDot.style.cssText += `
-    animation: pulse-dot 2.5s ease-in-out infinite;
-  `;
+  heroDot.style.cssText += `animation: pulse-dot 2.5s ease-in-out infinite;`;
   const s = document.createElement('style');
   s.textContent = `@keyframes pulse-dot {
-    0%,100%{box-shadow:0 0 0 0 rgba(91,141,243,0.5);}
-    50%{box-shadow:0 0 0 6px rgba(91,141,243,0);}
+    0%,100%{box-shadow:0 0 0 0 rgba(34,197,94,0.5);}
+    50%{box-shadow:0 0 0 6px rgba(34,197,94,0);}
   }`;
   document.head.appendChild(s);
 }
