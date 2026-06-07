@@ -199,8 +199,20 @@ button{font-family:var(--font-sans);cursor:pointer;}
 .contact-email{display:flex;align-items:center;gap:var(--sp-2);font-family:var(--font-mono);font-size:0.9375rem;color:var(--accent);padding:var(--sp-3) var(--sp-4);background:var(--accent-dim);border:1px solid var(--accent-border);border-radius:var(--r-md);transition:background 0.15s ease;cursor:pointer;border:none;}
 .contact-email:hover{background:rgba(91,141,243,0.18);}
 .contact-socials{display:flex;gap:var(--sp-3);}
-.social-btn{width:38px;height:38px;border-radius:50%;background:var(--bg-raised);border:1px solid var(--border-2);display:flex;align-items:center;justify-content:center;color:var(--text-2);transition:border-color 0.15s ease,color 0.15s ease;}
+.social-btn{width:38px;height:38px;border-radius:50%;background:var(--bg-raised);border:1px solid var(--border-2);display:flex;align-items:center;justify-content:center;color:var(--text-2);transition:border-color 0.2s ease,color 0.2s ease,background 0.2s ease,box-shadow 0.2s ease;}
 .social-btn:hover{border-color:var(--border-3);color:var(--text-1);}
+
+/* LinkedIn — brand blue */
+.social-btn[aria-label="LinkedIn"]{color:#0A66C2;border-color:rgba(10,102,194,0.35);background:rgba(10,102,194,0.08);}
+.social-btn[aria-label="LinkedIn"]:hover{color:#0A66C2;border-color:rgba(10,102,194,0.6);background:rgba(10,102,194,0.15);box-shadow:0 0 12px rgba(10,102,194,0.2);}
+
+/* GitHub — white/silver */
+.social-btn[aria-label="GitHub"]{color:#e6edf3;border-color:rgba(230,237,243,0.2);background:rgba(230,237,243,0.05);}
+.social-btn[aria-label="GitHub"]:hover{color:#fff;border-color:rgba(230,237,243,0.4);background:rgba(230,237,243,0.1);box-shadow:0 0 12px rgba(230,237,243,0.1);}
+
+/* Email — Gmail red */
+.social-btn[aria-label="Email"]{color:#EA4335;border-color:rgba(234,67,53,0.35);background:rgba(234,67,53,0.08);}
+.social-btn[aria-label="Email"]:hover{color:#EA4335;border-color:rgba(234,67,53,0.6);background:rgba(234,67,53,0.15);box-shadow:0 0 12px rgba(234,67,53,0.2);}
 
 /* Contact Form */
 .form-field{position:relative;margin-bottom:var(--sp-4);}
