@@ -179,12 +179,18 @@ window.copyEmail = function() {
 // 10. Contact form
 const form = document.getElementById('contactForm');
 if (form) {
+  // Clear error styling on input
+  form.querySelectorAll('[required], [type="email"]').forEach(f => {
+    f.addEventListener('input', () => {
+      f.closest('.form-field')?.classList.remove('has-error');
+    });
+  });
+
   form.addEventListener('submit', async e => {
     e.preventDefault();
     let valid = true;
     form.querySelectorAll('[required]').forEach(f => {
       const g = f.closest('.form-field');
-      const err = g?.querySelector('.form-error');
       if (!f.value.trim()) { g?.classList.add('has-error'); valid = false; }
       else g?.classList.remove('has-error');
     });
@@ -192,7 +198,12 @@ if (form) {
     if (em?.value && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em.value)) {
       em.closest('.form-field')?.classList.add('has-error'); valid = false;
     }
-    if (!valid) return;
+    if (!valid) {
+      if (typeof gtag === 'function') {
+        gtag('event', 'contact_form_error', { 'error_reason': 'validation_failed' });
+      }
+      return;
+    }
 
     const btn = form.querySelector('.btn-submit');
     const succ = form.querySelector('.form-success');
@@ -211,11 +222,17 @@ if (form) {
       } else {
         await new Promise(r => setTimeout(r, 1000));
       }
+      if (typeof gtag === 'function') {
+        gtag('event', 'contact_form_success', { 'method': 'emailjs' });
+      }
       succ?.classList.add('show');
       form.reset();
       btn.textContent = 'Sent ✓';
       setTimeout(() => { succ?.classList.remove('show'); btn.textContent = 'Send Message'; btn.disabled = false; }, 4000);
-    } catch {
+    } catch (err) {
+      if (typeof gtag === 'function') {
+        gtag('event', 'contact_form_failure', { 'error_reason': err?.message || 'api_error' });
+      }
       btn.textContent = 'Failed — try again';
       btn.disabled = false;
     }
@@ -320,3 +337,81 @@ if (heroDot) {
   }`;
   document.head.appendChild(s);
 }
+
+// === GOOGLE ANALYTICS CUSTOM EVENTS ===
+
+// 0. Privacy & Developer Environment Optimizations
+(function() {
+  const isLocal = window.location.hostname === 'localhost' || 
+                  window.location.hostname === '127.0.0.1' || 
+                  window.location.protocol === 'file:';
+  
+  const dnt = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+  const isDNT = dnt === '1' || dnt === 'yes';
+
+  if (isLocal || isDNT) {
+    window['ga-disable-G-MWW9X0CJQF'] = true;
+    if (isLocal) {
+      console.log('%c[GA4 Debug Mode]%c Localhost environment detected. Live analytics calls are disabled.', 'background:#e0f2fe;color:#0369a1;padding:2px 6px;border-radius:4px;font-weight:bold;', 'color:#52525b;');
+    }
+  }
+})();
+
+function trackGAEvent(name, params = {}) {
+  const isLocal = window.location.hostname === 'localhost' || 
+                  window.location.hostname === '127.0.0.1' || 
+                  window.location.protocol === 'file:';
+  
+  if (isLocal) {
+    console.log(`%c[GA4 Event Debug]%c ${name}`, 'color:#0369a1;font-weight:bold;', 'color:#1c1917;', params);
+    return;
+  }
+  
+  if (typeof gtag === 'function') {
+    gtag('event', name, params);
+  }
+}
+
+
+// 1. Track general button and links clicks
+document.querySelectorAll('.social-btn, .nav-cta, .btn-ghost, .btn-primary, .btn-submit, .btn-link, .contact-email').forEach(el => {
+  el.addEventListener('click', () => {
+    const label = el.getAttribute('aria-label') || el.innerText?.trim() || el.id || 'button';
+    const href = el.getAttribute('href') || '';
+    trackGAEvent('click_interaction', {
+      'element_label': label,
+      'element_url': href,
+      'page_location': window.location.pathname
+    });
+  });
+});
+
+// 2. Track Case Study Bento Card Clicks
+document.querySelectorAll('.card[role="link"]').forEach(card => {
+  card.addEventListener('click', () => {
+    const title = card.querySelector('.card-title')?.innerText?.trim() || 'Unknown Case Study';
+    trackGAEvent('view_case_study', {
+      'case_study_title': title
+    });
+  });
+});
+
+// 3. Track copy email click
+const emailBtn = document.getElementById('emailBtn');
+if (emailBtn) {
+  emailBtn.addEventListener('click', () => {
+    trackGAEvent('copy_email', {
+      'method': 'copy_button'
+    });
+  });
+}
+
+// 4. Track trying live interactive tools
+document.querySelectorAll('a[href*="/index.html"]').forEach(link => {
+  link.addEventListener('click', () => {
+    const title = link.closest('.card')?.querySelector('.card-title')?.innerText?.trim() || link.href;
+    trackGAEvent('try_live_tool', {
+      'tool_name': title
+    });
+  });
+});

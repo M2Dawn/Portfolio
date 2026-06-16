@@ -59,7 +59,7 @@ button{font-family:var(--font-sans);cursor:pointer;}
 
 /* 2. Layout */
 .container{max-width:1100px;margin:0 auto;padding:0 var(--sp-6);}
-.section{padding:var(--sp-24) 0;}
+.section{padding:var(--sp-24) 0;scroll-margin-top:76px;}
 
 /* 3. Navigation */
 .nav{position:fixed;top:0;left:0;right:0;z-index:100;height:60px;display:flex;align-items:center;border-bottom:1px solid transparent;transition:background 0.3s ease,border-color 0.3s ease;}
@@ -216,9 +216,32 @@ button{font-family:var(--font-sans);cursor:pointer;}
 
 /* Contact Form */
 .form-field{position:relative;margin-bottom:var(--sp-4);}
-.form-field label{position:absolute;left:var(--sp-4);top:50%;transform:translateY(-50%);color:var(--text-3);font-size:0.875rem;pointer-events:none;transition:transform 0.2s ease,color 0.2s ease,font-size 0.2s ease;transform-origin:left center;}
+.form-field label{position:absolute;left:var(--sp-4);top:50%;transform:translateY(-50%);color:var(--text-3);font-size:0.875rem;pointer-events:none;transition:transform 0.2s ease,color 0.2s ease,font-size 0.2s ease;transform-origin:left center;z-index:10;}
 .form-field.area label{top:var(--sp-4);transform:none;}
-.form-input,.form-textarea{width:100%;padding:var(--sp-4);background:var(--bg-overlay);border:1px solid var(--border-2);border-radius:var(--r-md);color:var(--text-1);font-family:var(--font-sans);font-size:0.9375rem;transition:border-color 0.15s ease,box-shadow 0.15s ease;}
+.form-input,.form-textarea{width:100%;padding:var(--sp-4);background:var(--bg-overlay);border:1px solid var(--border-2);border-radius:var(--r-md);color:var(--text-1);font-family:var(--font-sans);font-size:0.9375rem;transition:border-color 0.15s ease,box-shadow 0.15s ease;position:relative;z-index:1;}
+
+/* Floating Labels */
+.form-field .form-input:focus + label,
+.form-field .form-input:not(:placeholder-shown) + label {
+  transform: translateY(-220%) scale(0.75);
+  color: var(--accent);
+}
+.form-field.area .form-textarea:focus + label,
+.form-field.area .form-textarea:not(:placeholder-shown) + label {
+  transform: translateY(-190%) scale(0.75);
+  color: var(--accent);
+}
+
+/* Hide placeholder when input is not focused to prevent overlap */
+.form-input::placeholder,
+.form-textarea::placeholder {
+  color: transparent;
+  transition: color 0.15s ease;
+}
+.form-input:focus::placeholder,
+.form-textarea:focus::placeholder {
+  color: var(--text-3);
+}
 
 .form-row{display:grid;grid-template-columns:1fr 1fr;gap:var(--sp-4);}
 .form-error{font-size:0.75rem;color:#F87171;margin-top:4px;display:none;}
