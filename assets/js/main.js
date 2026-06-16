@@ -211,6 +211,7 @@ if (form) {
     btn.textContent = 'Sending…';
 
     try {
+      const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
       if (typeof emailjs !== 'undefined') {
         if (!window._ejsInit) { emailjs.init('0o6S42Yn8J2Sleaw1'); window._ejsInit = true; }
         await emailjs.send('service_f6ehl85', 'template_dks5llc', {
@@ -219,9 +220,18 @@ if (form) {
           message: form.querySelector('[name="message"]').value,
           to_name: 'Hossam Sabry'
         });
-      } else {
+      } else if (isLocal) {
+        // Simulate local success for testing
         await new Promise(r => setTimeout(r, 1000));
+        console.log('[Form Sent Mock]', {
+          name: form.querySelector('[name="name"]').value,
+          email: form.querySelector('[name="email"]').value,
+          message: form.querySelector('[name="message"]').value
+        });
+      } else {
+        throw new Error('blocked');
       }
+      
       if (typeof gtag === 'function') {
         gtag('event', 'contact_form_success', { 'method': 'emailjs' });
       }
@@ -233,9 +243,22 @@ if (form) {
       if (typeof gtag === 'function') {
         gtag('event', 'contact_form_failure', { 'error_reason': err?.message || 'api_error' });
       }
-      btn.textContent = 'Failed — try again';
+      
+      btn.textContent = err?.message === 'blocked' ? 'Blocked by Browser - Click to Email' : 'Failed - Click to Email';
       btn.disabled = false;
+      
+      // Fallback click listener to open local mail client prefilled with their typed content
+      const mailFallback = (e) => {
+        e.preventDefault();
+        const freshMsg = form.querySelector('[name="message"]').value;
+        const freshName = form.querySelector('[name="name"]').value;
+        window.location.href = `mailto:e.hossamsabry@gmail.com?subject=${encodeURIComponent('Contact via Portfolio - ' + freshName)}&body=${encodeURIComponent(freshMsg)}`;
+        btn.removeEventListener('click', mailFallback);
+        btn.textContent = 'Send Message';
+      };
+      btn.addEventListener('click', mailFallback);
     }
+
   });
 }
 
