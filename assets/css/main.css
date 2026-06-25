@@ -74,7 +74,7 @@ button{font-family:var(--font-sans);cursor:pointer;}
 .nav-toggle{display:none;background:none;border:none;color:var(--text-2);font-size:1.25rem;padding:var(--sp-2);}
 
 /* 4. Hero */
-.hero{position:relative;overflow:hidden;}
+.hero{position:relative;overflow:hidden;padding:0;}
 /* Dot grid */
 .hero::before{content:'';position:absolute;inset:0;background-image:radial-gradient(circle,rgba(91,141,243,0.13) 1px,transparent 1px);background-size:28px 28px;-webkit-mask-image:radial-gradient(ellipse 90% 90% at 50% 40%,black 10%,transparent 80%);mask-image:radial-gradient(ellipse 90% 90% at 50% 40%,black 10%,transparent 80%);pointer-events:none;z-index:0;}
 .hero>*{position:relative;z-index:1;}
@@ -96,18 +96,486 @@ button{font-family:var(--font-sans);cursor:pointer;}
 .hero-metric-num{font-size:1.75rem;font-weight:800;color:var(--text-1);letter-spacing:-0.04em;line-height:1;}
 .hero-metric-label{font-size:0.6875rem;color:var(--text-3);font-family:var(--font-mono);letter-spacing:0.02em;}
 
-/* Hero Code Panel */
-.code-panel{background:#0D0D10;border:1px solid rgba(91,141,243,0.18);border-radius:var(--r-xl);overflow:hidden;box-shadow:0 0 0 1px rgba(91,141,243,0.1),0 32px 100px rgba(0,0,0,0.6),0 0 80px rgba(91,141,243,0.12),inset 0 1px 0 rgba(255,255,255,0.04);position:relative;}
-.code-titlebar{display:flex;align-items:center;gap:var(--sp-2);padding:var(--sp-3) var(--sp-4);border-bottom:1px solid var(--border-1);background:rgba(255,255,255,0.02);}
-.dot{width:12px;height:12px;border-radius:50%;}
-.dot-r{background:#FF5F57;}.dot-y{background:#FFBD2E;}.dot-g{background:#28CA41;}
-.code-filename{margin-left:auto;font-size:0.75rem;font-family:var(--font-mono);color:var(--text-3);}
-.code-branch{display:inline-flex;align-items:center;gap:4px;font-size:0.6875rem;font-family:var(--font-mono);color:var(--text-3);margin-left:var(--sp-3);padding:2px 8px;border:1px solid var(--border-1);border-radius:var(--r-full);opacity:0.7;}
-.code-body{padding:var(--sp-5);font-family:var(--font-mono);font-size:0.8125rem;line-height:1.7;color:var(--text-2);position:relative;}
-.code-cursor{display:inline-block;width:2px;height:1em;background:var(--accent);vertical-align:text-bottom;animation:blink 1s step-end infinite;margin-left:1px;}
-@keyframes blink{0%,100%{opacity:1;}50%{opacity:0;}}
-.ck{color:#C792EA;}.cs{color:#89DDFF;}.cm{color:#546E7A;font-style:italic;}
-.cn{color:#82AAFF;}.cv{color:#EEFFFF;}.cst{color:#C3E88D;}.cc{color:#89DDFF;}
+/* Hero WPF Window Mockup */
+.wpf-window {
+  background: #0D0D10;
+  border: 1px solid rgba(91,141,243,0.18);
+  border-radius: var(--r-xl);
+  overflow: hidden;
+  box-shadow: 0 0 0 1px rgba(91,141,243,0.1), 0 32px 100px rgba(0,0,0,0.6), 0 0 80px rgba(91,141,243,0.12), inset 0 1px 0 rgba(255,255,255,0.04);
+  position: relative;
+  transition: opacity 0.3s ease, transform 0.3s var(--ease-spring), max-height 0.35s ease, border-color 0.3s ease;
+  max-height: 800px;
+}
+.wpf-window.wpf-minimized {
+  max-height: 35px;
+}
+.wpf-window.wpf-closed {
+  opacity: 0;
+  transform: scale(0.95) translateY(-20px);
+  pointer-events: none;
+  max-height: 0;
+  border-color: transparent;
+  box-shadow: none;
+  margin: 0;
+}
+.wpf-restore-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 40px auto;
+  padding: 12px 24px;
+  background: rgba(91, 141, 243, 0.08);
+  border: 1px solid rgba(91, 141, 243, 0.25);
+  border-radius: var(--r-md);
+  color: var(--accent-light);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  cursor: pointer;
+  backdrop-filter: blur(8px);
+  transition: all 0.25s var(--ease-spring);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+}
+.wpf-restore-btn:hover {
+  background: rgba(91, 141, 243, 0.15);
+  border-color: rgba(91, 141, 243, 0.45);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 40px rgba(91, 141, 243, 0.2);
+}
+.wpf-restore-btn svg {
+  color: var(--accent-light);
+  transition: transform 0.25s var(--ease-spring);
+}
+.wpf-restore-btn:hover svg {
+  transform: rotate(180deg);
+}
+.wpf-titlebar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--border-1);
+  background: rgba(255, 255, 255, 0.02);
+  user-select: none;
+}
+.wpf-app-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--text-2);
+}
+.wpf-title-badge {
+  font-size: 0.5625rem;
+  background: rgba(91, 141, 243, 0.12);
+  color: var(--accent-light);
+  padding: 1px 6px;
+  border-radius: 10px;
+  border: 1px solid rgba(91, 141, 243, 0.25);
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  user-select: none;
+}
+.wpf-app-icon {
+  color: var(--accent);
+  opacity: 0.85;
+}
+.wpf-controls {
+  display: flex;
+  margin: -10px -14px -10px 0;
+}
+.wpf-ctrl-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 34px;
+  background: transparent;
+  border: none;
+  color: var(--text-3);
+  transition: all 0.15s ease;
+  cursor: pointer;
+}
+.wpf-ctrl-btn:hover {
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text-1);
+}
+.wpf-ctrl-btn.wpf-close:hover {
+  background: #E81123;
+  color: #fff;
+}
+.wpf-body {
+  padding: var(--sp-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-4);
+  transition: max-height 0.3s ease, padding 0.3s ease, opacity 0.2s ease;
+  max-height: 800px;
+  opacity: 1;
+}
+.wpf-window.wpf-minimized .wpf-body {
+  max-height: 0;
+  padding-top: 0;
+  padding-bottom: 0;
+  opacity: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+/* Path flash keyframe & class */
+@keyframes wpf-path-flash {
+  0% { color: var(--accent-light); text-shadow: 0 0 8px var(--accent); }
+  100% { color: var(--text-2); text-shadow: none; }
+}
+.wpf-path-flash {
+  animation: wpf-path-flash 0.6s ease forwards;
+}
+/* Terminal blink cursor */
+.wpf-window.wpf-running .wpf-console-row:last-child::after {
+  content: "▊";
+  font-size: 0.75rem;
+  margin-left: 4px;
+  animation: wpf-caret-blink 0.8s infinite steps(2);
+  color: var(--accent-light);
+  vertical-align: middle;
+}
+@keyframes wpf-caret-blink {
+  0%, 100% { opacity: 0; }
+  50% { opacity: 1; }
+}
+.wpf-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.wpf-form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--sp-3);
+}
+.wpf-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.wpf-label {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-3);
+}
+.wpf-select-container {
+  position: relative;
+}
+.wpf-select {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  background: var(--bg-overlay);
+  border: 1px solid var(--border-1);
+  border-radius: var(--r-sm);
+  color: var(--text-2);
+  font-size: 0.75rem;
+  user-select: none;
+}
+.wpf-select svg {
+  color: var(--text-3);
+  transition: transform 0.2s ease;
+}
+.wpf-select-interactive {
+  cursor: pointer;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+.wpf-select-interactive:hover {
+  border-color: var(--accent-border);
+  background: rgba(91,141,243,0.06);
+}
+.wpf-select-container.open .wpf-select-interactive svg {
+  transform: rotate(180deg);
+}
+/* Dropdown menu */
+.wpf-dropdown-menu {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  z-index: 10;
+  background: var(--bg-raised);
+  border: 1px solid var(--border-2);
+  border-radius: var(--r-md);
+  box-shadow: 0 16px 48px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.03);
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(-4px);
+  pointer-events: none;
+  transition: opacity 0.18s ease, transform 0.18s ease;
+}
+.wpf-select-container.open .wpf-dropdown-menu {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+.wpf-dropdown-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 10px 12px;
+  cursor: pointer;
+  transition: background 0.12s ease;
+}
+.wpf-dropdown-item:hover {
+  background: rgba(91,141,243,0.08);
+}
+.wpf-dropdown-item + .wpf-dropdown-item {
+  border-top: 1px solid var(--border-1);
+}
+.wpf-dropdown-item .wpf-check {
+  margin-top: 2px;
+  flex-shrink: 0;
+  opacity: 0;
+  color: var(--accent);
+  transition: opacity 0.15s ease;
+}
+.wpf-dropdown-item.active .wpf-check {
+  opacity: 1;
+}
+.wpf-dropdown-title {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-1);
+}
+.wpf-dropdown-desc {
+  display: block;
+  font-size: 0.6875rem;
+  color: var(--text-3);
+  margin-top: 1px;
+}
+.wpf-path-input {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 6px 6px 12px;
+  background: var(--bg-overlay);
+  border: 1px solid var(--border-1);
+  border-radius: var(--r-sm);
+  color: var(--text-2);
+  font-size: 0.75rem;
+}
+.wpf-path-text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 240px;
+}
+.wpf-browse-btn {
+  font-size: 0.6875rem;
+  font-weight: 500;
+  background: var(--bg-inset);
+  border: 1px solid var(--border-2);
+  border-radius: 4px;
+  padding: 4px 10px;
+  color: var(--text-2);
+  cursor: pointer;
+  user-select: none;
+}
+.wpf-action-area {
+  min-height: 48px;
+  display: flex;
+  align-items: center;
+}
+/* Run button wrapper with hint */
+.wpf-run-wrap {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.wpf-run-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  flex: 1;
+  padding: 12px;
+  background: var(--accent);
+  border: none;
+  border-radius: var(--r-md);
+  color: #fff;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.15);
+}
+.wpf-run-btn:hover {
+  background: var(--accent-light);
+  box-shadow: 0 0 0 4px rgba(91,141,243,0.15), inset 0 1px 0 rgba(255,255,255,0.15);
+}
+.wpf-run-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.wpf-run-btn svg {
+  animation: wpf-pulse 1.5s infinite;
+}
+@keyframes wpf-pulse {
+  0% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.15); opacity: 0.7; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+/* Smooth state transitions */
+.wpf-state-hidden {
+  display: none !important;
+  opacity: 0;
+}
+.wpf-state-visible {
+  display: flex !important;
+  animation: stateIn 0.3s var(--ease-spring) forwards;
+}
+@keyframes stateIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.wpf-progress-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+}
+.wpf-progress-bar {
+  background: var(--bg-inset);
+  height: 6px;
+  border-radius: 99px;
+  overflow: hidden;
+}
+.wpf-progress-fill {
+  height: 100%;
+  background: var(--grad-brand);
+  width: 0%;
+  transition: width 0.1s linear;
+}
+.wpf-progress-status {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.6875rem;
+  font-family: var(--font-mono);
+  color: var(--text-2);
+}
+.wpf-status-task {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 260px;
+}
+.wpf-success-alert {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  background: rgba(74, 222, 128, 0.06);
+  border: 1px solid rgba(74, 222, 128, 0.2);
+  border-radius: var(--r-md);
+  width: 100%;
+}
+@keyframes popIn {
+  from { opacity: 0; transform: scale(0.97); }
+  to { opacity: 1; transform: scale(1); }
+}
+.wpf-alert-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: rgba(74, 222, 128, 0.12);
+  color: var(--success);
+  flex-shrink: 0;
+}
+.wpf-alert-content {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1;
+  min-width: 0;
+}
+.wpf-alert-title {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--success);
+}
+.wpf-alert-desc {
+  font-size: 0.6875rem;
+  color: var(--text-2);
+}
+/* Run again button */
+.wpf-run-again {
+  background: none;
+  border: 1px solid rgba(74, 222, 128, 0.25);
+  border-radius: var(--r-sm);
+  color: var(--success);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  padding: 4px 10px;
+  cursor: pointer;
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: all 0.15s ease;
+}
+.wpf-run-again:hover {
+  background: rgba(74, 222, 128, 0.1);
+  border-color: rgba(74, 222, 128, 0.4);
+}
+.wpf-console {
+  background: rgba(8, 8, 9, 0.85);
+  border: 1px solid var(--border-1);
+  border-radius: var(--r-md);
+  overflow: hidden;
+  font-family: var(--font-mono);
+}
+.wpf-console-titlebar {
+  display: flex;
+  justify-content: space-between;
+  padding: 6px 12px;
+  background: rgba(255, 255, 255, 0.01);
+  border-bottom: 1px solid var(--border-1);
+  font-size: 0.625rem;
+  color: var(--text-3);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.wpf-console-body {
+  padding: 10px 12px;
+  height: 105px;
+  overflow-y: auto;
+  font-size: 0.6875rem;
+  color: var(--text-2);
+  line-height: 1.6;
+  scrollbar-width: none;
+}
+.wpf-console-body::-webkit-scrollbar {
+  display: none;
+}
+.wpf-console-placeholder {
+  color: var(--text-4);
+  font-style: italic;
+  text-align: center;
+  padding-top: var(--sp-5);
+}
+.wpf-console-row {
+  margin-bottom: 2px;
+  opacity: 0;
+  transform: translateY(3px);
+  animation: consoleFadeIn 0.15s ease forwards;
+}
+@keyframes consoleFadeIn {
+  to { opacity: 1; transform: none; }
+}
 
 /* 5. Marquee */
 .marquee-section{border-top:1px solid var(--border-1);border-bottom:1px solid var(--border-1);padding:var(--sp-4) 0;overflow:hidden;}
@@ -506,6 +974,201 @@ section[style*="var(--bg-raised)"] {
   -webkit-backdrop-filter: blur(8px);
   position: relative;
   overflow: hidden;
+  .nav-links.open a{font-size:1rem;color:var(--text-1);}
+  @keyframes slideDown{from{opacity:0;transform:translateY(-8px);}to{opacity:1;transform:none;}}
+}
+
+/* ============================================
+   NEXT-LEVEL UPGRADES
+   ============================================ */
+
+/* 1. Film-grain noise texture over entire page */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none;
+  opacity: 0.032;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 128px 128px;
+}
+
+/* 2. Dot-grid pattern on bg-raised sections */
+.section[style*="bg-raised"],
+#expertise,
+section[style*="var(--bg-raised)"] {
+  background-image:
+    radial-gradient(circle, rgba(255,255,255,0.06) 1px, transparent 1px);
+  background-size: 28px 28px;
+  background-position: center center;
+}
+
+/* 3. Animated gradient border on cards (via conic-gradient spin) */
+.card {
+  isolation: isolate;
+}
+.card::after {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1px;
+  background: conic-gradient(
+    from var(--border-angle, 0deg),
+    transparent 0%,
+    rgba(91,141,243,0.6) 25%,
+    rgba(124,92,245,0.4) 50%,
+    transparent 75%
+  );
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  z-index: -1;
+}
+.card:hover::after {
+  opacity: 1;
+  animation: border-spin 3s linear infinite;
+}
+@keyframes border-spin {
+  to { --border-angle: 360deg; }
+}
+@property --border-angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+
+/* 4. Glowing accent line at top of featured card */
+.bento-full .card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 10%; right: 10%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(91,141,243,0.8), rgba(124,92,245,0.6), transparent);
+  z-index: 2;
+  pointer-events: none;
+}
+
+/* 5. Luminous hero headline — layered text shadow */
+.hero h1 {
+  text-shadow: 0 0 80px rgba(91,141,243,0.12);
+}
+.hero-grad {
+  filter: drop-shadow(0 0 30px rgba(91,141,243,0.3));
+}
+
+/* 6. Hero metrics — count-up targets */
+.hero-metric-num {
+  font-variant-numeric: tabular-nums;
+}
+
+/* 7. Section label — animated left-border accent */
+.section-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.section-label::before {
+  content: '';
+  display: inline-block;
+  width: 16px;
+  height: 2px;
+  background: var(--grad-brand);
+  border-radius: 99px;
+  flex-shrink: 0;
+}
+
+/* 8. Expertise card — glassmorphism upgrade */
+.exp-card {
+  background: rgba(15,15,17,0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+.exp-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(
+    100px circle at var(--cx,50%) var(--cy,50%),
+    rgba(91,141,243,0.04),
+    transparent 70%
+  );
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+.exp-card {
+  position: relative;
+  isolation: isolate;
+}
+.exp-card:hover::before { opacity: 1; }
+
+/* 9. Stat-box — glowing number */
+.stat-num {
+  text-shadow: 0 0 20px rgba(91,141,243,0.4);
+}
+
+/* 10. Code panel — scanline effect */
+.code-body::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0,0,0,0.03) 2px,
+    rgba(0,0,0,0.03) 4px
+  );
+  pointer-events: none;
+  border-radius: inherit;
+}
+
+/* 11. Nav brand — subtle gradient */
+.nav-brand {
+  background: linear-gradient(135deg, #F2F2F2 60%, var(--accent));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* 12. Active nav link indicator */
+.nav-links a.active {
+  color: var(--text-1);
+  position: relative;
+}
+.nav-links a.active::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0; right: 0;
+  height: 1px;
+  background: var(--accent);
+  border-radius: 99px;
+}
+
+/* 13. Marquee items — slightly brighter on hover */
+.marquee-track { pointer-events: none; }
+
+/* 14. Metric-card top-line glow */
+.metric-card::after {
+  filter: blur(4px);
+  opacity: 0.7;
+}
+
+/* 15. Testimonial cards — subtle glass */
+.testimonial {
+  background: rgba(15,15,17,0.6);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  position: relative;
+  overflow: hidden;
 }
 .testimonial::before {
   content: '\201C';
@@ -558,8 +1221,8 @@ section[style*="var(--bg-raised)"] {
   pointer-events: none;
 }
 
-/* 19. Hero code panel — inner glow */
-.code-panel {
+/* 19. Hero wpf window — inner glow */
+.wpf-window {
   box-shadow:
     0 0 0 1px var(--accent-border),
     0 24px 80px rgba(0,0,0,0.6),
@@ -651,7 +1314,7 @@ section[style*="var(--bg-raised)"] {
   gap: var(--sp-4);
   width: 100%;
 }
-.hero-visual .code-panel {
+.hero-visual .wpf-window {
   flex: none;
   width: 100%;
 }
@@ -660,17 +1323,11 @@ section[style*="var(--bg-raised)"] {
 .hero-stat-row { display: none; }
 .hero-tool-tags { display: none; }
 
-/* Code panel inside hero-visual: always visible, taller for depth */
-.hero-visual .code-panel {
+/* WPF Window inside hero-visual: always visible */
+.hero-visual .wpf-window {
   display: block;
   position: relative;
 }
-.hero-visual .code-body {
-  max-height: 340px;
-  overflow-y: auto;
-  scrollbar-width: none;
-}
-.hero-visual .code-body::-webkit-scrollbar { display: none; }
 
 /* === RESPONSIVE ========================================================= */
 @media (max-width: 960px) {
@@ -701,7 +1358,43 @@ section[style*="var(--bg-raised)"] {
   .hero h1 { font-size: clamp(2.25rem, 8vw, 3.5rem); }
 }
 @media (max-width: 640px) {
-  .hero-visual .code-panel { display: none; }
+  .wpf-form-row {
+    grid-template-columns: 1fr;
+  }
+  .wpf-body {
+    padding: var(--sp-3);
+    gap: var(--sp-3);
+  }
+  .wpf-titlebar {
+    padding: 8px 10px;
+  }
+  .wpf-path-text {
+    max-width: 160px;
+    font-size: 0.6875rem;
+  }
+  .wpf-console-body {
+    max-height: 70px;
+    font-size: 0.625rem;
+  }
+  .wpf-run-btn {
+    padding: 10px;
+    font-size: 0.75rem;
+  }
+  .wpf-dropdown-menu {
+    position: fixed;
+    left: var(--sp-4);
+    right: var(--sp-4);
+    top: auto;
+    bottom: var(--sp-4);
+    z-index: 100;
+    border-radius: var(--r-lg);
+    max-height: 60vh;
+    overflow-y: auto;
+  }
+  .wpf-restore-btn {
+    padding: 10px 18px;
+    font-size: 0.75rem;
+  }
 }
 
 @media (max-width: 600px) {
@@ -710,16 +1403,11 @@ section[style*="var(--bg-raised)"] {
   .hero-metrics { gap: var(--sp-5); }
 }
 
-/* Fix old standalone .code-panel rule (no longer needed for hero) */
-/* The display:none rule was for the old code-panel directly in hero */
-/* Now it's inside .hero-visual so we remove the global hide */
 @media (max-width: 900px) {
-  /* Remove old hide rule — the new .hero-visual .code-panel handles this */
-  .code-panel { display: block; }
+  .wpf-window { display: block; }
 }
 .code-output { white-space: pre-wrap; word-break: break-word; }
 /* Code panel status bar */
 .code-statusbar{display:flex;align-items:center;gap:var(--sp-4);padding:5px var(--sp-5);border-top:1px solid rgba(255,255,255,0.05);background:rgba(255,255,255,0.015);font-family:var(--font-mono);font-size:0.625rem;color:rgba(255,255,255,0.25);letter-spacing:0.04em;}
 .code-statusbar .sb-dot{width:6px;height:6px;border-radius:50%;background:#22C55E;margin-left:auto;}
 .code-statusbar .sb-success{color:#22C55E;}
-

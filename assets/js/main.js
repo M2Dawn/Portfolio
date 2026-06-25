@@ -78,88 +78,288 @@ document.querySelectorAll('.card').forEach(card => {
   });
 });
 
-// 8. Typewriter for code panel
-const codeOutput = document.getElementById('codeOutput');
-if (codeOutput) {
-  const codeLines = [
-    { t: 'cm', v: '// BIM Automation Tool &mdash; Batch Sheet Export' },
-    { t: '', v: '' },
-    { t: 'cm', v: 'using Autodesk.Revit.DB;' },
-    { t: 'cm', v: 'using Autodesk.Revit.UI;' },
-    { t: '', v: '' },
-    { t: 'cm', v: '[Transaction(TransactionMode.Manual)]' },
-    { t: 'ck', v: 'public class ', c: 'cn', cv: 'BatchExportCommand', c2: 'cv', v2: ' : IExternalCommand' },
-    { t: 'cv', v: '{' },
-    { t: 'ck', v: '  public ', c: 'cs', cv: 'Result', c2: 'cv', v2: ' Execute(' },
-    { t: 'cs', v: '    ExternalCommandData', c: 'cv', cv: ' commandData,' },
-    { t: 'ck', v: '    ref ', c: 'cs', cv: 'string', c2: 'cv', v2: ' message)' },
-    { t: 'cv', v: '  {' },
-    { t: 'cv', v: '    var ', c: 'cn', cv: 'doc', c2: 'cv', v2: ' = commandData' },
-    { t: 'cv', v: '      .Application.ActiveUIDocument.Document;' },
-    { t: '', v: '' },
-    { t: 'cm', v: '    // Collect all printable sheets' },
-    { t: 'cv', v: '    var ', c: 'cn', cv: 'sheets', c2: 'cv', v2: ' = new FilteredElementCollector(doc)' },
-    { t: 'cv', v: '      .OfClass(typeof(', c: 'cs', cv: 'ViewSheet', c2: 'cv', v2: '))' },
-    { t: 'cv', v: '      .Cast&lt;', c: 'cs', cv: 'ViewSheet', c2: 'cv', v2: '&gt;()' },
-    { t: 'cv', v: '      .Where(s =&gt; s.CanBePrinted)' },
-    { t: 'cv', v: '      .OrderBy(s =&gt; s.SheetNumber)' },
-    { t: 'cv', v: '      .ToList();' },
-    { t: '', v: '' },
-    { t: 'ck', v: '    if ', c: 'cv', cv: '(sheets.Count == ', c2: 'cn', v2: '0) {' },
-    { t: 'cv', v: '      message = ', c: 'cs', cv: '"No printable sheets found."', c2: 'cv', v2: ';' },
-    { t: 'ck', v: '      return ', c: 'cs', cv: 'Result', c2: 'cv', v2: '.Failed;' },
-    { t: 'cv', v: '    }' },
-    { t: '', v: '' },
-    { t: 'cm', v: '    // 6&ndash;8 hrs &rarr; under 2 hrs' },
-    { t: 'cv', v: '    ExportToPDF(doc, sheets);' },
-    { t: '', v: '' },
-    { t: 'ck', v: '    return ', c: 'cs', cv: 'Result', c2: 'cv', v2: '.Succeeded;' },
-    { t: 'cv', v: '  }' },
-    { t: '', v: '' },
-    { t: 'ck', v: '  private void ', c: 'cn', cv: 'ExportToPDF', c2: 'cv', v2: '(' },
-    { t: 'cs', v: '    Document', c: 'cv', cv: ' doc,' },
-    { t: 'cs', v: '    List&lt;ViewSheet&gt;', c: 'cv', cv: ' sheets)' },
-    { t: 'cv', v: '  {' },
-    { t: 'cv', v: '    var ', c: 'cn', cv: 'opts', c2: 'cv', v2: ' = new PDFExportOptions();' },
-    { t: 'cv', v: '    opts.FileName = GetExportPath(doc);' },
-    { t: 'cv', v: '    opts.Combine = ', c: 'ck', cv: 'true', c2: 'cv', v2: ';' },
-    { t: '', v: '' },
-    { t: 'cv', v: '    doc.Export(opts.FileName,' },
-    { t: 'cv', v: '      sheets, opts);' },
-    { t: 'cv', v: '  }' },
-    { t: 'cv', v: '}' },
+// 8. Revit Plugin WPF Mockup Simulation
+const wpfWindow = document.getElementById('wpfWindow');
+const wpfMinimize = document.getElementById('wpfMinimize');
+const wpfMaximize = document.getElementById('wpfMaximize');
+const wpfClose = document.getElementById('wpfClose');
+const wpfRestoreBtn = document.getElementById('wpfRestoreBtn');
+
+const wpfRunBtn = document.getElementById('wpfRunBtn');
+const wpfRunWrap = document.getElementById('wpfRunWrap');
+const wpfForm = document.getElementById('wpfForm');
+const wpfProgressPanel = document.getElementById('wpfProgressPanel');
+const wpfProgressFill = document.getElementById('wpfProgressFill');
+const wpfStatusTask = document.getElementById('wpfStatusTask');
+const wpfStatusPercent = document.getElementById('wpfStatusPercent');
+const wpfSuccessAlert = document.getElementById('wpfSuccessAlert');
+const wpfAlertDesc = document.getElementById('wpfAlertDesc');
+const wpfRunAgain = document.getElementById('wpfRunAgain');
+const wpfConsoleBody = document.getElementById('wpfConsoleBody');
+
+const wpfPathText = document.getElementById('wpfPathText');
+const wpfBrowseBtn = document.getElementById('wpfBrowseBtn');
+
+// Interactive Dropdown Elements
+const wpfFormatDropdown = document.getElementById('wpfFormatDropdown');
+const wpfFormatBtn = document.getElementById('wpfFormatBtn');
+const wpfFormatValue = document.getElementById('wpfFormatValue');
+const wpfFormatMenu = document.getElementById('wpfFormatMenu');
+
+if (wpfRunBtn) {
+  let simTimeout = null;
+  let selectedFormat = 'pdf'; // default
+
+  // Option 1: Titlebar Controls Interactivity
+  if (wpfClose && wpfWindow && wpfRestoreBtn) {
+    wpfClose.addEventListener('click', () => {
+      wpfWindow.classList.add('wpf-closed');
+      wpfRestoreBtn.classList.remove('wpf-state-hidden');
+      wpfRestoreBtn.classList.add('wpf-state-visible');
+      trackGAEvent('revit_exporter_window_control', { 'action': 'close' });
+    });
+  }
+
+  if (wpfRestoreBtn && wpfWindow) {
+    wpfRestoreBtn.addEventListener('click', () => {
+      wpfWindow.classList.remove('wpf-closed');
+      wpfRestoreBtn.classList.remove('wpf-state-visible');
+      wpfRestoreBtn.classList.add('wpf-state-hidden');
+      trackGAEvent('revit_exporter_window_control', { 'action': 'restore' });
+    });
+  }
+
+  if (wpfMinimize && wpfWindow) {
+    wpfMinimize.addEventListener('click', () => {
+      wpfWindow.classList.toggle('wpf-minimized');
+      const isMinimized = wpfWindow.classList.contains('wpf-minimized');
+      trackGAEvent('revit_exporter_window_control', { 'action': isMinimized ? 'minimize' : 'unminimize' });
+    });
+  }
+
+  if (wpfMaximize) {
+    wpfMaximize.addEventListener('click', () => {
+      appendLog('Window maximization disabled in simulated sandbox environment.', true);
+      trackGAEvent('revit_exporter_window_control', { 'action': 'maximize_attempt' });
+    });
+  }
+
+  // Option 2: Path browser cycling
+  const samplePaths = [
+    'C:\\Projects\\AECOM_Central\\Exports\\',
+    'D:\\BIM_Deliverables\\Phase_1\\Outputs\\',
+    'C:\\Users\\BIM_Coordinator\\Desktop\\Revit_PDFs\\'
   ];
+  let currentPathIndex = 0;
 
-  function buildLine(l) {
-    let out = '';
-    if (l.t)  out += '<span class="' + l.t + '">' + l.v + '</span>';
-    else      out += l.v || '';
-    if (l.c)  out += '<span class="' + l.c + '">' + l.cv + '</span>';
-    if (l.c2) out += '<span class="' + l.c2 + '">' + l.v2 + '</span>';
-    return out;
+  if (wpfBrowseBtn && wpfPathText) {
+    wpfBrowseBtn.addEventListener('click', () => {
+      currentPathIndex = (currentPathIndex + 1) % samplePaths.length;
+      wpfPathText.textContent = samplePaths[currentPathIndex];
+
+      // Reset & trigger path flash animation
+      wpfPathText.classList.remove('wpf-path-flash');
+      void wpfPathText.offsetWidth; // Trigger reflow
+      wpfPathText.classList.add('wpf-path-flash');
+
+      appendLog(`Output path redirected to: ${samplePaths[currentPathIndex]}`);
+      trackGAEvent('revit_exporter_browse', { 'new_path': samplePaths[currentPathIndex] });
+    });
   }
 
-  const codeBody = codeOutput.closest('.code-body');
-  let lineIdx = 0;
-  const ks = document.createElement('style');
-  ks.textContent = '@keyframes fadeIn{from{opacity:0;transform:translateY(3px)}to{opacity:1;transform:none}}';
-  document.head.appendChild(ks);
+  // Dropdown interactivity
+  if (wpfFormatBtn && wpfFormatDropdown && wpfFormatMenu) {
+    wpfFormatBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      wpfFormatDropdown.classList.toggle('open');
+    });
 
-  function typeLine() {
-    if (lineIdx >= codeLines.length) {
-      if (codeBody) codeBody.scrollTop = codeBody.scrollHeight;
-      return;
+    // Close dropdown on click outside
+    document.addEventListener('click', () => {
+      wpfFormatDropdown.classList.remove('open');
+    });
+
+    // Handle Option Selection
+    wpfFormatMenu.querySelectorAll('.wpf-dropdown-item').forEach(item => {
+      item.addEventListener('click', (e) => {
+        e.stopPropagation();
+        selectedFormat = item.getAttribute('data-value');
+        wpfFormatValue.textContent = item.getAttribute('data-label');
+        
+        // Update active class
+        wpfFormatMenu.querySelectorAll('.wpf-dropdown-item').forEach(i => i.classList.remove('active'));
+        item.classList.add('active');
+        
+        // Close menu
+        wpfFormatDropdown.classList.remove('open');
+        
+        trackGAEvent('change_revit_exporter_format', { 'selected_format': selectedFormat });
+      });
+    });
+  }
+
+  function formatTime() {
+    const now = new Date();
+    return `[${now.toTimeString().split(' ')[0]}]`;
+  }
+
+  function appendLog(message, isImportant = false) {
+    if (wpfConsoleBody) {
+      const placeholder = wpfConsoleBody.querySelector('.wpf-console-placeholder');
+      if (placeholder) placeholder.remove();
+
+      const row = document.createElement('div');
+      row.className = 'wpf-console-row';
+      if (isImportant) row.style.color = 'var(--accent-light)';
+      row.innerHTML = `<span style="color:var(--text-3); margin-right:6px;">${formatTime()}</span> ${message}`;
+      wpfConsoleBody.appendChild(row);
+      wpfConsoleBody.scrollTop = wpfConsoleBody.scrollHeight;
     }
-    const el = document.createElement('div');
-    el.style.cssText = 'min-height:1.55em;animation:fadeIn 0.15s ease forwards';
-    el.innerHTML = buildLine(codeLines[lineIdx]) || '\u200B';
-    codeOutput.appendChild(el);
-    if (codeBody) codeBody.scrollTop = codeBody.scrollHeight;
-    lineIdx++;
-    setTimeout(typeLine, lineIdx < 6 ? 110 : 55);
   }
 
-  setTimeout(typeLine, 900);
+  function resetSimulation() {
+    if (simTimeout) clearTimeout(simTimeout);
+    if (wpfWindow) wpfWindow.classList.remove('wpf-running');
+
+    // Fade visible state back to Form/Run btn
+    wpfSuccessAlert.classList.remove('wpf-state-visible');
+    wpfSuccessAlert.classList.add('wpf-state-hidden');
+    
+    wpfForm.classList.remove('wpf-state-hidden');
+    wpfForm.classList.add('wpf-state-visible');
+    wpfRunWrap.classList.remove('wpf-state-hidden');
+    wpfRunWrap.classList.add('wpf-state-visible');
+
+    wpfRunBtn.disabled = false;
+    wpfProgressPanel.classList.remove('wpf-state-visible');
+    wpfProgressPanel.classList.add('wpf-state-hidden');
+    wpfProgressFill.style.width = '0%';
+    wpfStatusPercent.textContent = '0%';
+    wpfStatusTask.textContent = 'Ready';
+    
+    if (wpfConsoleBody) {
+      wpfConsoleBody.innerHTML = '<div class="wpf-console-placeholder">Revit API Simulated Sandbox. Click \'Run Exporter\' above to begin.</div>';
+    }
+  }
+
+  function startSimulation() {
+    wpfRunBtn.disabled = true;
+    if (wpfWindow) wpfWindow.classList.add('wpf-running'); // Start caret blink
+
+    appendLog('System initialized. Checking Revit document context...', true);
+
+    trackGAEvent('run_revit_exporter_simulation', {
+      'export_format': selectedFormat,
+      'output_path': wpfPathText ? wpfPathText.textContent : 'C:\\Projects\\AECOM_Central\\Exports\\'
+    });
+
+    setTimeout(() => {
+      // Transition state: Hide form & run button, Show progress panel
+      wpfForm.classList.remove('wpf-state-visible');
+      wpfForm.classList.add('wpf-state-hidden');
+      wpfRunWrap.classList.remove('wpf-state-visible');
+      wpfRunWrap.classList.add('wpf-state-hidden');
+
+      wpfProgressPanel.classList.remove('wpf-state-hidden');
+      wpfProgressPanel.classList.add('wpf-state-visible');
+      
+      runSteps();
+    }, 800);
+  }
+
+  function runSteps() {
+    let steps = [];
+    let successMessage = "";
+    let finalLog = "";
+    
+    if (selectedFormat === 'pdf') {
+      steps = [
+        { progress: 5, task: 'Loading database...', log: 'Opening Autodesk.Revit.DB connection...', delay: 400 },
+        { progress: 12, task: 'Analyzing views...', log: 'Scanning sheets database. Found 247 printable views.', delay: 500 },
+        { progress: 20, task: 'Exporting sheets 1 - 50...', log: 'Exporting Sheets [1 - 50] to PDF format...', delay: 600 },
+        { progress: 45, task: 'Exporting sheets 51 - 120...', log: 'Exporting Sheets [51 - 120] to PDF format...', delay: 600 },
+        { progress: 70, task: 'Exporting sheets 121 - 200...', log: 'Exporting Sheets [121 - 200] to PDF format...', delay: 600 },
+        { progress: 90, task: 'Exporting sheets 201 - 247...', log: 'Exporting Sheets [201 - 247] to PDF format...', delay: 500 },
+        { progress: 96, task: 'Combining sheets into PDF...', log: 'Merging separate pages into a single multipage document...', delay: 700 },
+        { progress: 100, task: 'Completing export...', log: `PDF generated successfully: ${wpfPathText ? wpfPathText.textContent : 'C:\\Projects\\AECOM_Central\\Exports\\'}AECOM_Set_Merged.pdf`, delay: 400 }
+      ];
+      successMessage = "247 sheets combined into PDF. Saved ~6.5 hours of manual work.";
+      finalLog = "Task finished. Saved 6.5 hours of manual work.";
+    } else if (selectedFormat === 'dwg') {
+      steps = [
+        { progress: 5, task: 'Loading database...', log: 'Opening Autodesk.Revit.DB connection...', delay: 400 },
+        { progress: 12, task: 'Analyzing views...', log: 'Scanning sheets database. Found 247 printable views.', delay: 500 },
+        { progress: 20, task: 'Exporting sheets 1 - 50...', log: 'Exporting Sheets [1 - 50] to CAD DWG format...', delay: 600 },
+        { progress: 45, task: 'Exporting sheets 51 - 120...', log: 'Exporting Sheets [51 - 120] to CAD DWG format...', delay: 600 },
+        { progress: 70, task: 'Exporting sheets 121 - 200...', log: 'Exporting Sheets [121 - 200] to CAD DWG format...', delay: 600 },
+        { progress: 90, task: 'Exporting sheets 201 - 247...', log: 'Exporting Sheets [201 - 247] to CAD DWG format...', delay: 500 },
+        { progress: 96, task: 'Verifying files...', log: 'Validating exported file naming patterns and standard styles...', delay: 700 },
+        { progress: 100, task: 'Completing export...', log: `247 DWG files exported successfully to ${wpfPathText ? wpfPathText.textContent : 'C:\\Projects\\AECOM_Central\\Exports\\'}`, delay: 400 }
+      ];
+      successMessage = "247 DWG files exported successfully. Saved ~6.5 hours of manual work.";
+      finalLog = "Task finished. Saved 6.5 hours of manual work.";
+    } else if (selectedFormat === 'dwg-csv') {
+      steps = [
+        { progress: 5, task: 'Loading database...', log: 'Opening Autodesk.Revit.DB connection...', delay: 400 },
+        { progress: 12, task: 'Analyzing views...', log: 'Scanning sheets database. Found 247 printable views.', delay: 500 },
+        { progress: 20, task: 'Exporting sheets 1 - 50...', log: 'Exporting Sheets [1 - 50] to CAD DWG format...', delay: 600 },
+        { progress: 45, task: 'Exporting sheets 51 - 120...', log: 'Exporting Sheets [51 - 120] to CAD DWG format...', delay: 600 },
+        { progress: 70, task: 'Exporting sheets 121 - 200...', log: 'Exporting Sheets [121 - 200] to CAD DWG format...', delay: 600 },
+        { progress: 85, task: 'Exporting sheets 201 - 247...', log: 'Exporting Sheets [201 - 247] to CAD DWG format...', delay: 500 },
+        { progress: 92, task: 'Extracting schedules...', log: 'Querying schedule views. Extracting room, door, and window parameters...', delay: 600 },
+        { progress: 98, task: 'Exporting CSV schedules...', log: 'Generating 12 CSV reports with structured BIM metadata...', delay: 500 },
+        { progress: 100, task: 'Completing export...', log: `DWG + CSV files generated at ${wpfPathText ? wpfPathText.textContent : 'C:\\Projects\\AECOM_Central\\Exports\\'}`, delay: 400 }
+      ];
+      successMessage = "247 DWG files + 12 CSV schedules exported. Saved ~8 hours of manual work.";
+      finalLog = "Task finished. Saved 8 hours of manual work.";
+    }
+
+    let currentStep = 0;
+
+    function nextStep() {
+      if (currentStep >= steps.length) {
+        setTimeout(() => {
+          // Hide progress, Show success alert
+          wpfProgressPanel.classList.remove('wpf-state-visible');
+          wpfProgressPanel.classList.add('wpf-state-hidden');
+          if (wpfWindow) wpfWindow.classList.remove('wpf-running'); // Turn off caret blink
+          
+          if (wpfAlertDesc) wpfAlertDesc.textContent = successMessage;
+          wpfSuccessAlert.classList.remove('wpf-state-hidden');
+          wpfSuccessAlert.classList.add('wpf-state-visible');
+          
+          appendLog(finalLog, true);
+
+          // Auto-reset after 7 seconds if the user doesn't click "Run again"
+          simTimeout = setTimeout(resetSimulation, 7000);
+        }, 500);
+        return;
+      }
+
+      const s = steps[currentStep];
+      wpfStatusTask.textContent = s.task;
+      wpfStatusPercent.textContent = `${s.progress}%`;
+      wpfProgressFill.style.width = `${s.progress}%`;
+      appendLog(s.log);
+
+      currentStep++;
+      simTimeout = setTimeout(nextStep, s.delay);
+    }
+
+    nextStep();
+  }
+
+  wpfRunBtn.addEventListener('click', () => {
+    if (simTimeout) clearTimeout(simTimeout);
+    startSimulation();
+  });
+
+  if (wpfRunAgain) {
+    wpfRunAgain.addEventListener('click', () => {
+      resetSimulation();
+      trackGAEvent('revit_exporter_run_again', { 'last_format': selectedFormat });
+    });
+  }
 }
 
 // 9. Copy email
@@ -199,9 +399,7 @@ if (form) {
       em.closest('.form-field')?.classList.add('has-error'); valid = false;
     }
     if (!valid) {
-      if (typeof gtag === 'function') {
-        gtag('event', 'contact_form_error', { 'error_reason': 'validation_failed' });
-      }
+      trackGAEvent('contact_form_error', { 'error_reason': 'validation_failed' });
       return;
     }
 
@@ -232,17 +430,13 @@ if (form) {
         throw new Error('blocked');
       }
       
-      if (typeof gtag === 'function') {
-        gtag('event', 'contact_form_success', { 'method': 'emailjs' });
-      }
+      trackGAEvent('contact_form_success', { 'method': 'emailjs' });
       succ?.classList.add('show');
       form.reset();
       btn.textContent = 'Sent ✓';
       setTimeout(() => { succ?.classList.remove('show'); btn.textContent = 'Send Message'; btn.disabled = false; }, 4000);
     } catch (err) {
-      if (typeof gtag === 'function') {
-        gtag('event', 'contact_form_failure', { 'error_reason': err?.message || 'api_error' });
-      }
+      trackGAEvent('contact_form_failure', { 'error_reason': err?.message || 'api_error' });
       
       btn.textContent = err?.message === 'blocked' ? 'Blocked by Browser - Click to Email' : 'Failed - Click to Email';
       btn.disabled = false;

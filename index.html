@@ -83,21 +83,133 @@
   <!-- HERO RIGHT: Visual Panel -->
   <div class="hero-visual hero-enter" style="animation-delay:200ms">
 
-    <!-- Code panel -->
-    <div class="code-panel">
-      <div class="code-titlebar">
-        <span class="dot dot-r"></span>
-        <span class="dot dot-y"></span>
-        <span class="dot dot-g"></span>
-        <span class="code-filename">BatchExport.cs</span>
-        <span class="code-branch">
-          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="6" y1="3" x2="6" y2="15"/><circle cx="18" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M18 9a9 9 0 0 1-9 9"/></svg>
-          main
-        </span>
+    <!-- Restore window trigger (hidden by default) -->
+    <button class="wpf-restore-btn wpf-state-hidden" id="wpfRestoreBtn">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2-2V5a2 2 0 0 1-2-2H9"/><polyline points="17 14 12 9 7 14"/><line x1="12" y1="9" x2="12" y2="21"/></svg>
+      <span>Restore Exporter Plugin</span>
+    </button>
+
+    <!-- WPF Window Mockup -->
+    <div class="wpf-window" id="wpfWindow">
+      <div class="wpf-titlebar">
+        <div class="wpf-app-title">
+          <svg class="wpf-app-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M8 18H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v4" />
+            <rect x="8" y="8" width="14" height="14" rx="2" />
+            <path d="M12 15h6" />
+            <path d="M15 12l3 3-3 3" />
+          </svg>
+          <span>Batch Sheet Exporter v2.1</span>
+          <span class="wpf-title-badge">Simulation</span>
+        </div>
+        <div class="wpf-controls">
+          <div class="wpf-ctrl-btn" id="wpfMinimize" aria-label="Minimize">
+            <svg width="10" height="1" viewBox="0 0 10 1"><line x1="0" y1="0.5" x2="10" y2="0.5" stroke="currentColor" stroke-width="1"/></svg>
+          </div>
+          <div class="wpf-ctrl-btn" id="wpfMaximize" aria-label="Maximize">
+            <svg width="10" height="10" viewBox="0 0 10 10"><rect x="0.5" y="0.5" width="9" height="9" fill="none" stroke="currentColor" stroke-width="1"/></svg>
+          </div>
+          <div class="wpf-ctrl-btn wpf-close" id="wpfClose" aria-label="Close">
+            <svg width="10" height="10" viewBox="0 0 10 10"><path d="M1 1l8 8M9 1L1 9" stroke="currentColor" stroke-width="1"/></svg>
+          </div>
+        </div>
       </div>
-      <div class="code-body">
-        <div id="codeOutput" class="code-output"></div>
-        <span class="code-cursor" id="codeCursor"></span>
+      <div class="wpf-body" id="wpfBody">
+        <!-- Form Settings -->
+        <div class="wpf-form" id="wpfForm">
+          <div class="wpf-form-row">
+            <div class="wpf-field">
+              <span class="wpf-label">Export Format</span>
+              <div class="wpf-select-container" id="wpfFormatDropdown">
+                <div class="wpf-select wpf-select-interactive" id="wpfFormatBtn">
+                  <span id="wpfFormatValue">PDF (Combine multi-sheet)</span>
+                  <svg width="8" height="5" viewBox="0 0 8 5" fill="none"><path d="M1 1l3 3 3-3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div>
+                <div class="wpf-dropdown-menu" id="wpfFormatMenu">
+                  <div class="wpf-dropdown-item active" data-value="pdf" data-label="PDF (Combine multi-sheet)">
+                    <svg class="wpf-check" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+                    <div>
+                      <span class="wpf-dropdown-title">PDF (Combine multi-sheet)</span>
+                      <span class="wpf-dropdown-desc">Merge all sheets into a single PDF file</span>
+                    </div>
+                  </div>
+                  <div class="wpf-dropdown-item" data-value="dwg" data-label="DWG (Individual sheets)">
+                    <svg class="wpf-check" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+                    <div>
+                      <span class="wpf-dropdown-title">DWG (Individual sheets)</span>
+                      <span class="wpf-dropdown-desc">Export each sheet as a separate CAD file</span>
+                    </div>
+                  </div>
+                  <div class="wpf-dropdown-item" data-value="dwg-csv" data-label="DWG + CSV (Sheets + Schedules)">
+                    <svg class="wpf-check" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+                    <div>
+                      <span class="wpf-dropdown-title">DWG + CSV (Sheets + Schedules)</span>
+                      <span class="wpf-dropdown-desc">CAD files + structured schedule data</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="wpf-field">
+              <span class="wpf-label">Sheet Selection</span>
+              <div class="wpf-select" style="opacity:0.7; cursor:default;">
+                <span>All Sheets (247 views)</span>
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="opacity:0.4;"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+              </div>
+            </div>
+          </div>
+          <div class="wpf-field">
+            <span class="wpf-label">Output Path</span>
+            <div class="wpf-path-input">
+              <span class="wpf-path-text" id="wpfPathText">C:\Projects\AECOM_Central\Exports\</span>
+              <span class="wpf-browse-btn" id="wpfBrowseBtn">Browse...</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Action / Progress Area -->
+        <div class="wpf-action-area">
+          <div class="wpf-run-wrap" id="wpfRunWrap">
+            <button class="wpf-run-btn" id="wpfRunBtn">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+              <span>Run Exporter</span>
+            </button>
+          </div>
+
+          <!-- Progress Panel -->
+          <div class="wpf-progress-panel wpf-state-hidden" id="wpfProgressPanel">
+            <div class="wpf-progress-bar">
+              <div class="wpf-progress-fill" id="wpfProgressFill"></div>
+            </div>
+            <div class="wpf-progress-status">
+              <span class="wpf-status-task" id="wpfStatusTask">Initializing...</span>
+              <span class="wpf-status-percent" id="wpfStatusPercent">0%</span>
+            </div>
+          </div>
+
+          <!-- Success Alert -->
+          <div class="wpf-success-alert wpf-state-hidden" id="wpfSuccessAlert">
+            <div class="wpf-alert-icon">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+            <div class="wpf-alert-content">
+              <span class="wpf-alert-title">Export Completed Successfully!</span>
+              <span class="wpf-alert-desc" id="wpfAlertDesc">247 sheets combined into PDF. Saved ~6.5 hours of manual work.</span>
+            </div>
+            <button class="wpf-run-again" id="wpfRunAgain">Run again</button>
+          </div>
+        </div>
+
+        <!-- Console Log Panel -->
+        <div class="wpf-console">
+          <div class="wpf-console-titlebar">
+            <span>Log Output</span>
+            <span class="wpf-console-clear">Auto-scrolling</span>
+          </div>
+          <div class="wpf-console-body" id="wpfConsoleBody">
+            <div class="wpf-console-placeholder">Revit API Simulated Sandbox. Click 'Run Exporter' above to begin.</div>
+          </div>
+        </div>
       </div>
     </div>
 
