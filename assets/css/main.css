@@ -93,8 +93,23 @@ button{font-family:var(--font-sans);cursor:pointer;}
 .hero-metrics{display:flex;gap:0;margin-top:var(--sp-2);}
 .hero-metric{display:flex;flex-direction:column;gap:4px;padding:var(--sp-4) var(--sp-6) var(--sp-4) 0;margin-right:var(--sp-6);border-right:1px solid var(--border-1);}
 .hero-metric:last-child{border-right:none;margin-right:0;}
-.hero-metric-num{font-size:1.75rem;font-weight:800;color:var(--text-1);letter-spacing:-0.04em;line-height:1;}
-.hero-metric-label{font-size:0.6875rem;color:var(--text-3);font-family:var(--font-mono);letter-spacing:0.02em;}
+.hero-metric-num {
+  font-size: 2rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, var(--text-1) 30%, var(--accent-light));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: -0.04em;
+  line-height: 1.1;
+}
+.hero-metric-label {
+  font-size: 0.625rem;
+  color: var(--text-2);
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+}
 
 /* Hero WPF Window Mockup */
 .wpf-window {
